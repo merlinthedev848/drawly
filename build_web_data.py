@@ -14,6 +14,8 @@ from stats_engine import (
     EXPECTED_GAP
 )
 from horse_racing_engine import get_preset_races, calculate_horse_likelihoods
+from stock_explosion_engine import get_preset_explosion_stocks
+from football_predictor_engine import get_preset_football_matches
 
 def build_export_data():
     df_raw, draw_matrix = load_lotto_data()
@@ -75,6 +77,10 @@ def build_export_data():
     for race in preset_races:
         race['analyzed_runners'] = calculate_horse_likelihoods(race['runners'])
 
+    # Build stock radar & football predictions
+    preset_stocks = get_preset_explosion_stocks()
+    preset_football = get_preset_football_matches()
+
     data_payload = {
         'total_draws': len(df_raw),
         'start_date': df_raw['draw_date'].min().strftime('%Y-%m-%d'),
@@ -87,6 +93,12 @@ def build_export_data():
         'recent_draws': recent_draws[:50],  # top 50 recent draws
         'horse_racing': {
             'preset_races': preset_races
+        },
+        'stock_radar': {
+            'stocks': preset_stocks
+        },
+        'football_predictor': {
+            'matches': preset_football
         }
     }
     
@@ -95,7 +107,7 @@ def build_export_data():
     with open(json_path, "w") as f:
         json.dump(data_payload, f, indent=2)
         
-    print(f"Exported dataset JSON with Horse Racing to {json_path}")
+    print(f"Exported full multi-domain dataset JSON to {json_path}")
     return data_payload
 
 if __name__ == "__main__":
