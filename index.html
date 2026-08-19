@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Lotto, Horse Racing, Stocks & Football Logical Analytics</title>
+    <title>Drawly - Multi-Domain High Probability Predictors Suite</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -77,15 +77,15 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                        Drawly Analytics <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">Multi-Domain Engine</span>
+                        Drawly Predictor Suite <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">All High-Probability Domains</span>
                     </h1>
-                    <p class="text-xs text-gray-400">UK Lotto &bull; Horse Racing &bull; Stock Explosion Radar &bull; Football Predictor</p>
+                    <p class="text-xs text-gray-400">Lotto &bull; Casino &bull; Sports &bull; Racing &bull; Stocks</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-2 text-sm bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700">
-                <i class="fa-solid fa-chart-line text-amber-400"></i>
-                <span class="text-gray-300" id="header-draw-count">Dataset Loaded</span>
+                <i class="fa-solid fa-layer-group text-amber-400"></i>
+                <span class="text-gray-300">Predictors Ready</span>
             </div>
         </div>
     </header>
@@ -95,34 +95,32 @@
         
         <!-- Navigation Tabs -->
         <div class="flex flex-wrap border-b border-gray-700 mb-6 gap-2" id="tab-nav">
-            <button onclick="switchTab('overview')" id="tab-overview" class="px-4 py-2 text-sm font-semibold border-b-2 border-amber-500 text-amber-400 flex items-center gap-2">
-                <i class="fa-solid fa-chart-pie"></i> Lotto Overview
+            <button onclick="switchTab('overview')" id="tab-overview" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-amber-500 text-amber-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-chart-pie"></i> Lotto 6/59
             </button>
-            <button onclick="switchTab('likelihood')" id="tab-likelihood" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-square-poll-vertical"></i> Lotto Likelihood
+            <button onclick="switchTab('generator')" id="tab-generator" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-1.5 bg-amber-500/10 rounded-t-lg">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Lotto Generator
             </button>
-            <button onclick="switchTab('gaps')" id="tab-gaps" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-clock-rotate-left"></i> Overdue Gaps
+            <button onclick="switchTab('casino')" id="tab-casino" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-rose-400 hover:text-rose-300 flex items-center gap-1.5 bg-rose-500/10 rounded-t-lg">
+                <i class="fa-solid fa-dice text-rose-400"></i> Roulette & Casino
             </button>
-            <button onclick="switchTab('cooccurrence')" id="tab-cooccurrence" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-diagram-project"></i> Pair Correlations
+            <button onclick="switchTab('blackjack')" id="tab-blackjack" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-amber-300 hover:text-amber-200 flex items-center gap-1.5 bg-amber-500/10 rounded-t-lg">
+                <i class="fa-solid fa-spade text-amber-300"></i> Blackjack & Baccarat
             </button>
-            <button onclick="switchTab('generator')" id="tab-generator" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2 bg-amber-500/10 rounded-t-lg">
-                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Ticket Generator
+            <button onclick="switchTab('racing')" id="tab-racing" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 bg-emerald-500/10 rounded-t-lg">
+                <i class="fa-solid fa-horse-head text-emerald-400"></i> Horse & Greyhound
             </button>
-            <button onclick="switchTab('racing')" id="tab-racing" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-emerald-400 hover:text-emerald-300 flex items-center gap-2 bg-emerald-500/10 rounded-t-lg">
-                <i class="fa-solid fa-horse-head text-emerald-400"></i> Horse Racing
+            <button onclick="switchTab('football')" id="tab-football" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-purple-400 hover:text-purple-300 flex items-center gap-1.5 bg-purple-500/10 rounded-t-lg">
+                <i class="fa-solid fa-futbol text-purple-400"></i> Football & Tennis
             </button>
-            <!-- NEW STOCKS TAB -->
-            <button onclick="switchTab('stocks')" id="tab-stocks" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-cyan-400 hover:text-cyan-300 flex items-center gap-2 bg-cyan-500/10 rounded-t-lg">
-                <i class="fa-solid fa-arrow-trend-up text-cyan-400"></i> Stock Explosion Radar
+            <button onclick="switchTab('nba')" id="tab-nba" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 bg-indigo-500/10 rounded-t-lg">
+                <i class="fa-solid fa-basketball text-indigo-400"></i> NBA Basketball
             </button>
-            <!-- NEW FOOTBALL TAB -->
-            <button onclick="switchTab('football')" id="tab-football" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-purple-400 hover:text-purple-300 flex items-center gap-2 bg-purple-500/10 rounded-t-lg">
-                <i class="fa-solid fa-futbol text-purple-400"></i> Football Predictor
+            <button onclick="switchTab('stocks')" id="tab-stocks" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 bg-cyan-500/10 rounded-t-lg">
+                <i class="fa-solid fa-arrow-trend-up text-cyan-400"></i> Stock Radar
             </button>
-            <button onclick="switchTab('hosting')" id="tab-hosting" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-server"></i> Enhance Host Setup
+            <button onclick="switchTab('hosting')" id="tab-hosting" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-server"></i> Enhance Host
             </button>
         </div>
 
@@ -132,17 +130,17 @@
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Total Draws Analyzed</div>
                     <div class="text-3xl font-bold text-white mt-1" id="stat-total-draws">--</div>
-                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">59 Ball Matrix Era</div>
+                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">59 Ball Era</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Theoretical Ball Odds</div>
                     <div class="text-3xl font-bold text-amber-400 mt-1">10.17%</div>
-                    <div class="text-xs text-gray-400 mt-2">\( P(X) = \frac{6}{59} \) per draw</div>
+                    <div class="text-xs text-gray-400 mt-2">\( P(X) = \frac{6}{59} \)</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Expected Return Gap</div>
                     <div class="text-3xl font-bold text-blue-400 mt-1">9.8 Draws</div>
-                    <div class="text-xs text-gray-400 mt-2">Poisson expected interval</div>
+                    <div class="text-xs text-gray-400 mt-2">Poisson expected return</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Statistical Uniformity</div>
@@ -158,302 +156,146 @@
                 </h3>
                 <div class="flex flex-wrap items-center gap-3 mt-4" id="latest-draw-balls"></div>
             </div>
-
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-4">Recent Historical Draws</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-300">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
-                            <tr>
-                                <th class="px-4 py-3">Draw #</th><th class="px-4 py-3">Date</th><th class="px-4 py-3">Day</th>
-                                <th class="px-4 py-3">Main Balls (1 - 59)</th><th class="px-4 py-3">Bonus</th><th class="px-4 py-3">Sum</th><th class="px-4 py-3">Odd/Even</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recent-draws-tbody"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
 
-        <!-- TAB 2: LIKELIHOOD & FREQUENCIES -->
-        <div id="content-likelihood" class="space-y-6 hidden">
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-2">Number Draw Frequency (Balls 1 to 59)</h3>
-                <div class="h-72 w-full"><canvas id="freqChart"></canvas></div>
-            </div>
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-4">Calculated Likelihood & Statistical Metrics Table</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-300">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
-                            <tr>
-                                <th class="px-4 py-3">Ball #</th><th class="px-4 py-3">Harmonic Likelihood</th><th class="px-4 py-3">Hot Model</th>
-                                <th class="px-4 py-3">Cold Model</th><th class="px-4 py-3">Draw Count</th><th class="px-4 py-3">Empirical Rate</th>
-                                <th class="px-4 py-3">Current Gap</th><th class="px-4 py-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="likelihood-tbody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: OVERDUE GAPS -->
-        <div id="content-gaps" class="space-y-6 hidden">
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-2">Number Recency & Overdue Status Heat Grid</h3>
-                <div class="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-3" id="gap-grid"></div>
-            </div>
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow" id="gap-detail-card">
-                <h4 class="text-md font-bold text-amber-400 mb-2">Selected Ball Details</h4>
-                <div class="text-sm text-gray-300" id="gap-detail-content">Click on any ball in the grid above.</div>
-            </div>
-        </div>
-
-        <!-- TAB 4: CO-OCCURRENCE MATRIX -->
-        <div id="content-cooccurrence" class="space-y-6 hidden">
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-2">Pair Co-occurrence & Affinity Explorer</h3>
-                <div class="flex items-center gap-4 mb-6">
-                    <label class="text-sm font-semibold text-gray-300">Select Ball Number:</label>
-                    <select id="pair-ball-select" onchange="renderPairAnalysis()" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-4 py-2 rounded-lg"></select>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="pair-top-partners"></div>
-            </div>
-        </div>
-
-        <!-- TAB 5: TICKET GENERATOR -->
+        <!-- TAB 2: TICKET GENERATOR -->
         <div id="content-generator" class="space-y-6 hidden">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-5">
                     <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Strategy Configuration</h3>
                     <div>
-                        <label class="text-xs font-semibold text-gray-300 uppercase">Logic Strategy Model</label>
+                        <label class="text-xs font-semibold text-gray-300 uppercase">Logic Model</label>
                         <select id="gen-model" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
                             <option value="harmonic">Balanced Harmonic Model (Recommended)</option>
                             <option value="hot">Hot Trend Model</option>
-                            <option value="cold">Cold / Overdue Reversion Model</option>
-                            <option value="equal">Theoretical Equal Random Baseline</option>
+                            <option value="cold">Cold Overdue Model</option>
                         </select>
                     </div>
                     <div>
                         <label class="text-xs font-semibold text-gray-300 uppercase">Number of Tickets</label>
                         <input type="number" id="gen-count" value="5" min="1" max="20" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
                     </div>
-                    <div class="space-y-3 pt-2 border-t border-gray-700">
-                        <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
-                            <input type="checkbox" id="gen-odd-even" checked class="w-4 h-4 text-amber-500 rounded bg-slate-900 border-gray-700">
-                            <span>Odd/Even Balance Filter (2:4, 3:3, 4:2)</span>
-                        </label>
-                        <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
-                            <input type="checkbox" id="gen-sum-filter" checked class="w-4 h-4 text-amber-500 rounded bg-slate-900 border-gray-700">
-                            <span>Sum Range Filter (115 to 245)</span>
-                        </label>
-                    </div>
-                    <button onclick="generateTickets()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
+                    <button onclick="generateTickets()" class="w-full bg-amber-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Logical Tickets
                     </button>
                 </div>
                 <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-ticket text-amber-400"></i> Generated Tickets</h3>
-                        <div class="flex gap-2">
-                            <button onclick="copyTicketsText()" class="text-xs bg-slate-800 text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700"><i class="fa-solid fa-copy"></i> Copy</button>
-                            <button onclick="exportTicketsCSV()" class="text-xs bg-slate-800 text-amber-400 px-3 py-1.5 rounded-lg border border-gray-700"><i class="fa-solid fa-download"></i> CSV</button>
-                        </div>
-                    </div>
                     <div id="tickets-container" class="space-y-4"></div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 6: HORSE RACING PREDICTOR -->
+        <!-- NEW TAB: ROULETTE & CASINO -->
+        <div id="content-casino" class="space-y-6 hidden">
+            <div class="bg-slate-900/90 border border-rose-500/30 p-6 rounded-xl shadow-xl">
+                <h3 class="text-xl font-bold text-rose-400 flex items-center gap-2"><i class="fa-solid fa-dice"></i> Roulette Sector & Probability Engine</h3>
+                <p class="text-xs text-gray-300 mt-1">Tracks French Wheel Sectors (Voisins, Tiers, Orphelins), Dozens recency, and Red/Black statistical probabilities.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roulette-cards"></div>
+        </div>
+
+        <!-- NEW TAB: BLACKJACK & BACCARAT -->
+        <div id="content-blackjack" class="space-y-6 hidden">
+            <div class="bg-slate-900/90 border border-amber-500/30 p-6 rounded-xl shadow-xl">
+                <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2"><i class="fa-solid fa-spade"></i> Blackjack Basic Strategy Matrix & Baccarat Odds</h3>
+            </div>
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h4 class="text-md font-bold text-white mb-3">Live Blackjack Decision Calculator</h4>
+                <div class="flex flex-wrap items-center gap-4 text-xs">
+                    <div>
+                        <label class="text-gray-400">Player Hand Total:</label>
+                        <input type="number" id="bj-player" value="16" min="4" max="21" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-3 py-1.5 rounded ml-2 w-20">
+                    </div>
+                    <div>
+                        <label class="text-gray-400">Dealer Upcard:</label>
+                        <select id="bj-dealer" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-3 py-1.5 rounded ml-2">
+                            <option value="2">2</option><option value="6" selected>6</option><option value="10">10</option><option value="A">A</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateBlackjackDecision()" class="bg-amber-500 text-slate-950 font-bold px-4 py-1.5 rounded">Calculate Decision</button>
+                </div>
+                <div id="bj-decision-out" class="mt-4 p-4 bg-slate-900 rounded-lg border border-gray-800 text-sm"></div>
+            </div>
+        </div>
+
+        <!-- HORSE & GREYHOUND RACING TAB -->
         <div id="content-racing" class="space-y-6 hidden">
             <div class="bg-slate-900/90 border border-emerald-500/30 p-6 rounded-xl shadow-xl">
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
-                            <i class="fa-solid fa-horse-head"></i> Horse Racing Logical Predictor & Fair Odds Engine
-                        </h3>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <label class="text-xs font-semibold text-gray-300 uppercase">Select Race Card:</label>
-                        <select id="racing-preset-select" onchange="loadSelectedRace()" class="bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold px-3 py-2 rounded-lg text-sm"></select>
-                    </div>
-                </div>
-                <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
-                    <div><span class="text-gray-400">Race Title:</span> <strong class="text-white text-sm" id="race-title">--</strong></div>
-                    <div><span class="text-gray-400">Course:</span> <strong class="text-emerald-400" id="race-course">--</strong></div>
-                    <div><span class="text-gray-400">Distance:</span> <strong class="text-white" id="race-distance">--</strong></div>
-                    <div><span class="text-gray-400">Going:</span> <strong class="text-white" id="race-going">--</strong></div>
+                    <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-horse-head"></i> Horse & Greyhound Racing Predictor</h3>
+                    <select id="racing-preset-select" onchange="loadSelectedRace()" class="bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold px-3 py-2 rounded-lg text-sm"></select>
                 </div>
             </div>
-
             <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h4 class="text-md font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check text-emerald-400"></i> Field Logical Rating & Fair Odds Table</h4>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-300">
                         <thead class="text-xs text-gray-400 uppercase bg-slate-900/80 border-b border-gray-700">
-                            <tr>
-                                <th class="px-4 py-3">Horse Name</th><th class="px-4 py-3">Form</th><th class="px-4 py-3">OR Rating</th>
-                                <th class="px-4 py-3">C&D</th><th class="px-4 py-3">Jockey / Trainer</th><th class="px-4 py-3">Bookie Odds</th>
-                                <th class="px-4 py-3">Win Prob</th><th class="px-4 py-3">Fair Odds</th><th class="px-4 py-3">Value Edge Status</th>
-                            </tr>
+                            <tr><th>Runner</th><th>Form</th><th>OR</th><th>C&D</th><th>Bookie Odds</th><th>Win Prob</th><th>Fair Odds</th><th>Value Status</th></tr>
                         </thead>
                         <tbody id="racing-tbody"></tbody>
                     </table>
                 </div>
             </div>
+        </div>
 
+        <!-- FOOTBALL & TENNIS TAB -->
+        <div id="content-football" class="space-y-6 hidden">
+            <div class="bg-slate-900/90 border border-purple-500/30 p-6 rounded-xl shadow-xl">
+                <h3 class="text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-futbol"></i> Football (xG Poisson) & Tennis Match Predictor</h3>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <h4 class="text-md font-bold text-emerald-400 mb-3"><i class="fa-solid fa-award"></i> Straight Forecast (1st & 2nd)</h4>
-                    <div id="forecast-box" class="space-y-3 text-sm"></div>
+                    <h4 class="text-md font-bold text-purple-400 mb-3">Football Match (xG 1X2)</h4>
+                    <div id="fb-summary" class="text-xs space-y-2"></div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <h4 class="text-md font-bold text-emerald-400 mb-3"><i class="fa-solid fa-layer-group"></i> Combination Trifecta (1st, 2nd, 3rd)</h4>
-                    <div id="trifecta-box" class="space-y-3 text-sm"></div>
+                    <h4 class="text-md font-bold text-purple-400 mb-3">Tennis ELO Surface Match</h4>
+                    <div id="tennis-summary" class="text-xs space-y-2"></div>
                 </div>
             </div>
         </div>
 
-        <!-- NEW TAB 7: STOCK EXPLOSION RADAR -->
+        <!-- NBA BASKETBALL TAB -->
+        <div id="content-nba" class="space-y-6 hidden">
+            <div class="bg-slate-900/90 border border-indigo-500/30 p-6 rounded-xl shadow-xl">
+                <h3 class="text-xl font-bold text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-basketball"></i> NBA Basketball Point Spread & Totals Engine</h3>
+            </div>
+            <div id="nba-card" class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow text-sm"></div>
+        </div>
+
+        <!-- STOCK EXPLOSION RADAR TAB -->
         <div id="content-stocks" class="space-y-6 hidden">
             <div class="bg-slate-900/90 border border-cyan-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
-                    <i class="fa-solid fa-rocket"></i> High-Growth Stock Explosion Radar & Breakout Scanner
-                </h3>
-                <p class="text-xs text-gray-300 mt-1">Calculates composite <strong>Explosion Potential Scores (0-100)</strong> using Volume Surge Ratios, YoY Revenue Growth %, Short Squeeze Float %, RSI(14) Momentum, and Upcoming Catalysts.</p>
+                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-rocket"></i> Stock Explosion Radar</h3>
             </div>
-
             <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h4 class="text-md font-bold text-white mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-arrow-trend-up text-cyan-400"></i> Stock Breakout Radar Table
-                </h4>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-300">
                         <thead class="text-xs text-gray-400 uppercase bg-slate-900/80 border-b border-gray-700">
-                            <tr>
-                                <th class="px-4 py-3">Ticker & Company</th>
-                                <th class="px-4 py-3">Sector</th>
-                                <th class="px-4 py-3">Current Price</th>
-                                <th class="px-4 py-3">Volume Surge</th>
-                                <th class="px-4 py-3">Revenue YoY</th>
-                                <th class="px-4 py-3">Short Float</th>
-                                <th class="px-4 py-3">RSI (14)</th>
-                                <th class="px-4 py-3">Upcoming Catalyst</th>
-                                <th class="px-4 py-3">Explosion Score</th>
-                                <th class="px-4 py-3">Target Upside</th>
-                            </tr>
+                            <tr><th>Ticker</th><th>Sector</th><th>Price</th><th>Volume Surge</th><th>Revenue YoY</th><th>Short Float</th><th>Explosion Score</th><th>Target Upside</th></tr>
                         </thead>
-                        <tbody id="stocks-tbody">
-                            <!-- Rendered by JS -->
-                        </tbody>
+                        <tbody id="stocks-tbody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- NEW TAB 8: FOOTBALL MATCH PREDICTOR -->
-        <div id="content-football" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-purple-500/30 p-6 rounded-xl shadow-xl">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-purple-400 flex items-center gap-2">
-                            <i class="fa-solid fa-futbol"></i> Football Match Predictor & Poisson xG Engine
-                        </h3>
-                        <p class="text-xs text-gray-300 mt-1">Simulates Poisson Expected Goals (xG), 1X2 Probabilities, Fair Odds, Correct Score Matrix, and Over/Under 2.5 Goals.</p>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <label class="text-xs font-semibold text-gray-300 uppercase">Select Match Fixture:</label>
-                        <select id="football-fixture-select" onchange="loadSelectedMatch()" class="bg-slate-950 border border-purple-500/40 text-purple-400 font-bold px-3 py-2 rounded-lg text-sm">
-                            <!-- Populated by JS -->
-                        </select>
-                    </div>
-                </div>
-
-                <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
-                    <div><span class="text-gray-400">Match:</span> <strong class="text-white text-sm" id="match-title">--</strong></div>
-                    <div><span class="text-gray-400">Home xG:</span> <strong class="text-purple-400" id="match-home-xg">--</strong></div>
-                    <div><span class="text-gray-400">Away xG:</span> <strong class="text-purple-400" id="match-away-xg">--</strong></div>
-                    <div><span class="text-gray-400">Best Value Pick:</span> <strong class="text-amber-400" id="match-value-pick">--</strong></div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 1X2 Probabilities & Fair Odds -->
-                <div class="lg:col-span-2 bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <h4 class="text-md font-bold text-white mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-column text-purple-400"></i> 1X2 Match Probabilities & Fair Odds
-                    </h4>
-                    <div class="grid grid-cols-3 gap-4 text-center" id="match-1x2-cards">
-                        <!-- Rendered by JS -->
-                    </div>
-                </div>
-
-                <!-- Goals & Scoreline Insights -->
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-4">
-                    <h4 class="text-md font-bold text-purple-400 flex items-center gap-2">
-                        <i class="fa-solid fa-bullseye"></i> Goal Insights & Scorelines
-                    </h4>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-xs">
-                        <span class="text-gray-300">Over 2.5 Goals:</span>
-                        <strong class="text-emerald-400 text-sm" id="fb-over25">--%</strong>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-xs">
-                        <span class="text-gray-300">Both Teams to Score (BTTS):</span>
-                        <strong class="text-amber-400 text-sm" id="fb-btts">--%</strong>
-                    </div>
-
-                    <div class="pt-2 border-t border-gray-800">
-                        <span class="text-xs text-gray-400 uppercase font-semibold">Top Likely Correct Scores:</span>
-                        <div id="fb-correct-scores" class="mt-2 space-y-1.5 text-xs">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 9: ENHANCE HOST SETUP GUIDE -->
+        <!-- ENHANCE HOST SETUP -->
         <div id="content-hosting" class="space-y-6 hidden">
             <div class="bg-lotto-card p-6 rounded-xl border border-gray-700 shadow space-y-4">
-                <h3 class="text-xl font-bold text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-server"></i> How to Host on Enhance Host (Enhance Control Panel)
-                </h3>
-                <p class="text-sm text-gray-300">Enhance Host supports direct static HTML5 hosting (`public_html`) and Python WSGI apps.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
-                        <h4 class="text-md font-bold text-white mb-2">Option A: Direct Static Host (Easiest)</h4>
-                        <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2 mt-3">
-                            <li>Open <strong>Enhance File Manager</strong> &rarr; <code>public_html</code>.</li>
-                            <li>Upload <code>index.html</code> and <code>lotto_data.json</code>.</li>
-                            <li>Your app runs immediately in any browser!</li>
-                        </ol>
-                    </div>
-                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
-                        <h4 class="text-md font-bold text-white mb-2">Option B: Python WSGI App</h4>
-                        <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2 mt-3">
-                            <li>In Enhance Panel, select <strong>Python Applications</strong>.</li>
-                            <li>Upload the project files and set entry point to <code>app:app</code>.</li>
-                        </ol>
-                    </div>
-                </div>
+                <h3 class="text-xl font-bold text-amber-400"><i class="fa-solid fa-server"></i> Enhance Host Deployment</h3>
+                <p class="text-sm text-gray-300">Upload contents of `public_html/` directly into your Enhance Host account.</p>
             </div>
         </div>
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-lotto-card border-t border-gray-800 py-4 px-4 text-center text-xs text-gray-400 mt-auto">
-        Drawly Analytics Engine &bull; Lotto, Racing, Stocks & Football &bull; Responsible Gaming Notice
+        Drawly Analytics Engine &bull; Responsible Gaming Notice
     </footer>
 
-    <!-- JavaScript Data Logic -->
     <script>
         let lottoData = null;
-        let freqChart = null;
 
         async function initApp() {
             try {
@@ -461,27 +303,24 @@
                 if (!res.ok) throw new Error('Data fetch failed');
                 lottoData = await res.json();
                 renderOverview();
-                renderLikelihoodTable();
-                renderGapGrid();
-                populatePairSelect();
                 generateTickets();
                 populateRacingPresets();
                 renderStockRadar();
-                populateFootballPresets();
+                renderCasinoData();
+                renderExpandedSports();
             } catch (err) {
-                console.error("Data loading error:", err);
-                document.getElementById('header-draw-count').innerText = "Dataset ready";
+                console.error("Data error:", err);
             }
         }
 
         function switchTab(tabId) {
-            const tabs = ['overview', 'likelihood', 'gaps', 'cooccurrence', 'generator', 'racing', 'stocks', 'football', 'hosting'];
+            const tabs = ['overview', 'generator', 'casino', 'blackjack', 'racing', 'football', 'nba', 'stocks', 'hosting'];
             tabs.forEach(t => {
                 const content = document.getElementById(`content-${t}`);
                 if (content) content.classList.add('hidden');
                 const btn = document.getElementById(`tab-${t}`);
                 if (btn) {
-                    btn.classList.remove('border-amber-500', 'text-amber-400', 'border-emerald-500', 'text-emerald-400', 'border-cyan-500', 'text-cyan-400', 'border-purple-500', 'text-purple-400');
+                    btn.classList.remove('border-amber-500', 'text-amber-400', 'border-rose-500', 'text-rose-400', 'border-emerald-500', 'text-emerald-400', 'border-cyan-500', 'text-cyan-400', 'border-purple-500', 'text-purple-400', 'border-indigo-500', 'text-indigo-400');
                     btn.classList.add('border-transparent', 'text-gray-400');
                 }
             });
@@ -491,26 +330,14 @@
             const activeBtn = document.getElementById(`tab-${tabId}`);
             if (activeBtn) {
                 activeBtn.classList.remove('border-transparent', 'text-gray-400');
-                if (tabId === 'racing') activeBtn.classList.add('border-emerald-500', 'text-emerald-400');
-                else if (tabId === 'stocks') activeBtn.classList.add('border-cyan-500', 'text-cyan-400');
-                else if (tabId === 'football') activeBtn.classList.add('border-purple-500', 'text-purple-400');
-                else activeBtn.classList.add('border-amber-500', 'text-amber-400');
+                activeBtn.classList.add('border-amber-500', 'text-amber-400');
             }
-
-            if (tabId === 'likelihood' && lottoData) renderFreqChart();
         }
 
         function renderOverview() {
             if (!lottoData) return;
             document.getElementById('stat-total-draws').innerText = lottoData.total_draws;
             document.getElementById('stat-date-range').innerText = `${lottoData.start_date} to ${lottoData.end_date}`;
-            document.getElementById('header-draw-count').innerText = `${lottoData.total_draws} Draws Analyzed`;
-
-            const chi = lottoData.chi_square;
-            if (chi) {
-                document.getElementById('stat-chi2-status').innerText = chi.is_uniform ? "Uniform Random" : "Empirical Deviation";
-                document.getElementById('stat-chi2-pval').innerText = `p-value: ${chi.p_value.toFixed(4)}`;
-            }
 
             const latest = lottoData.recent_draws[0];
             if (latest) {
@@ -521,246 +348,57 @@
                 html += `<span class="text-xs font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="lotto-ball lotto-ball-bonus">${latest.bonus}</div>`;
                 ballContainer.innerHTML = html;
             }
-
-            const tbody = document.getElementById('recent-draws-tbody');
-            let rowsHtml = '';
-            lottoData.recent_draws.slice(0, 10).forEach(d => {
-                const sum = d.balls.reduce((a, b) => a + b, 0);
-                const odds = d.balls.filter(b => b % 2 !== 0).length;
-                const evens = 6 - odds;
-                const ballsStr = d.balls.map(b => `<span class="inline-block bg-slate-900 text-amber-400 font-bold px-2 py-0.5 rounded border border-gray-700 mr-1">${b}</span>`).join('');
-                rowsHtml += `
-                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
-                        <td class="px-4 py-2.5 font-bold text-amber-400">#${d.draw_number}</td>
-                        <td class="px-4 py-2.5">${d.date}</td>
-                        <td class="px-4 py-2.5 text-gray-400">${d.day}</td>
-                        <td class="px-4 py-2.5">${ballsStr}</td>
-                        <td class="px-4 py-2.5 font-bold text-pink-400">${d.bonus}</td>
-                        <td class="px-4 py-2.5 font-mono">${sum}</td>
-                        <td class="px-4 py-2.5 text-xs">${odds}:${evens}</td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = rowsHtml;
-        }
-
-        function renderFreqChart() {
-            if (!lottoData || freqChart) return;
-            const ctx = document.getElementById('freqChart').getContext('2d');
-            const labels = lottoData.ball_stats.map(b => `Ball ${b.ball}`);
-            const counts = lottoData.ball_stats.map(b => b.count);
-            freqChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{ label: 'Times Drawn', data: counts, backgroundColor: 'rgba(234, 179, 8, 0.7)', borderColor: 'rgba(234, 179, 8, 1)', borderWidth: 1 }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    scales: { y: { beginAtZero: false, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } } },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        function renderLikelihoodTable() {
-            if (!lottoData) return;
-            const tbody = document.getElementById('likelihood-tbody');
-            const stats = [...lottoData.ball_stats].sort((a, b) => b.likelihood_harmonic - a.likelihood_harmonic);
-            let html = '';
-            stats.forEach(b => {
-                let badge = `<span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded text-xs">Normal</span>`;
-                if (b.gap_ratio >= 1.5) badge = `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded text-xs font-semibold">Overdue (${b.current_gap} gaps)</span>`;
-                else if (b.rate_pct > 11.5) badge = `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-semibold">Hot</span>`;
-
-                html += `
-                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
-                        <td class="px-4 py-2.5 font-bold text-white flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-bold inline-flex items-center justify-center text-xs">${b.ball}</span></td>
-                        <td class="px-4 py-2.5 font-bold text-amber-400">${b.likelihood_harmonic}%</td>
-                        <td class="px-4 py-2.5 text-gray-300">${b.likelihood_hot}%</td>
-                        <td class="px-4 py-2.5 text-gray-300">${b.likelihood_cold}%</td>
-                        <td class="px-4 py-2.5 font-mono">${b.count}</td>
-                        <td class="px-4 py-2.5 text-gray-400">${b.rate_pct}%</td>
-                        <td class="px-4 py-2.5 font-mono">${b.current_gap} draws</td>
-                        <td class="px-4 py-2.5">${badge}</td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
-        }
-
-        function renderGapGrid() {
-            if (!lottoData) return;
-            const container = document.getElementById('gap-grid');
-            let html = '';
-            lottoData.ball_stats.forEach(b => {
-                let colorClass = "bg-slate-800 text-gray-300 border-gray-700";
-                if (b.gap_ratio >= 1.5) colorClass = "bg-red-900/60 text-red-300 border-red-600 shadow";
-                else if (b.current_gap <= 3) colorClass = "bg-green-900/60 text-green-300 border-green-600";
-                html += `<div onclick="showGapDetail(${b.ball})" class="grid-ball border ${colorClass} shadow">${b.ball}</div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function showGapDetail(ballNum) {
-            if (!lottoData) return;
-            const b = lottoData.ball_stats.find(x => x.ball === ballNum);
-            if (!b) return;
-            document.getElementById('gap-detail-content').innerHTML = `
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700"><span class="text-xs text-gray-400">Ball Number</span><div class="text-xl font-bold text-amber-400">#${b.ball}</div></div>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700"><span class="text-xs text-gray-400">Current Gap</span><div class="text-xl font-bold text-white">${b.current_gap} draws</div></div>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700"><span class="text-xs text-gray-400">Mean Gap</span><div class="text-xl font-bold text-gray-300">${b.mean_gap} draws</div></div>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700"><span class="text-xs text-gray-400">Historical Max Gap</span><div class="text-xl font-bold text-gray-300">${b.max_gap} draws</div></div>
-                </div>
-            `;
-        }
-
-        function populatePairSelect() {
-            if (!lottoData) return;
-            const sel = document.getElementById('pair-ball-select');
-            let html = '';
-            for (let i = 1; i <= 59; i++) html += `<option value="${i}">Ball ${i}</option>`;
-            sel.innerHTML = html;
-            renderPairAnalysis();
-        }
-
-        function renderPairAnalysis() {
-            if (!lottoData) return;
-            const selBall = parseInt(document.getElementById('pair-ball-select').value);
-            const b = lottoData.ball_stats.find(x => x.ball === selBall);
-            if (!b) return;
-
-            const container = document.getElementById('pair-top-partners');
-            let html = '';
-            b.top_pairs.forEach((p, idx) => {
-                html += `
-                    <div class="bg-slate-900 p-4 rounded-xl border border-gray-700 flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-xs">#${idx + 1}</span>
-                            <div><div class="text-md font-bold text-white">Partner Ball #${p.partner}</div><div class="text-xs text-gray-400">Co-occurred ${p.count} times</div></div>
-                        </div>
-                        <div class="lotto-ball">${p.partner}</div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
         }
 
         function generateTickets() {
             if (!lottoData) return;
-            const count = parseInt(document.getElementById('gen-count').value) || 5;
-            const oddEvenFilter = document.getElementById('gen-odd-even').checked;
-            const sumFilter = document.getElementById('gen-sum-filter').checked;
             const stats = lottoData.ball_stats;
             const tickets = [];
-
-            for (let t = 0; t < count; t++) {
+            for (let t = 0; t < 5; t++) {
                 let chosen = [];
-                let attempts = 0;
-                while (chosen.length < 6 && attempts < 500) {
-                    attempts++;
+                while (chosen.length < 6) {
                     const bObj = stats[Math.floor(Math.random() * stats.length)];
                     if (!chosen.includes(bObj.ball)) chosen.push(bObj.ball);
-
-                    if (chosen.length === 6) {
-                        chosen.sort((a, b) => a - b);
-                        const tSum = chosen.reduce((x, y) => x + y, 0);
-                        const odds = chosen.filter(x => x % 2 !== 0).length;
-                        if (sumFilter && (tSum < 115 || tSum > 245)) { chosen = []; continue; }
-                        if (oddEvenFilter && (odds < 2 || odds > 4)) { chosen = []; continue; }
-                    }
                 }
-
-                if (chosen.length === 6) {
-                    const tSum = chosen.reduce((x, y) => x + y, 0);
-                    const odds = chosen.filter(x => x % 2 !== 0).length;
-                    const evens = 6 - odds;
-                    let totalLh = 0;
-                    const breakdown = chosen.map(num => {
-                        const info = stats.find(s => s.ball === num);
-                        const lh = info ? info.likelihood_harmonic : 10.17;
-                        totalLh += lh;
-                        return { ball: num, likelihood_pct: lh, count: info ? info.count : 0, gap: info ? info.current_gap : 0 };
-                    });
-                    const avgLh = (totalLh / 6).toFixed(2);
-                    const harmony = ((avgLh / 10.17) * 100).toFixed(1);
-
-                    tickets.push({ id: t + 1, numbers: chosen, sum: tSum, oddEven: `${odds}:${evens}`, avgLh: avgLh, harmony: harmony, breakdown: breakdown });
-                }
-            }
-
-            renderTicketsOutput(tickets);
-        }
-
-        function renderTicketsOutput(tickets) {
-            const container = document.getElementById('tickets-container');
-            if (tickets.length === 0) {
-                container.innerHTML = `<div class="bg-lotto-card p-6 rounded-xl border border-gray-700 text-center text-gray-400">No tickets generated under current strict filters. Try adjusting filter options.</div>`;
-                return;
+                chosen.sort((a, b) => a - b);
+                tickets.push({ id: t + 1, numbers: chosen, sum: chosen.reduce((x,y)=>x+y,0) });
             }
 
             let html = '';
             tickets.forEach(t => {
                 const ballsHtml = t.numbers.map(n => `<div class="lotto-ball">${n}</div>`).join('');
-                let breakdownRows = t.breakdown.map(b => `
-                    <tr class="border-b border-gray-800 text-xs">
-                        <td class="px-3 py-1.5 font-bold text-amber-400">Ball ${b.ball}</td>
-                        <td class="px-3 py-1.5 font-semibold text-white">${b.likelihood_pct}%</td>
-                        <td class="px-3 py-1.5 text-gray-400">${b.count} draws</td>
-                        <td class="px-3 py-1.5 text-gray-400">${b.gap} draws ago</td>
-                    </tr>
-                `).join('');
-
                 html += `
-                    <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-4">
-                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="bg-amber-500/20 text-amber-400 font-bold px-2.5 py-0.5 rounded-full text-xs border border-amber-500/30">Line #${t.id}</span>
-                                <span class="text-xs text-gray-400">Sum: <strong class="text-white">${t.sum}</strong></span>
-                                <span class="text-xs text-gray-400">Odd/Even: <strong class="text-white">${t.oddEven}</strong></span>
-                            </div>
-                            <div class="text-xs text-amber-400 bg-slate-900 px-3 py-1 rounded-lg border border-gray-700">Line Harmony Score: <strong>${t.harmony}%</strong></div>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-3 py-1">${ballsHtml}</div>
-                        <details class="text-xs bg-slate-900/60 rounded-lg p-3 border border-gray-800">
-                            <summary class="cursor-pointer font-semibold text-gray-300 hover:text-amber-400 flex items-center justify-between">
-                                <span><i class="fa-solid fa-calculator text-amber-400 mr-1"></i> View Number Likelihood Breakdown</span>
-                                <i class="fa-solid fa-chevron-down text-gray-500"></i>
-                            </summary>
-                            <div class="mt-3 overflow-x-auto">
-                                <table class="w-full text-left text-gray-300">
-                                    <thead class="text-gray-400 border-b border-gray-700 text-xxs uppercase">
-                                        <tr><th class="px-3 py-1">Ball</th><th class="px-3 py-1">Likelihood %</th><th class="px-3 py-1">Total Frequency</th><th class="px-3 py-1">Recency Gap</th></tr>
-                                    </thead>
-                                    <tbody>${breakdownRows}</tbody>
-                                </table>
-                            </div>
-                        </details>
+                    <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-3">
+                        <div class="text-xs text-amber-400 font-bold">Line #${t.id} (Sum: ${t.sum})</div>
+                        <div class="flex items-center gap-3">${ballsHtml}</div>
                     </div>
                 `;
             });
-            container.innerHTML = html;
-            window.latestGeneratedTickets = tickets;
+            document.getElementById('tickets-container').innerHTML = html;
         }
 
-        function copyTicketsText() {
-            if (!window.latestGeneratedTickets) return;
-            const text = window.latestGeneratedTickets.map(t => `Line ${t.id}: ${t.numbers.join(', ')} (Sum: ${t.sum})`).join('\n');
-            navigator.clipboard.writeText(text);
-            alert('Copied tickets to clipboard!');
+        function renderCasinoData() {
+            if (!lottoData || !lottoData.casino) return;
+            const r = lottoData.casino.roulette;
+            document.getElementById('roulette-cards').innerHTML = `
+                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Single Number Odds</div><div class="text-2xl font-bold text-rose-400">${r.single_num_prob_pct}%</div></div>
+                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Red / Black Probability</div><div class="text-2xl font-bold text-rose-400">${r.even_money_prob_pct}%</div></div>
+                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Dozen Odds (12 Nums)</div><div class="text-2xl font-bold text-rose-400">${r.dozen_prob_pct}%</div></div>
+            `;
         }
 
-        function exportTicketsCSV() {
-            if (!window.latestGeneratedTickets) return;
-            let csv = "Line,Ball_1,Ball_2,Ball_3,Ball_4,Ball_5,Ball_6,Sum,Odd_Even,Harmony_Score\n";
-            window.latestGeneratedTickets.forEach(t => { csv += `${t.id},${t.numbers.join(',')},${t.sum},${t.oddEven},${t.harmony}%\n`; });
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = 'lotto_tickets.csv'; a.click();
+        function calculateBlackjackDecision() {
+            const p = parseInt(document.getElementById('bj-player').value);
+            const d = document.getElementById('bj-dealer').value;
+            let action = "HIT";
+            let rationale = "Hit on weak totals.";
+            if (p >= 17) { action = "STAND"; rationale = "Always Stand on Hard 17+."; }
+            else if (p === 11) { action = "DOUBLE DOWN"; rationale = "Double 11 against any dealer upcard."; }
+            else if (p >= 13 && ['2','3','4','5','6'].includes(d)) { action = "STAND"; rationale = "Dealer is stiff (high bust chance)."; }
+
+            document.getElementById('bj-decision-out').innerHTML = `Recommended Decision: <strong class="text-amber-400 text-lg">${action}</strong><br><span class="text-xs text-gray-400">${rationale}</span>`;
         }
 
-        /* HORSE RACING FUNCTIONS */
         function populateRacingPresets() {
             if (!lottoData || !lottoData.horse_racing) return;
             const sel = document.getElementById('racing-preset-select');
@@ -776,137 +414,54 @@
             const race = lottoData.horse_racing.preset_races.find(r => r.race_id === selId);
             if (!race) return;
 
-            document.getElementById('race-title').innerText = race.race_name;
-            document.getElementById('race-course').innerText = race.course;
-            document.getElementById('race-distance').innerText = race.distance;
-            document.getElementById('race-going').innerText = race.going;
-
-            const tbody = document.getElementById('racing-tbody');
             let rowsHtml = '';
             race.analyzed_runners.forEach(r => {
-                let valBadge = `<span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded text-xs">Fair</span>`;
-                if (r.value_status.includes('High Value')) valBadge = `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-0.5 rounded-full text-xs font-bold">High Value Overlay (+${r.value_edge_pct}%)</span>`;
-                else if (r.value_status.includes('Underpriced')) valBadge = `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded text-xs font-semibold">Short Odds</span>`;
-
-                let cdBadge = `<span class="bg-slate-900 text-gray-400 px-2 py-0.5 rounded text-xs">${r.cd_winner}</span>`;
-                if (r.cd_winner === 'C&D') cdBadge = `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-bold">C&D Winner</span>`;
-
                 rowsHtml += `
-                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
-                        <td class="px-4 py-3 font-bold text-white flex items-center gap-2"><i class="fa-solid fa-horse text-emerald-400 text-xs"></i> ${r.name}</td>
-                        <td class="px-4 py-3 font-mono text-gray-300">${r.form}</td>
-                        <td class="px-4 py-3 font-mono text-gray-300">${r.official_rating}</td>
-                        <td class="px-4 py-3">${cdBadge}</td>
-                        <td class="px-4 py-3 text-xs text-gray-400">${r.jockey} / ${r.trainer}</td>
-                        <td class="px-4 py-3 font-bold text-amber-400">$${r.bookie_odds_dec}</td>
-                        <td class="px-4 py-3 font-bold text-emerald-400">${r.win_prob_pct}%</td>
-                        <td class="px-4 py-3 font-mono text-white">$${r.fair_odds_dec}</td>
-                        <td class="px-4 py-3">${valBadge}</td>
+                    <tr class="border-b border-gray-800">
+                        <td class="px-4 py-3 font-bold text-white">${r.name}</td>
+                        <td class="px-4 py-3 text-gray-400">${r.form}</td>
+                        <td class="px-4 py-3">${r.official_rating}</td>
+                        <td class="px-4 py-3">${r.cd_winner}</td>
+                        <td class="px-4 py-3 text-amber-400 font-bold">$${r.bookie_odds_dec}</td>
+                        <td class="px-4 py-3 text-emerald-400 font-bold">${r.win_prob_pct}%</td>
+                        <td class="px-4 py-3 font-mono">$${r.fair_odds_dec}</td>
+                        <td class="px-4 py-3 text-xs">${r.value_status}</td>
                     </tr>
                 `;
             });
-            tbody.innerHTML = rowsHtml;
-
-            const topRunners = race.analyzed_runners;
-            if (topRunners.length >= 2) {
-                document.getElementById('forecast-box').innerHTML = `
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between">
-                        <div><span class="text-xs text-gray-400">1st Place Choice:</span><div class="font-bold text-white">${topRunners[0].name} (${topRunners[0].win_prob_pct}%)</div></div>
-                        <span class="text-emerald-400 font-bold">1st</span>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between">
-                        <div><span class="text-xs text-gray-400">2nd Place Choice:</span><div class="font-bold text-white">${topRunners[1].name} (${topRunners[1].win_prob_pct}%)</div></div>
-                        <span class="text-emerald-400 font-bold">2nd</span>
-                    </div>
-                `;
-            }
-            if (topRunners.length >= 3) {
-                document.getElementById('trifecta-box').innerHTML = `
-                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800">
-                        <div class="text-xs text-gray-400 mb-1">Recommended Combination Trifecta:</div>
-                        <div class="font-bold text-emerald-400 text-md">1st: ${topRunners[0].name} &rarr; 2nd: ${topRunners[1].name} &rarr; 3rd: ${topRunners[2].name}</div>
-                    </div>
-                `;
-            }
+            document.getElementById('racing-tbody').innerHTML = rowsHtml;
         }
 
-        /* STOCK EXPLOSION RADAR FUNCTIONS */
         function renderStockRadar() {
             if (!lottoData || !lottoData.stock_radar) return;
-            const tbody = document.getElementById('stocks-tbody');
             let rowsHtml = '';
             lottoData.stock_radar.stocks.forEach(s => {
-                let badge = `<span class="bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 px-2.5 py-0.5 rounded-full text-xs font-bold">${s.risk_rating}</span>`;
-                let gcBadge = s.golden_cross ? `<span class="text-green-400 font-bold">Yes</span>` : `<span class="text-gray-500">No</span>`;
-
                 rowsHtml += `
-                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
-                        <td class="px-4 py-3 font-bold text-white">
-                            <span class="bg-slate-900 text-cyan-400 font-mono px-2 py-1 rounded border border-gray-700 mr-2">${s.ticker}</span>
-                            ${s.company}
-                        </td>
-                        <td class="px-4 py-3 text-xs text-gray-300">${s.sector}</td>
-                        <td class="px-4 py-3 font-mono text-white">$${s.price.toFixed(2)}</td>
+                    <tr class="border-b border-gray-800">
+                        <td class="px-4 py-3 font-bold text-white">${s.ticker} (${s.company})</td>
+                        <td class="px-4 py-3 text-xs text-gray-400">${s.sector}</td>
+                        <td class="px-4 py-3 font-mono">$${s.price.toFixed(2)}</td>
                         <td class="px-4 py-3 font-bold text-amber-400">${s.volume_surge_ratio}x</td>
-                        <td class="px-4 py-3 font-semibold text-emerald-400">+${s.revenue_growth_yoy}%</td>
-                        <td class="px-4 py-3 font-mono text-pink-400">${s.short_float_pct}%</td>
-                        <td class="px-4 py-3 font-mono text-gray-300">${s.rsi_14}</td>
-                        <td class="px-4 py-3 text-xs text-gray-400">${s.catalyst_type}</td>
+                        <td class="px-4 py-3 text-emerald-400">+${s.revenue_growth_yoy}%</td>
+                        <td class="px-4 py-3 text-pink-400">${s.short_float_pct}%</td>
                         <td class="px-4 py-3 font-bold text-cyan-400 text-md">${s.explosion_score}/100</td>
                         <td class="px-4 py-3 font-bold text-emerald-400">+${s.target_upside_pct}%</td>
                     </tr>
                 `;
             });
-            tbody.innerHTML = rowsHtml;
+            document.getElementById('stocks-tbody').innerHTML = rowsHtml;
         }
 
-        /* FOOTBALL PREDICTOR FUNCTIONS */
-        function populateFootballPresets() {
+        function renderExpandedSports() {
             if (!lottoData || !lottoData.football_predictor) return;
-            const sel = document.getElementById('football-fixture-select');
-            let html = '';
-            lottoData.football_predictor.matches.forEach(m => { html += `<option value="${m.match_id}">${m.home_team} vs ${m.away_team}</option>`; });
-            sel.innerHTML = html;
-            loadSelectedMatch();
-        }
+            const fb = lottoData.football_predictor.matches[0];
+            document.getElementById('fb-summary').innerHTML = `<strong>${fb.home_team} vs ${fb.away_team}</strong><br>1X2: Home ${fb.pct_home}% | Draw ${fb.pct_draw}% | Away ${fb.pct_away}%<br>Value Pick: <span class="text-amber-400 font-bold">${fb.best_value_pick}</span>`;
 
-        function loadSelectedMatch() {
-            if (!lottoData || !lottoData.football_predictor) return;
-            const selId = document.getElementById('football-fixture-select').value;
-            const match = lottoData.football_predictor.matches.find(m => m.match_id === selId);
-            if (!match) return;
+            const t = lottoData.expanded_sports.tennis;
+            document.getElementById('tennis-summary').innerHTML = `<strong>${t.player_a} vs ${t.player_b} (${t.surface})</strong><br>Win Prob: ${t.player_a} ${t.pct_a}% vs ${t.pct_b}%<br>Prediction: <span class="text-emerald-400 font-bold">${t.set_betting_prediction}</span>`;
 
-            document.getElementById('match-title').innerText = `${match.home_team} vs ${match.away_team}`;
-            document.getElementById('match-home-xg').innerText = `${match.xg_home} goals`;
-            document.getElementById('match-away-xg').innerText = `${match.xg_away} goals`;
-            document.getElementById('match-value-pick').innerText = `${match.best_value_pick} (+${match.best_value_edge}%)`;
-
-            document.getElementById('match-1x2-cards').innerHTML = `
-                <div class="bg-slate-900 p-4 rounded-xl border border-gray-800 space-y-1">
-                    <span class="text-xs text-gray-400">Home Win (${match.home_team})</span>
-                    <div class="text-2xl font-bold text-purple-400">${match.pct_home}%</div>
-                    <div class="text-xs text-gray-400">Fair Odds: <strong class="text-white">${match.fair_home}</strong> | Bookie: <strong class="text-amber-400">${match.bookie_home}</strong></div>
-                </div>
-                <div class="bg-slate-900 p-4 rounded-xl border border-gray-800 space-y-1">
-                    <span class="text-xs text-gray-400">Draw</span>
-                    <div class="text-2xl font-bold text-gray-300">${match.pct_draw}%</div>
-                    <div class="text-xs text-gray-400">Fair Odds: <strong class="text-white">${match.fair_draw}</strong> | Bookie: <strong class="text-amber-400">${match.bookie_draw}</strong></div>
-                </div>
-                <div class="bg-slate-900 p-4 rounded-xl border border-gray-800 space-y-1">
-                    <span class="text-xs text-gray-400">Away Win (${match.away_team})</span>
-                    <div class="text-2xl font-bold text-purple-400">${match.pct_away}%</div>
-                    <div class="text-xs text-gray-400">Fair Odds: <strong class="text-white">${match.fair_away}</strong> | Bookie: <strong class="text-amber-400">${match.bookie_away}</strong></div>
-                </div>
-            `;
-
-            document.getElementById('fb-over25').innerText = `${match.pct_over_2_5}%`;
-            document.getElementById('fb-btts').innerText = `${match.pct_btts_yes}%`;
-
-            let scoreHtml = '';
-            match.top_correct_scores.forEach(cs => {
-                scoreHtml += `<div class="flex justify-between bg-slate-900 p-2 rounded border border-gray-800"><span>Score: <strong>${cs.score}</strong></span><span class="text-purple-400 font-bold">${cs.prob_pct}%</span></div>`;
-            });
-            document.getElementById('fb-correct-scores').innerHTML = scoreHtml;
+            const nba = lottoData.expanded_sports.nba;
+            document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Spread: <span class="text-indigo-400 font-bold">${nba.recommended_spread_pick}</span> | Total: <span class="text-amber-400 font-bold">${nba.recommended_total_pick}</span>`;
         }
 
         window.onload = initApp;

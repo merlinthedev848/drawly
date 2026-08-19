@@ -16,6 +16,8 @@ from stats_engine import (
 from horse_racing_engine import get_preset_races, calculate_horse_likelihoods
 from stock_explosion_engine import get_preset_explosion_stocks
 from football_predictor_engine import get_preset_football_matches
+from casino_games_engine import analyze_roulette_wheel, get_blackjack_basic_strategy, analyze_baccarat_probabilities
+from sports_expanded_engine import calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, predict_greyhound_race
 
 def build_export_data():
     df_raw, draw_matrix = load_lotto_data()
@@ -29,7 +31,6 @@ def build_export_data():
     df_lh_hot = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="hot")
     df_lh_cold = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="cold")
 
-    # Format draws for JSON
     recent_draws = []
     for idx, row in df_raw.iloc[::-1].iterrows():
         recent_draws.append({
@@ -40,7 +41,6 @@ def build_export_data():
             'bonus': int(row['bonus_ball'])
         })
 
-    # Prepare ball statistics array (1 to 59)
     ball_stats = []
     for b in range(1, TOTAL_BALLS + 1):
         f_row = df_freq[df_freq['ball'] == b].iloc[0]
@@ -49,7 +49,6 @@ def build_export_data():
         lh_hot = df_lh_hot[df_lh_hot['ball'] == b].iloc[0]['likelihood_pct']
         lh_cold = df_lh_cold[df_lh_cold['ball'] == b].iloc[0]['likelihood_pct']
         
-        # Top 3 pairs for this ball
         pairs = cooc_matrix[b - 1]
         top_pair_indices = np.argsort(pairs)[::-1]
         top_pairs = []
@@ -72,14 +71,20 @@ def build_export_data():
             'top_pairs': top_pairs
         })
 
-    # Build horse racing preset datasets
     preset_races = get_preset_races()
     for race in preset_races:
         race['analyzed_runners'] = calculate_horse_likelihoods(race['runners'])
 
-    # Build stock radar & football predictions
     preset_stocks = get_preset_explosion_stocks()
     preset_football = get_preset_football_matches()
+
+    # Build new casino & expanded sports data
+    roulette_data = analyze_roulette_wheel()
+    baccarat_data = analyze_baccarat_probabilities()
+    euromillions_data = calculate_euromillions_stats()
+    tennis_match = predict_tennis_match("Jannik Sinner", "Carlos Alcaraz", surface="Hard", rank_a=1, rank_b=3)
+    nba_game = predict_basketball_nba("Boston Celtics", "Denver Nuggets", line_spread=-4.5, line_total=221.0)
+    greyhound_race = predict_greyhound_race()
 
     data_payload = {
         'total_draws': len(df_raw),
@@ -90,7 +95,7 @@ def build_export_data():
         'chi_square': chi_square,
         'ball_stats': ball_stats,
         'cooccurrence_matrix': cooc_matrix.tolist(),
-        'recent_draws': recent_draws[:50],  # top 50 recent draws
+        'recent_draws': recent_draws[:50],
         'horse_racing': {
             'preset_races': preset_races
         },
@@ -99,6 +104,16 @@ def build_export_data():
         },
         'football_predictor': {
             'matches': preset_football
+        },
+        'casino': {
+            'roulette': roulette_data,
+            'baccarat': baccarat_data
+        },
+        'expanded_sports': {
+            'euromillions': euromillions_data,
+            'tennis': tennis_match,
+            'nba': nba_game,
+            'greyhound': greyhound_race
         }
     }
     
@@ -107,7 +122,7 @@ def build_export_data():
     with open(json_path, "w") as f:
         json.dump(data_payload, f, indent=2)
         
-    print(f"Exported full multi-domain dataset JSON to {json_path}")
+    print(f"Exported complete multi-predictor dataset JSON to {json_path}")
     return data_payload
 
 if __name__ == "__main__":

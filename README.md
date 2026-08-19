@@ -1,46 +1,48 @@
-# Drawly - Multi-Domain Logical Analytics & Predictor Suite
+# Drawly - Multi-Domain High Probability Analytics & Predictor Suite
 
-**Drawly** is an analytical suite combining mathematical probability models for **UK National Lottery (Lotto 6/59)**, **Horse Racing Value Ratings**, **High-Growth Stock Explosion Radar**, and **Football Match Predictor (Poisson xG Engine)**. Optimized for hosting on **Enhance Host** or any standard web server.
-
----
-
-## 🌟 Modules & Features
-
-### 🎰 1. UK National Lotto (6/59 Matrix)
-- **Theoretical vs. Empirical Odds Engine**: Baseline odds (\(10.169\%\)) vs empirical frequency rates.
-- **Hot & Overdue Recency Gaps**: Tracks draw gaps relative to Poisson expected return intervals (\(\approx 9.83\) draws).
-- **Chi-Square Goodness-of-Fit Test**: Evaluates statistical uniform random noise vs empirical trend deviations.
-- **Pair Co-occurrence Matrix**: 59x59 affinity matrix for pair co-occurrences.
-- **Logical Ticket Generator**: Generates 6-number lines with sum bounds, odd/even balance checks, and line harmony score breakdowns.
-
-### 🐎 2. Horse Racing Predictor & Value Engine
-- **Composite Rating Engine**: Combines Recent Form, Official Rating (OR), Course & Distance (C&D) compatibility, and Jockey/Trainer strike rates.
-- **Fair Odds & Value Overlays**: Calculates true fair odds (\(1 / P_{\text{win}}\)) and flags **High Value Overlays**.
-- **Forecast & Trifecta Generator**: Produces Straight Forecast (1st & 2nd) and Combination Trifecta suggestions.
-
-### 📈 3. Stock Explosion Radar
-- **Explosion Potential Index (0-100)**: Evaluates Volume Surge Ratios, YoY Revenue Growth %, Short Squeeze Float %, RSI(14) Momentum, and Upcoming Catalysts.
-- **Breakout Scanner**: Highlights high-conviction momentum stocks and projected target upside %.
-
-### ⚽ 4. Football Match Predictor (Soccer Betting Engine)
-- **Poisson Expected Goals (xG)**: Models Home & Away attack vs defense ratings.
-- **1X2 Probabilities & Fair Odds**: Calculates Home Win, Draw, and Away Win probabilities vs bookmaker odds.
-- **Over/Under 2.5 & BTTS**: Computes match goal expectations and top 4 correct score probabilities.
+**Drawly** is a comprehensive mathematical analytics and prediction suite covering all major high-probability wagering, gaming, and financial domains. Optimized for hosting on **Enhance Host** or any standard web server.
 
 ---
 
-## 🚀 Quick Deployment to Enhance Host
+## 🌟 Included Predictor Engines
 
-### Option A: Direct Static Hosting (Recommended)
+### 🎰 1. UK National Lotto (6/59) & EuroMillions (5+2 Stars)
+- Theoretical baseline vs empirical draw rates.
+- Hot trend frequency and overdue recency gap tracking (Poisson expectation).
+- Chi-Square Goodness-of-Fit test & pair co-occurrence heatmap.
+
+### 🎲 2. Roulette & Casino Probability (`casino_games_engine.py`)
+- European (37 pockets) & American (38 pockets) odds breakdown.
+- Sector tracking: **Voisins du Zéro**, **Tiers du Cylindre**, and **Orphelins**.
+- Dozen recency bias and Red/Black statistical decay.
+
+### 🃏 3. Blackjack & Baccarat Advisor (`casino_games_engine.py`)
+- **Blackjack Basic Strategy Matrix Calculator**: Real-time optimal decision engine (Hit, Stand, Double Down, Split) based on Player hand vs Dealer upcard.
+- **Baccarat (Punto Banco)**: Expected value breakdown (Banker 1.06% house edge vs Player 1.24%).
+
+### 🐎 4. Horse & Greyhound Racing (`horse_racing_engine.py` & `sports_expanded_engine.py`)
+- **Horse Racing**: Form score decay parser, Official Rating (OR) normalization, Course & Distance (C&D) win bonuses, and Fair Odds Value Overlays.
+- **Greyhound Racing**: Trap bias (Inside 1-2 vs Outside) & split time analysis.
+
+### ⚽ 5. Football & Tennis Predictor (`football_predictor_engine.py` & `sports_expanded_engine.py`)
+- **Football (Poisson xG Engine)**: Expected goals, 1X2 win probabilities, fair odds value edge (+%), Over/Under 2.5 goals, BTTS %, and top 4 correct score matrix.
+- **Tennis Match Predictor**: ELO rating, surface specialization (Clay, Grass, Hard), H2H records, and set betting predictions.
+
+### 🏀 6. NBA Basketball Point Spread Engine (`sports_expanded_engine.py`)
+- Possessions pace rating, expected score margins, recommended point spread picks, and Over/Under total points picks.
+
+### 📈 7. Stock Explosion Radar (`stock_explosion_engine.py`)
+- Composite **Explosion Potential Score (0-100)**: Volume Surge Ratios, YoY Revenue Growth %, Short Squeeze Float %, RSI(14) Momentum, and Upcoming Catalysts.
+
+---
+
+## 🚀 Deployment to Enhance Host
+
+### Direct Static Hosting (Recommended)
 1. Log into your **Enhance Control Panel**.
 2. Go to **File Manager** -> `public_html`.
 3. Upload `public_html/index.html` and `public_html/lotto_data.json`.
 4. Open your domain URL in any browser!
-
-### Option B: Python WSGI / Flask App
-1. In Enhance Panel, create a **Python Application**.
-2. Upload the repository files.
-3. Set entry point to `app:app`.
 
 ---
 

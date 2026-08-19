@@ -6507,5 +6507,161 @@
         "match_id": "bay_bvb"
       }
     ]
+  },
+  "casino": {
+    "roulette": {
+      "wheel_type": "European",
+      "single_num_prob_pct": 2.7,
+      "even_money_prob_pct": 48.65,
+      "dozen_prob_pct": 32.43,
+      "recent_spins_count": 20,
+      "red_pct": 50.0,
+      "black_pct": 50.0,
+      "zero_count": 0,
+      "dozens": {
+        "1st_12": 7,
+        "2nd_12": 7,
+        "3rd_12": 6
+      },
+      "sectors": {
+        "Voisins_du_Zero": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Tiers_du_Cylindre": {
+          "count": 12,
+          "pct": 60.0
+        },
+        "Orphelins": {
+          "count": 8,
+          "pct": 40.0
+        }
+      }
+    },
+    "baccarat": {
+      "banker": {
+        "win_prob_pct": 45.86,
+        "house_edge_pct": 1.06,
+        "payout": "1:1 (minus 5% commission)",
+        "recommendation": "Optimal Bet (Lowest House Edge)"
+      },
+      "player": {
+        "win_prob_pct": 44.62,
+        "house_edge_pct": 1.24,
+        "payout": "1:1",
+        "recommendation": "Good Bet"
+      },
+      "tie": {
+        "win_prob_pct": 9.52,
+        "house_edge_pct": 14.36,
+        "payout": "8:1",
+        "recommendation": "Avoid (High House Edge Trap)"
+      }
+    }
+  },
+  "expanded_sports": {
+    "euromillions": {
+      "game_name": "EuroMillions",
+      "main_balls": 5,
+      "main_range": "1 to 50",
+      "lucky_stars": 2,
+      "star_range": "1 to 12",
+      "main_draw_prob_pct": 10.0,
+      "star_draw_prob_pct": 16.67,
+      "jackpot_odds_one_in": 139838160
+    },
+    "tennis": {
+      "player_a": "Jannik Sinner",
+      "player_b": "Carlos Alcaraz",
+      "surface": "Hard",
+      "pct_a": 61.3,
+      "pct_b": 38.7,
+      "fair_a": 1.63,
+      "fair_b": 2.58,
+      "bookie_a": 1.55,
+      "bookie_b": 2.45,
+      "value_pick": "Jannik Sinner",
+      "value_edge_pct": -4.9,
+      "set_betting_prediction": "Jannik Sinner 2-1 Sets"
+    },
+    "nba": {
+      "home_team": "Boston Celtics",
+      "away_team": "Denver Nuggets",
+      "line_spread": -4.5,
+      "line_total": 221.0,
+      "proj_margin": 6.9,
+      "proj_total": 224.7,
+      "pct_home_win": 82.0,
+      "pct_away_win": 18.0,
+      "recommended_spread_pick": "Boston Celtics -4.5",
+      "recommended_total_pick": "OVER 221.0"
+    },
+    "greyhound": {
+      "track": "Romford",
+      "distance": "400m",
+      "runners": [
+        {
+          "trap": 1,
+          "dog_name": "Swift Sparkle",
+          "split_time_sec": 3.75,
+          "grade": "A1",
+          "win_prob_pct": 24.2,
+          "fair_odds": 4.13,
+          "bookie_odds": 2.8,
+          "value_edge_pct": -32.2
+        },
+        {
+          "trap": 2,
+          "dog_name": "Ballymac Hero",
+          "split_time_sec": 3.82,
+          "grade": "A1",
+          "win_prob_pct": 20.4,
+          "fair_odds": 4.9,
+          "bookie_odds": 4.0,
+          "value_edge_pct": -18.4
+        },
+        {
+          "trap": 5,
+          "dog_name": "Romeo Commander",
+          "split_time_sec": 3.79,
+          "grade": "A1",
+          "win_prob_pct": 16.4,
+          "fair_odds": 6.1,
+          "bookie_odds": 5.0,
+          "value_edge_pct": -18.0
+        },
+        {
+          "trap": 3,
+          "dog_name": "Droopys Jet",
+          "split_time_sec": 3.88,
+          "grade": "A2",
+          "win_prob_pct": 13.8,
+          "fair_odds": 7.25,
+          "bookie_odds": 6.5,
+          "value_edge_pct": -10.3
+        },
+        {
+          "trap": 6,
+          "dog_name": "Slick Sentinel",
+          "split_time_sec": 3.84,
+          "grade": "A2",
+          "win_prob_pct": 13.6,
+          "fair_odds": 7.35,
+          "bookie_odds": 7.5,
+          "value_edge_pct": 2.0
+        },
+        {
+          "trap": 4,
+          "dog_name": "Westwell King",
+          "split_time_sec": 3.9,
+          "grade": "A2",
+          "win_prob_pct": 11.7,
+          "fair_odds": 8.55,
+          "bookie_odds": 8.0,
+          "value_edge_pct": -6.4
+        }
+      ],
+      "forecast_pick": "Trap 1 (Swift Sparkle) & Trap 2 (Ballymac Hero)"
+    }
   }
 }
