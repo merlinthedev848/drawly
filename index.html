@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Multi-Domain High Probability Predictors Suite</title>
+    <title>Drawly - UK & Irish Lotto, Casino, Sports, Stocks Predictor Suite</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -77,15 +77,19 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                        Drawly Predictor Suite <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">All High-Probability Domains</span>
+                        Drawly Predictor Suite <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">Multi-Domain Engine</span>
                     </h1>
-                    <p class="text-xs text-gray-400">Lotto &bull; Casino &bull; Sports &bull; Racing &bull; Stocks</p>
+                    <p class="text-xs text-gray-400">UK & Irish Lotto &bull; Casino &bull; Sports &bull; Racing &bull; Stocks</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 text-sm bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700">
-                <i class="fa-solid fa-layer-group text-amber-400"></i>
-                <span class="text-gray-300">Predictors Ready</span>
+            <!-- Game Selector Dropdown -->
+            <div class="flex items-center gap-3">
+                <label class="text-xs font-semibold text-gray-300 uppercase">Select Lottery Game:</label>
+                <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-amber-500/50 text-amber-400 font-bold px-3 py-1.5 rounded-lg text-sm focus:outline-none">
+                    <option value="uk" selected>🇬🇧 UK National Lotto (6/59)</option>
+                    <option value="irish">🇮🇪 Irish National Lotto (6/47)</option>
+                </select>
             </div>
         </div>
     </header>
@@ -96,7 +100,7 @@
         <!-- Navigation Tabs -->
         <div class="flex flex-wrap border-b border-gray-700 mb-6 gap-2" id="tab-nav">
             <button onclick="switchTab('overview')" id="tab-overview" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-amber-500 text-amber-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-chart-pie"></i> Lotto 6/59
+                <i class="fa-solid fa-chart-pie"></i> Lotto Overview
             </button>
             <button onclick="switchTab('generator')" id="tab-generator" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-1.5 bg-amber-500/10 rounded-t-lg">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Lotto Generator
@@ -130,17 +134,17 @@
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Total Draws Analyzed</div>
                     <div class="text-3xl font-bold text-white mt-1" id="stat-total-draws">--</div>
-                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">59 Ball Era</div>
+                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">--</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Theoretical Ball Odds</div>
-                    <div class="text-3xl font-bold text-amber-400 mt-1">10.17%</div>
-                    <div class="text-xs text-gray-400 mt-2">\( P(X) = \frac{6}{59} \)</div>
+                    <div class="text-3xl font-bold text-amber-400 mt-1" id="stat-theo-prob">--%</div>
+                    <div class="text-xs text-gray-400 mt-2" id="stat-theo-formula">--</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Expected Return Gap</div>
-                    <div class="text-3xl font-bold text-blue-400 mt-1">9.8 Draws</div>
-                    <div class="text-xs text-gray-400 mt-2">Poisson expected return</div>
+                    <div class="text-3xl font-bold text-blue-400 mt-1" id="stat-exp-gap">-- Draws</div>
+                    <div class="text-xs text-gray-400 mt-2">Poisson return interval</div>
                 </div>
                 <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
                     <div class="text-xs text-gray-400 uppercase font-semibold">Statistical Uniformity</div>
@@ -151,10 +155,25 @@
 
             <div class="bg-slate-800/80 p-6 rounded-xl border border-amber-500/30 shadow-lg">
                 <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-trophy text-amber-400"></i> Latest UK Lotto Draw
+                    <i class="fa-solid fa-trophy text-amber-400"></i> Latest Draw Result
                     <span class="text-xs font-normal text-gray-400" id="latest-draw-date">--</span>
                 </h3>
                 <div class="flex flex-wrap items-center gap-3 mt-4" id="latest-draw-balls"></div>
+            </div>
+
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-4">Recent Historical Draws</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-300">
+                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
+                            <tr>
+                                <th class="px-4 py-3">Draw #</th><th class="px-4 py-3">Date</th><th class="px-4 py-3">Day</th>
+                                <th class="px-4 py-3">Main Balls</th><th class="px-4 py-3">Bonus</th><th class="px-4 py-3">Sum</th><th class="px-4 py-3">Odd/Even</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-draws-tbody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -185,22 +204,20 @@
             </div>
         </div>
 
-        <!-- NEW TAB: ROULETTE & CASINO -->
+        <!-- CASINO TAB -->
         <div id="content-casino" class="space-y-6 hidden">
             <div class="bg-slate-900/90 border border-rose-500/30 p-6 rounded-xl shadow-xl">
                 <h3 class="text-xl font-bold text-rose-400 flex items-center gap-2"><i class="fa-solid fa-dice"></i> Roulette Sector & Probability Engine</h3>
-                <p class="text-xs text-gray-300 mt-1">Tracks French Wheel Sectors (Voisins, Tiers, Orphelins), Dozens recency, and Red/Black statistical probabilities.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roulette-cards"></div>
         </div>
 
-        <!-- NEW TAB: BLACKJACK & BACCARAT -->
+        <!-- BLACKJACK TAB -->
         <div id="content-blackjack" class="space-y-6 hidden">
             <div class="bg-slate-900/90 border border-amber-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2"><i class="fa-solid fa-spade"></i> Blackjack Basic Strategy Matrix & Baccarat Odds</h3>
+                <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2"><i class="fa-solid fa-spade"></i> Blackjack Basic Strategy Matrix</h3>
             </div>
             <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h4 class="text-md font-bold text-white mb-3">Live Blackjack Decision Calculator</h4>
                 <div class="flex flex-wrap items-center gap-4 text-xs">
                     <div>
                         <label class="text-gray-400">Player Hand Total:</label>
@@ -258,7 +275,7 @@
         <!-- NBA BASKETBALL TAB -->
         <div id="content-nba" class="space-y-6 hidden">
             <div class="bg-slate-900/90 border border-indigo-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-basketball"></i> NBA Basketball Point Spread & Totals Engine</h3>
+                <h3 class="text-xl font-bold text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-basketball"></i> NBA Basketball Point Spread Engine</h3>
             </div>
             <div id="nba-card" class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow text-sm"></div>
         </div>
@@ -291,18 +308,19 @@
     </main>
 
     <footer class="bg-lotto-card border-t border-gray-800 py-4 px-4 text-center text-xs text-gray-400 mt-auto">
-        Drawly Analytics Engine &bull; Responsible Gaming Notice
+        Drawly Analytics Engine &bull; UK & Irish Lotto &bull; Responsible Gaming Notice
     </footer>
 
     <script>
         let lottoData = null;
+        let currentGame = 'uk';
 
         async function initApp() {
             try {
                 const res = await fetch('lotto_data.json');
                 if (!res.ok) throw new Error('Data fetch failed');
                 lottoData = await res.json();
-                renderOverview();
+                renderCurrentGame();
                 generateTickets();
                 populateRacingPresets();
                 renderStockRadar();
@@ -313,6 +331,62 @@
             }
         }
 
+        function changeLottoGame() {
+            currentGame = document.getElementById('game-selector').value;
+            renderCurrentGame();
+            generateTickets();
+        }
+
+        function getCurrentGameData() {
+            if (!lottoData) return null;
+            if (lottoData.lotto_games && lottoData.lotto_games[currentGame]) {
+                return lottoData.lotto_games[currentGame];
+            }
+            return lottoData;
+        }
+
+        function renderCurrentGame() {
+            const gData = getCurrentGameData();
+            if (!gData) return;
+
+            document.getElementById('stat-total-draws').innerText = gData.total_draws;
+            document.getElementById('stat-date-range').innerText = `${gData.start_date} to ${gData.end_date}`;
+            document.getElementById('stat-theo-prob').innerText = `${gData.theo_draw_prob}%`;
+            document.getElementById('stat-theo-formula').innerText = `P(X) = 6/${gData.total_balls}`;
+            document.getElementById('stat-exp-gap').innerText = `${gData.expected_gap} Draws`;
+
+            const latest = gData.recent_draws[0];
+            if (latest) {
+                document.getElementById('latest-draw-date').innerText = `Draw #${latest.draw_number} (${latest.date})`;
+                const ballContainer = document.getElementById('latest-draw-balls');
+                let html = '';
+                latest.balls.forEach(b => { html += `<div class="lotto-ball">${b}</div>`; });
+                html += `<span class="text-xs font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="lotto-ball lotto-ball-bonus">${latest.bonus}</div>`;
+                ballContainer.innerHTML = html;
+            }
+
+            const tbody = document.getElementById('recent-draws-tbody');
+            let rowsHtml = '';
+            gData.recent_draws.slice(0, 10).forEach(d => {
+                const sum = d.balls.reduce((a, b) => a + b, 0);
+                const odds = d.balls.filter(b => b % 2 !== 0).length;
+                const evens = 6 - odds;
+                const ballsStr = d.balls.map(b => `<span class="inline-block bg-slate-900 text-amber-400 font-bold px-2 py-0.5 rounded border border-gray-700 mr-1">${b}</span>`).join('');
+                rowsHtml += `
+                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
+                        <td class="px-4 py-2.5 font-bold text-amber-400">#${d.draw_number}</td>
+                        <td class="px-4 py-2.5">${d.date}</td>
+                        <td class="px-4 py-2.5 text-gray-400">${d.day}</td>
+                        <td class="px-4 py-2.5">${ballsStr}</td>
+                        <td class="px-4 py-2.5 font-bold text-pink-400">${d.bonus}</td>
+                        <td class="px-4 py-2.5 font-mono">${sum}</td>
+                        <td class="px-4 py-2.5 text-xs">${odds}:${evens}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = rowsHtml;
+        }
+
         function switchTab(tabId) {
             const tabs = ['overview', 'generator', 'casino', 'blackjack', 'racing', 'football', 'nba', 'stocks', 'hosting'];
             tabs.forEach(t => {
@@ -320,7 +394,7 @@
                 if (content) content.classList.add('hidden');
                 const btn = document.getElementById(`tab-${t}`);
                 if (btn) {
-                    btn.classList.remove('border-amber-500', 'text-amber-400', 'border-rose-500', 'text-rose-400', 'border-emerald-500', 'text-emerald-400', 'border-cyan-500', 'text-cyan-400', 'border-purple-500', 'text-purple-400', 'border-indigo-500', 'text-indigo-400');
+                    btn.classList.remove('border-amber-500', 'text-amber-400');
                     btn.classList.add('border-transparent', 'text-gray-400');
                 }
             });
@@ -334,25 +408,10 @@
             }
         }
 
-        function renderOverview() {
-            if (!lottoData) return;
-            document.getElementById('stat-total-draws').innerText = lottoData.total_draws;
-            document.getElementById('stat-date-range').innerText = `${lottoData.start_date} to ${lottoData.end_date}`;
-
-            const latest = lottoData.recent_draws[0];
-            if (latest) {
-                document.getElementById('latest-draw-date').innerText = `Draw #${latest.draw_number} (${latest.date})`;
-                const ballContainer = document.getElementById('latest-draw-balls');
-                let html = '';
-                latest.balls.forEach(b => { html += `<div class="lotto-ball">${b}</div>`; });
-                html += `<span class="text-xs font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="lotto-ball lotto-ball-bonus">${latest.bonus}</div>`;
-                ballContainer.innerHTML = html;
-            }
-        }
-
         function generateTickets() {
-            if (!lottoData) return;
-            const stats = lottoData.ball_stats;
+            const gData = getCurrentGameData();
+            if (!gData) return;
+            const stats = gData.ball_stats;
             const tickets = [];
             for (let t = 0; t < 5; t++) {
                 let chosen = [];
@@ -369,7 +428,7 @@
                 const ballsHtml = t.numbers.map(n => `<div class="lotto-ball">${n}</div>`).join('');
                 html += `
                     <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-3">
-                        <div class="text-xs text-amber-400 font-bold">Line #${t.id} (Sum: ${t.sum})</div>
+                        <div class="text-xs text-amber-400 font-bold">Line #${t.id} (${currentGame.toUpperCase()} Lotto | Sum: ${t.sum})</div>
                         <div class="flex items-center gap-3">${ballsHtml}</div>
                     </div>
                 `;

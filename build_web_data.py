@@ -8,28 +8,27 @@ from stats_engine import (
     compute_gap_statistics, 
     compute_cooccurrence_matrix, 
     perform_chi_square_test,
-    compute_number_likelihoods,
-    TOTAL_BALLS,
-    THEO_DRAW_PROB,
-    EXPECTED_GAP
+    compute_number_likelihoods
 )
 from horse_racing_engine import get_preset_races, calculate_horse_likelihoods
 from stock_explosion_engine import get_preset_explosion_stocks
 from football_predictor_engine import get_preset_football_matches
-from casino_games_engine import analyze_roulette_wheel, get_blackjack_basic_strategy, analyze_baccarat_probabilities
+from casino_games_engine import analyze_roulette_wheel, analyze_baccarat_probabilities
 from sports_expanded_engine import calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, predict_greyhound_race
 
-def build_export_data():
-    df_raw, draw_matrix = load_lotto_data()
-    
-    df_freq = compute_ball_frequencies(draw_matrix)
-    df_gaps = compute_gap_statistics(draw_matrix)
-    cooc_matrix = compute_cooccurrence_matrix(draw_matrix)
-    chi_square = perform_chi_square_test(df_freq, len(df_raw))
-    
-    df_lh_harmonic = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="harmonic")
-    df_lh_hot = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="hot")
-    df_lh_cold = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="cold")
+def process_lotto_game(game_type="uk", total_balls=59):
+    df_raw, draw_matrix = load_lotto_data(game_type)
+    theo_draw_prob = 6.0 / total_balls
+    expected_gap = total_balls / 6.0
+
+    df_freq = compute_ball_frequencies(draw_matrix, total_balls=total_balls)
+    df_gaps = compute_gap_statistics(draw_matrix, total_balls=total_balls)
+    cooc_matrix = compute_cooccurrence_matrix(draw_matrix, total_balls=total_balls)
+    chi_square = perform_chi_square_test(df_freq, len(df_raw), total_balls=total_balls)
+
+    df_lh_harmonic = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="harmonic", total_balls=total_balls)
+    df_lh_hot = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="hot", total_balls=total_balls)
+    df_lh_cold = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="cold", total_balls=total_balls)
 
     recent_draws = []
     for idx, row in df_raw.iloc[::-1].iterrows():
@@ -42,13 +41,13 @@ def build_export_data():
         })
 
     ball_stats = []
-    for b in range(1, TOTAL_BALLS + 1):
+    for b in range(1, total_balls + 1):
         f_row = df_freq[df_freq['ball'] == b].iloc[0]
         g_row = df_gaps[df_gaps['ball'] == b].iloc[0]
         lh_harm = df_lh_harmonic[df_lh_harmonic['ball'] == b].iloc[0]['likelihood_pct']
         lh_hot = df_lh_hot[df_lh_hot['ball'] == b].iloc[0]['likelihood_pct']
         lh_cold = df_lh_cold[df_lh_cold['ball'] == b].iloc[0]['likelihood_pct']
-        
+
         pairs = cooc_matrix[b - 1]
         top_pair_indices = np.argsort(pairs)[::-1]
         top_pairs = []
@@ -67,9 +66,27 @@ def build_export_data():
             'likelihood_harmonic': float(lh_harm),
             'likelihood_hot': float(lh_hot),
             'likelihood_cold': float(lh_cold),
-            'likelihood_equal': float(np.round(THEO_DRAW_PROB * 100, 2)),
+            'likelihood_equal': float(np.round(theo_draw_prob * 100, 2)),
             'top_pairs': top_pairs
         })
+
+    return {
+        'game_type': game_type,
+        'total_balls': total_balls,
+        'total_draws': len(df_raw),
+        'start_date': df_raw['draw_date'].min().strftime('%Y-%m-%d'),
+        'end_date': df_raw['draw_date'].max().strftime('%Y-%m-%d'),
+        'expected_gap': float(np.round(expected_gap, 2)),
+        'theo_draw_prob': float(np.round(theo_draw_prob * 100, 2)),
+        'chi_square': chi_square,
+        'ball_stats': ball_stats,
+        'cooccurrence_matrix': cooc_matrix.tolist(),
+        'recent_draws': recent_draws[:50]
+    }
+
+def build_export_data():
+    uk_lotto = process_lotto_game("uk", 59)
+    irish_lotto = process_lotto_game("irish", 47)
 
     preset_races = get_preset_races()
     for race in preset_races:
@@ -78,7 +95,6 @@ def build_export_data():
     preset_stocks = get_preset_explosion_stocks()
     preset_football = get_preset_football_matches()
 
-    # Build new casino & expanded sports data
     roulette_data = analyze_roulette_wheel()
     baccarat_data = analyze_baccarat_probabilities()
     euromillions_data = calculate_euromillions_stats()
@@ -87,15 +103,19 @@ def build_export_data():
     greyhound_race = predict_greyhound_race()
 
     data_payload = {
-        'total_draws': len(df_raw),
-        'start_date': df_raw['draw_date'].min().strftime('%Y-%m-%d'),
-        'end_date': df_raw['draw_date'].max().strftime('%Y-%m-%d'),
-        'expected_gap': EXPECTED_GAP,
-        'theo_draw_prob': float(np.round(THEO_DRAW_PROB * 100, 2)),
-        'chi_square': chi_square,
-        'ball_stats': ball_stats,
-        'cooccurrence_matrix': cooc_matrix.tolist(),
-        'recent_draws': recent_draws[:50],
+        'total_draws': uk_lotto['total_draws'],
+        'start_date': uk_lotto['start_date'],
+        'end_date': uk_lotto['end_date'],
+        'expected_gap': uk_lotto['expected_gap'],
+        'theo_draw_prob': uk_lotto['theo_draw_prob'],
+        'chi_square': uk_lotto['chi_square'],
+        'ball_stats': uk_lotto['ball_stats'],
+        'cooccurrence_matrix': uk_lotto['cooccurrence_matrix'],
+        'recent_draws': uk_lotto['recent_draws'],
+        'lotto_games': {
+            'uk': uk_lotto,
+            'irish': irish_lotto
+        },
         'horse_racing': {
             'preset_races': preset_races
         },
@@ -122,7 +142,7 @@ def build_export_data():
     with open(json_path, "w") as f:
         json.dump(data_payload, f, indent=2)
         
-    print(f"Exported complete multi-predictor dataset JSON to {json_path}")
+    print(f"Exported dataset JSON with UK & Irish Lotto to {json_path}")
     return data_payload
 
 if __name__ == "__main__":

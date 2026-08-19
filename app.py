@@ -7,9 +7,7 @@ from stats_engine import (
     compute_gap_statistics, 
     compute_cooccurrence_matrix, 
     perform_chi_square_test,
-    compute_number_likelihoods,
-    TOTAL_BALLS,
-    THEO_DRAW_PROB
+    compute_number_likelihoods
 )
 from generator import generate_logical_tickets
 
@@ -40,16 +38,12 @@ def api_generate():
     req = request.get_json() or {}
     model = req.get("model", "harmonic")
     num_tickets = req.get("num_tickets", 5)
-    weights = req.get("weights", {'base': 0.25, 'hot': 0.35, 'cold': 0.30, 'pair': 0.10})
-    odd_even_filter = req.get("odd_even_filter", True)
-    sum_filter = req.get("sum_filter", True)
+    game_type = req.get("game_type", "uk")
 
     tickets = generate_logical_tickets(
         num_tickets=num_tickets,
         model=model,
-        weights=weights,
-        odd_even_filter=odd_even_filter,
-        sum_filter=sum_filter
+        game_type=game_type
     )
     return jsonify({"tickets": tickets})
 
