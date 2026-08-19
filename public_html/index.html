@@ -1,0 +1,7114 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK National Lotto & Horse Racing Logical Analyzer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        lotto: {
+                            gold: '#F59E0B',
+                            navy: '#0F172A',
+                            card: '#1E293B',
+                            accent: '#3B82F6',
+                            ball: '#EAB308',
+                            bonus: '#EC4899'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .lotto-ball {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #000;
+            background: radial-gradient(circle at 35% 35%, #fffbcf, #eab308 60%, #ca8a04);
+            box-shadow: 0 4px 10px rgba(234, 179, 8, 0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
+            border: 2px solid #fef08a;
+        }
+        .lotto-ball-bonus {
+            background: radial-gradient(circle at 35% 35%, #fce7f3, #ec4899 60%, #be185d);
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
+            border: 2px solid #fbcfe8;
+            color: #fff;
+        }
+        .grid-ball {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .grid-ball:hover {
+            transform: scale(1.12);
+        }
+    </style>
+</head>
+<body class="bg-lotto-navy text-gray-100 min-h-screen font-sans flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-lotto-card border-b border-gray-700 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg">
+                    \(\Sigma\)
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        Logical Probability Analyzer <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">Lotto & Racing</span>
+                    </h1>
+                    <p class="text-xs text-gray-400">UK Lotto Frequency Engine & Horse Racing Value Predictor</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2 text-sm bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                <i class="fa-solid fa-chart-line text-amber-400"></i>
+                <span class="text-gray-300" id="header-draw-count">Dataset Loaded</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap border-b border-gray-700 mb-6 gap-2" id="tab-nav">
+            <button onclick="switchTab('overview')" id="tab-overview" class="px-4 py-2 text-sm font-semibold border-b-2 border-amber-500 text-amber-400 flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i> Lotto Overview
+            </button>
+            <button onclick="switchTab('likelihood')" id="tab-likelihood" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
+                <i class="fa-solid fa-square-poll-vertical"></i> Lotto Likelihood
+            </button>
+            <button onclick="switchTab('gaps')" id="tab-gaps" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left"></i> Overdue Gaps
+            </button>
+            <button onclick="switchTab('cooccurrence')" id="tab-cooccurrence" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project"></i> Pair Correlations
+            </button>
+            <button onclick="switchTab('generator')" id="tab-generator" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2 bg-amber-500/10 rounded-t-lg">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Ticket Generator
+            </button>
+            <!-- NEW HORSE RACING TAB -->
+            <button onclick="switchTab('racing')" id="tab-racing" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-emerald-400 hover:text-emerald-300 flex items-center gap-2 bg-emerald-500/10 rounded-t-lg">
+                <i class="fa-solid fa-horse-head text-emerald-400"></i> Horse Racing Predictor
+            </button>
+            <button onclick="switchTab('hosting')" id="tab-hosting" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-2">
+                <i class="fa-solid fa-server"></i> Enhance Host Setup
+            </button>
+        </div>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="content-overview" class="space-y-6">
+            <!-- Key Stat Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Total Draws Analyzed</div>
+                    <div class="text-3xl font-bold text-white mt-1" id="stat-total-draws">--</div>
+                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">59 Ball Matrix Era</div>
+                </div>
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Theoretical Ball Odds</div>
+                    <div class="text-3xl font-bold text-amber-400 mt-1">10.17%</div>
+                    <div class="text-xs text-gray-400 mt-2">\( P(X) = \frac{6}{59} \) per draw</div>
+                </div>
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Expected Return Gap</div>
+                    <div class="text-3xl font-bold text-blue-400 mt-1">9.8 Draws</div>
+                    <div class="text-xs text-gray-400 mt-2">Poisson expected interval</div>
+                </div>
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Statistical Uniformity</div>
+                    <div class="text-xl font-bold text-green-400 mt-2" id="stat-chi2-status">Chi-Square Test</div>
+                    <div class="text-xs text-gray-400 mt-1" id="stat-chi2-pval">p-value evaluation</div>
+                </div>
+            </div>
+
+            <!-- Latest Draw Banner -->
+            <div class="bg-slate-800/80 p-6 rounded-xl border border-amber-500/30 shadow-lg">
+                <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400"></i> Latest UK Lotto Draw
+                    <span class="text-xs font-normal text-gray-400" id="latest-draw-date">--</span>
+                </h3>
+                <div class="flex flex-wrap items-center gap-3 mt-4" id="latest-draw-balls">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Recent Draws History Table -->
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-4">Recent Historical Draws</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-300">
+                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
+                            <tr>
+                                <th class="px-4 py-3">Draw #</th>
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Day</th>
+                                <th class="px-4 py-3">Main Balls (1 - 59)</th>
+                                <th class="px-4 py-3">Bonus</th>
+                                <th class="px-4 py-3">Sum</th>
+                                <th class="px-4 py-3">Odd/Even</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-draws-tbody">
+                            <!-- JS rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: LIKELIHOOD & FREQUENCIES -->
+        <div id="content-likelihood" class="space-y-6 hidden">
+            <div class="bg-blue-950/40 border border-blue-500/30 p-4 rounded-xl text-xs text-blue-200 flex items-start gap-3">
+                <i class="fa-solid fa-circle-info text-blue-400 text-lg mt-0.5"></i>
+                <div>
+                    <span class="font-bold text-white">Mathematical Likelihood Principles:</span>
+                    Each ball has a theoretical probability of \( \frac{6}{59} \approx 10.169\% \) of being drawn.
+                    The empirical likelihood model combines historical frequency, rolling recency trends, and Poisson return intervals to compute normalized probabilities for upcoming draws.
+                </div>
+            </div>
+
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-2">Number Draw Frequency (Balls 1 to 59)</h3>
+                <div class="h-72 w-full">
+                    <canvas id="freqChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-4">Calculated Likelihood & Statistical Metrics Table</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-300">
+                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
+                            <tr>
+                                <th class="px-4 py-3">Ball #</th>
+                                <th class="px-4 py-3">Harmonic Likelihood</th>
+                                <th class="px-4 py-3">Hot Model</th>
+                                <th class="px-4 py-3">Cold Model</th>
+                                <th class="px-4 py-3">Draw Count</th>
+                                <th class="px-4 py-3">Empirical Rate</th>
+                                <th class="px-4 py-3">Current Gap</th>
+                                <th class="px-4 py-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="likelihood-tbody">
+                            <!-- JS rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: OVERDUE GAPS -->
+        <div id="content-gaps" class="space-y-6 hidden">
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-2">Number Recency & Overdue Status Heat Grid</h3>
+                <p class="text-xs text-gray-400 mb-4">Click any ball to inspect detailed draw gap metrics. Green = Recently drawn, Red/Pink = Overdue.</p>
+                <div class="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-3" id="gap-grid"></div>
+            </div>
+
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow" id="gap-detail-card">
+                <h4 class="text-md font-bold text-amber-400 mb-2">Selected Ball Details</h4>
+                <div class="text-sm text-gray-300" id="gap-detail-content">
+                    Click on any ball in the grid above to view its exact gap statistics.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: CO-OCCURRENCE MATRIX -->
+        <div id="content-cooccurrence" class="space-y-6 hidden">
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h3 class="text-lg font-bold text-white mb-2">Pair Co-occurrence & Affinity Explorer</h3>
+                <div class="flex items-center gap-4 mb-6">
+                    <label class="text-sm font-semibold text-gray-300">Select Ball Number:</label>
+                    <select id="pair-ball-select" onchange="renderPairAnalysis()" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-4 py-2 rounded-lg">
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="pair-top-partners"></div>
+            </div>
+        </div>
+
+        <!-- TAB 5: TICKET GENERATOR -->
+        <div id="content-generator" class="space-y-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-5">
+                    <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Strategy Configuration
+                    </h3>
+                    <div>
+                        <label class="text-xs font-semibold text-gray-300 uppercase">Logic Strategy Model</label>
+                        <select id="gen-model" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
+                            <option value="harmonic">Balanced Harmonic Model (Recommended)</option>
+                            <option value="hot">Hot Trend Model</option>
+                            <option value="cold">Cold / Overdue Reversion Model</option>
+                            <option value="equal">Theoretical Equal Random Baseline</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-gray-300 uppercase">Number of Tickets</label>
+                        <input type="number" id="gen-count" value="5" min="1" max="20" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
+                    </div>
+                    <div class="space-y-3 pt-2 border-t border-gray-700">
+                        <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
+                            <input type="checkbox" id="gen-odd-even" checked class="w-4 h-4 text-amber-500 rounded bg-slate-900 border-gray-700">
+                            <span>Odd/Even Balance Filter (2:4, 3:3, 4:2)</span>
+                        </label>
+                        <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
+                            <input type="checkbox" id="gen-sum-filter" checked class="w-4 h-4 text-amber-500 rounded bg-slate-900 border-gray-700">
+                            <span>Sum Range Filter (115 to 245)</span>
+                        </label>
+                    </div>
+                    <button onclick="generateTickets()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Logical Tickets
+                    </button>
+                </div>
+
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-ticket text-amber-400"></i> Generated Tickets
+                        </h3>
+                        <div class="flex gap-2">
+                            <button onclick="copyTicketsText()" class="text-xs bg-slate-800 text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700"><i class="fa-solid fa-copy"></i> Copy</button>
+                            <button onclick="exportTicketsCSV()" class="text-xs bg-slate-800 text-amber-400 px-3 py-1.5 rounded-lg border border-gray-700"><i class="fa-solid fa-download"></i> CSV</button>
+                        </div>
+                    </div>
+                    <div id="tickets-container" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW TAB 6: HORSE RACING PREDICTOR -->
+        <div id="content-racing" class="space-y-6 hidden">
+            <div class="bg-slate-900/90 border border-emerald-500/30 p-6 rounded-xl shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-horse-head"></i> Horse Racing Logical Predictor & Fair Odds Engine
+                        </h3>
+                        <p class="text-xs text-gray-300 mt-1">Calculates composite ratings from Form, Official Rating (OR), Course & Distance (C&D), and Jockey/Trainer synergy to identify <strong>Value Overlays</strong>.</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <label class="text-xs font-semibold text-gray-300 uppercase">Select Race Card:</label>
+                        <select id="racing-preset-select" onchange="loadSelectedRace()" class="bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold px-3 py-2 rounded-lg text-sm">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Selected Race Summary Info Banner -->
+                <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
+                    <div><span class="text-gray-400">Race Title:</span> <strong class="text-white text-sm" id="race-title">--</strong></div>
+                    <div><span class="text-gray-400">Course:</span> <strong class="text-emerald-400" id="race-course">--</strong></div>
+                    <div><span class="text-gray-400">Distance:</span> <strong class="text-white" id="race-distance">--</strong></div>
+                    <div><span class="text-gray-400">Going:</span> <strong class="text-white" id="race-going">--</strong></div>
+                </div>
+            </div>
+
+            <!-- Horse Racing Ratings & Value Table -->
+            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                <h4 class="text-md font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-400"></i> Field Logical Rating & Fair Odds Table
+                </h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-300">
+                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/80 border-b border-gray-700">
+                            <tr>
+                                <th class="px-4 py-3">Horse Name</th>
+                                <th class="px-4 py-3">Form</th>
+                                <th class="px-4 py-3">OR Rating</th>
+                                <th class="px-4 py-3">C&D</th>
+                                <th class="px-4 py-3">Jockey / Trainer</th>
+                                <th class="px-4 py-3">Bookie Odds</th>
+                                <th class="px-4 py-3">Calculated Win Prob</th>
+                                <th class="px-4 py-3">Fair Odds</th>
+                                <th class="px-4 py-3">Value Edge Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="racing-tbody">
+                            <!-- Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Forecast & Combination Recommendations -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <h4 class="text-md font-bold text-emerald-400 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-award"></i> Logical Straight Forecast (1st & 2nd)
+                    </h4>
+                    <div id="forecast-box" class="space-y-3 text-sm">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+                    <h4 class="text-md font-bold text-emerald-400 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group"></i> Logical Combination Trifecta (1st, 2nd, 3rd)
+                    </h4>
+                    <div id="trifecta-box" class="space-y-3 text-sm">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: ENHANCE HOST SETUP GUIDE -->
+        <div id="content-hosting" class="space-y-6 hidden">
+            <div class="bg-lotto-card p-6 rounded-xl border border-gray-700 shadow space-y-4">
+                <h3 class="text-xl font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-server"></i> How to Host on Enhance Host (Enhance Control Panel)
+                </h3>
+                <p class="text-sm text-gray-300">Enhance Host supports direct static HTML5 hosting (`public_html`) and Python WSGI apps.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                        <h4 class="text-md font-bold text-white mb-2">Option A: Direct Static Host (Easiest)</h4>
+                        <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2 mt-3">
+                            <li>Open <strong>Enhance File Manager</strong> &rarr; <code>public_html</code>.</li>
+                            <li>Upload <code>index.html</code> and <code>lotto_data.json</code>.</li>
+                            <li>Your app runs immediately in any browser!</li>
+                        </ol>
+                    </div>
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                        <h4 class="text-md font-bold text-white mb-2">Option B: Python WSGI App</h4>
+                        <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2 mt-3">
+                            <li>In Enhance Panel, select <strong>Python Applications</strong>.</li>
+                            <li>Upload the project files and set entry point to <code>app:app</code>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-lotto-card border-t border-gray-800 py-4 px-4 text-center text-xs text-gray-400 mt-auto">
+        UK National Lottery & Horse Racing Analytical Engine &bull; Responsible Gaming Notice
+    </footer>
+
+    <!-- JavaScript Data Logic -->
+    <script>
+        const embeddedLottoData = {
+  "total_draws": 1130,
+  "start_date": "2015-10-10",
+  "end_date": "2026-08-05",
+  "expected_gap": 9.833333333333332,
+  "theo_draw_prob": 10.17,
+  "chi_square": {
+    "chi2_stat": 40.017109144542765,
+    "p_value": 0.9655109708709836,
+    "dof": 58,
+    "is_uniform": true
+  },
+  "ball_stats": [
+    {
+      "ball": 1,
+      "count": 111,
+      "rate_pct": 9.82,
+      "current_gap": 2,
+      "max_gap": 63,
+      "mean_gap": 9.2,
+      "gap_ratio": 0.2,
+      "likelihood_harmonic": 8.63,
+      "likelihood_hot": 9.82,
+      "likelihood_cold": 5.63,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 9,
+          "count": 17
+        },
+        {
+          "partner": 42,
+          "count": 14
+        },
+        {
+          "partner": 49,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 2,
+      "count": 94,
+      "rate_pct": 8.32,
+      "current_gap": 1,
+      "max_gap": 46,
+      "mean_gap": 11.13,
+      "gap_ratio": 0.1,
+      "likelihood_harmonic": 7.87,
+      "likelihood_hot": 8.32,
+      "likelihood_cold": 5.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 31,
+          "count": 14
+        },
+        {
+          "partner": 32,
+          "count": 13
+        },
+        {
+          "partner": 21,
+          "count": 13
+        }
+      ]
+    },
+    {
+      "ball": 3,
+      "count": 108,
+      "rate_pct": 9.56,
+      "current_gap": 7,
+      "max_gap": 34,
+      "mean_gap": 9.47,
+      "gap_ratio": 0.71,
+      "likelihood_harmonic": 9.0,
+      "likelihood_hot": 9.56,
+      "likelihood_cold": 7.26,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 51,
+          "count": 15
+        },
+        {
+          "partner": 15,
+          "count": 14
+        },
+        {
+          "partner": 24,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 4,
+      "count": 114,
+      "rate_pct": 10.09,
+      "current_gap": 11,
+      "max_gap": 73,
+      "mean_gap": 8.74,
+      "gap_ratio": 1.12,
+      "likelihood_harmonic": 9.73,
+      "likelihood_hot": 10.09,
+      "likelihood_cold": 8.92,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 36,
+          "count": 17
+        },
+        {
+          "partner": 30,
+          "count": 16
+        },
+        {
+          "partner": 37,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 5,
+      "count": 117,
+      "rate_pct": 10.35,
+      "current_gap": 0,
+      "max_gap": 82,
+      "mean_gap": 8.61,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 8.71,
+      "likelihood_hot": 10.35,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 41,
+          "count": 17
+        },
+        {
+          "partner": 33,
+          "count": 17
+        },
+        {
+          "partner": 46,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 6,
+      "count": 120,
+      "rate_pct": 10.62,
+      "current_gap": 12,
+      "max_gap": 45,
+      "mean_gap": 8.37,
+      "gap_ratio": 1.22,
+      "likelihood_harmonic": 10.1,
+      "likelihood_hot": 10.62,
+      "likelihood_cold": 9.37,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 55,
+          "count": 18
+        },
+        {
+          "partner": 43,
+          "count": 18
+        },
+        {
+          "partner": 29,
+          "count": 18
+        }
+      ]
+    },
+    {
+      "ball": 7,
+      "count": 119,
+      "rate_pct": 10.53,
+      "current_gap": 10,
+      "max_gap": 51,
+      "mean_gap": 8.47,
+      "gap_ratio": 1.02,
+      "likelihood_harmonic": 9.8,
+      "likelihood_hot": 10.53,
+      "likelihood_cold": 8.48,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 44,
+          "count": 18
+        },
+        {
+          "partner": 47,
+          "count": 15
+        },
+        {
+          "partner": 55,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 8,
+      "count": 113,
+      "rate_pct": 10.0,
+      "current_gap": 16,
+      "max_gap": 56,
+      "mean_gap": 8.94,
+      "gap_ratio": 1.63,
+      "likelihood_harmonic": 10.45,
+      "likelihood_hot": 10.0,
+      "likelihood_cold": 11.51,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 24,
+          "count": 16
+        },
+        {
+          "partner": 52,
+          "count": 15
+        },
+        {
+          "partner": 55,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 9,
+      "count": 132,
+      "rate_pct": 11.68,
+      "current_gap": 7,
+      "max_gap": 43,
+      "mean_gap": 7.56,
+      "gap_ratio": 0.71,
+      "likelihood_harmonic": 9.95,
+      "likelihood_hot": 11.68,
+      "likelihood_cold": 7.26,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 12,
+          "count": 21
+        },
+        {
+          "partner": 1,
+          "count": 17
+        },
+        {
+          "partner": 42,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 10,
+      "count": 111,
+      "rate_pct": 9.82,
+      "current_gap": 3,
+      "max_gap": 39,
+      "mean_gap": 9.18,
+      "gap_ratio": 0.31,
+      "likelihood_harmonic": 8.73,
+      "likelihood_hot": 9.82,
+      "likelihood_cold": 5.95,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 39,
+          "count": 18
+        },
+        {
+          "partner": 46,
+          "count": 14
+        },
+        {
+          "partner": 51,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 11,
+      "count": 114,
+      "rate_pct": 10.09,
+      "current_gap": 12,
+      "max_gap": 62,
+      "mean_gap": 8.84,
+      "gap_ratio": 1.22,
+      "likelihood_harmonic": 9.86,
+      "likelihood_hot": 10.09,
+      "likelihood_cold": 9.37,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 55,
+          "count": 17
+        },
+        {
+          "partner": 33,
+          "count": 15
+        },
+        {
+          "partner": 44,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 12,
+      "count": 109,
+      "rate_pct": 9.65,
+      "current_gap": 1,
+      "max_gap": 53,
+      "mean_gap": 9.19,
+      "gap_ratio": 0.1,
+      "likelihood_harmonic": 8.47,
+      "likelihood_hot": 9.65,
+      "likelihood_cold": 5.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 9,
+          "count": 21
+        },
+        {
+          "partner": 32,
+          "count": 15
+        },
+        {
+          "partner": 35,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 13,
+      "count": 102,
+      "rate_pct": 9.03,
+      "current_gap": 5,
+      "max_gap": 52,
+      "mean_gap": 10.1,
+      "gap_ratio": 0.51,
+      "likelihood_harmonic": 8.55,
+      "likelihood_hot": 9.03,
+      "likelihood_cold": 6.57,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 58,
+          "count": 15
+        },
+        {
+          "partner": 39,
+          "count": 13
+        },
+        {
+          "partner": 46,
+          "count": 13
+        }
+      ]
+    },
+    {
+      "ball": 14,
+      "count": 96,
+      "rate_pct": 8.5,
+      "current_gap": 16,
+      "max_gap": 55,
+      "mean_gap": 10.69,
+      "gap_ratio": 1.63,
+      "likelihood_harmonic": 9.78,
+      "likelihood_hot": 8.5,
+      "likelihood_cold": 11.51,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 49,
+          "count": 15
+        },
+        {
+          "partner": 45,
+          "count": 15
+        },
+        {
+          "partner": 20,
+          "count": 13
+        }
+      ]
+    },
+    {
+      "ball": 15,
+      "count": 115,
+      "rate_pct": 10.18,
+      "current_gap": 9,
+      "max_gap": 43,
+      "mean_gap": 8.79,
+      "gap_ratio": 0.92,
+      "likelihood_harmonic": 9.51,
+      "likelihood_hot": 10.18,
+      "likelihood_cold": 8.07,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 59,
+          "count": 15
+        },
+        {
+          "partner": 50,
+          "count": 14
+        },
+        {
+          "partner": 3,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 16,
+      "count": 136,
+      "rate_pct": 12.04,
+      "current_gap": 0,
+      "max_gap": 42,
+      "mean_gap": 7.36,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 9.47,
+      "likelihood_hot": 12.04,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 20,
+          "count": 18
+        },
+        {
+          "partner": 18,
+          "count": 18
+        },
+        {
+          "partner": 56,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 17,
+      "count": 117,
+      "rate_pct": 10.35,
+      "current_gap": 7,
+      "max_gap": 39,
+      "mean_gap": 8.6,
+      "gap_ratio": 0.71,
+      "likelihood_harmonic": 9.35,
+      "likelihood_hot": 10.35,
+      "likelihood_cold": 7.26,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 47,
+          "count": 17
+        },
+        {
+          "partner": 24,
+          "count": 17
+        },
+        {
+          "partner": 31,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 18,
+      "count": 116,
+      "rate_pct": 10.27,
+      "current_gap": 4,
+      "max_gap": 56,
+      "mean_gap": 8.78,
+      "gap_ratio": 0.41,
+      "likelihood_harmonic": 9.02,
+      "likelihood_hot": 10.27,
+      "likelihood_cold": 6.25,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 49,
+          "count": 20
+        },
+        {
+          "partner": 16,
+          "count": 18
+        },
+        {
+          "partner": 42,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 19,
+      "count": 107,
+      "rate_pct": 9.47,
+      "current_gap": 3,
+      "max_gap": 67,
+      "mean_gap": 9.54,
+      "gap_ratio": 0.31,
+      "likelihood_harmonic": 8.57,
+      "likelihood_hot": 9.47,
+      "likelihood_cold": 5.95,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 35,
+          "count": 18
+        },
+        {
+          "partner": 36,
+          "count": 14
+        },
+        {
+          "partner": 51,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 20,
+      "count": 117,
+      "rate_pct": 10.35,
+      "current_gap": 17,
+      "max_gap": 97,
+      "mean_gap": 8.34,
+      "gap_ratio": 1.73,
+      "likelihood_harmonic": 10.79,
+      "likelihood_hot": 10.35,
+      "likelihood_cold": 12.1,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 16,
+          "count": 18
+        },
+        {
+          "partner": 45,
+          "count": 17
+        },
+        {
+          "partner": 44,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 21,
+      "count": 117,
+      "rate_pct": 10.35,
+      "current_gap": 0,
+      "max_gap": 30,
+      "mean_gap": 8.59,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 8.71,
+      "likelihood_hot": 10.35,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 51,
+          "count": 15
+        },
+        {
+          "partner": 39,
+          "count": 15
+        },
+        {
+          "partner": 32,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 22,
+      "count": 108,
+      "rate_pct": 9.56,
+      "current_gap": 11,
+      "max_gap": 41,
+      "mean_gap": 9.39,
+      "gap_ratio": 1.12,
+      "likelihood_harmonic": 9.49,
+      "likelihood_hot": 9.56,
+      "likelihood_cold": 8.92,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 49,
+          "count": 16
+        },
+        {
+          "partner": 56,
+          "count": 15
+        },
+        {
+          "partner": 53,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 23,
+      "count": 108,
+      "rate_pct": 9.56,
+      "current_gap": 5,
+      "max_gap": 54,
+      "mean_gap": 9.44,
+      "gap_ratio": 0.51,
+      "likelihood_harmonic": 8.79,
+      "likelihood_hot": 9.56,
+      "likelihood_cold": 6.57,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 43,
+          "count": 18
+        },
+        {
+          "partner": 31,
+          "count": 17
+        },
+        {
+          "partner": 56,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 24,
+      "count": 126,
+      "rate_pct": 11.15,
+      "current_gap": 1,
+      "max_gap": 48,
+      "mean_gap": 7.94,
+      "gap_ratio": 0.1,
+      "likelihood_harmonic": 9.15,
+      "likelihood_hot": 11.15,
+      "likelihood_cold": 5.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 30,
+          "count": 18
+        },
+        {
+          "partner": 17,
+          "count": 17
+        },
+        {
+          "partner": 33,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 25,
+      "count": 116,
+      "rate_pct": 10.27,
+      "current_gap": 1,
+      "max_gap": 41,
+      "mean_gap": 8.75,
+      "gap_ratio": 0.1,
+      "likelihood_harmonic": 8.75,
+      "likelihood_hot": 10.27,
+      "likelihood_cold": 5.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 44,
+          "count": 15
+        },
+        {
+          "partner": 27,
+          "count": 15
+        },
+        {
+          "partner": 34,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 26,
+      "count": 114,
+      "rate_pct": 10.09,
+      "current_gap": 14,
+      "max_gap": 36,
+      "mean_gap": 8.71,
+      "gap_ratio": 1.42,
+      "likelihood_harmonic": 10.15,
+      "likelihood_hot": 10.09,
+      "likelihood_cold": 10.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 53,
+          "count": 18
+        },
+        {
+          "partner": 33,
+          "count": 17
+        },
+        {
+          "partner": 43,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 27,
+      "count": 122,
+      "rate_pct": 10.8,
+      "current_gap": 26,
+      "max_gap": 39,
+      "mean_gap": 8.08,
+      "gap_ratio": 2.64,
+      "likelihood_harmonic": 13.05,
+      "likelihood_hot": 10.8,
+      "likelihood_cold": 19.07,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 32,
+          "count": 18
+        },
+        {
+          "partner": 57,
+          "count": 16
+        },
+        {
+          "partner": 59,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 28,
+      "count": 106,
+      "rate_pct": 9.38,
+      "current_gap": 34,
+      "max_gap": 87,
+      "mean_gap": 9.41,
+      "gap_ratio": 3.46,
+      "likelihood_harmonic": 15.28,
+      "likelihood_hot": 9.38,
+      "likelihood_cold": 28.73,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 41,
+          "count": 15
+        },
+        {
+          "partner": 47,
+          "count": 14
+        },
+        {
+          "partner": 7,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 29,
+      "count": 118,
+      "rate_pct": 10.44,
+      "current_gap": 3,
+      "max_gap": 62,
+      "mean_gap": 8.59,
+      "gap_ratio": 0.31,
+      "likelihood_harmonic": 9.0,
+      "likelihood_hot": 10.44,
+      "likelihood_cold": 5.95,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 6,
+          "count": 18
+        },
+        {
+          "partner": 40,
+          "count": 16
+        },
+        {
+          "partner": 44,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 30,
+      "count": 113,
+      "rate_pct": 10.0,
+      "current_gap": 2,
+      "max_gap": 51,
+      "mean_gap": 8.99,
+      "gap_ratio": 0.2,
+      "likelihood_harmonic": 8.71,
+      "likelihood_hot": 10.0,
+      "likelihood_cold": 5.63,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 24,
+          "count": 18
+        },
+        {
+          "partner": 41,
+          "count": 16
+        },
+        {
+          "partner": 45,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 31,
+      "count": 126,
+      "rate_pct": 11.15,
+      "current_gap": 13,
+      "max_gap": 54,
+      "mean_gap": 7.65,
+      "gap_ratio": 1.32,
+      "likelihood_harmonic": 10.48,
+      "likelihood_hot": 11.15,
+      "likelihood_cold": 9.86,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 36,
+          "count": 17
+        },
+        {
+          "partner": 23,
+          "count": 17
+        },
+        {
+          "partner": 17,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 32,
+      "count": 115,
+      "rate_pct": 10.18,
+      "current_gap": 12,
+      "max_gap": 40,
+      "mean_gap": 8.63,
+      "gap_ratio": 1.22,
+      "likelihood_harmonic": 9.9,
+      "likelihood_hot": 10.18,
+      "likelihood_cold": 9.37,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 27,
+          "count": 18
+        },
+        {
+          "partner": 41,
+          "count": 16
+        },
+        {
+          "partner": 51,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 33,
+      "count": 107,
+      "rate_pct": 9.47,
+      "current_gap": 60,
+      "max_gap": 49,
+      "mean_gap": 9.06,
+      "gap_ratio": 6.1,
+      "likelihood_harmonic": 38.68,
+      "likelihood_hot": 9.47,
+      "likelihood_cold": 100.21,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 35,
+          "count": 18
+        },
+        {
+          "partner": 24,
+          "count": 17
+        },
+        {
+          "partner": 26,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 34,
+      "count": 103,
+      "rate_pct": 9.12,
+      "current_gap": 3,
+      "max_gap": 53,
+      "mean_gap": 9.8,
+      "gap_ratio": 0.31,
+      "likelihood_harmonic": 8.41,
+      "likelihood_hot": 9.12,
+      "likelihood_cold": 5.95,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 12,
+          "count": 14
+        },
+        {
+          "partner": 27,
+          "count": 14
+        },
+        {
+          "partner": 25,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 35,
+      "count": 121,
+      "rate_pct": 10.71,
+      "current_gap": 2,
+      "max_gap": 71,
+      "mean_gap": 8.38,
+      "gap_ratio": 0.2,
+      "likelihood_harmonic": 9.03,
+      "likelihood_hot": 10.71,
+      "likelihood_cold": 5.63,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 33,
+          "count": 18
+        },
+        {
+          "partner": 19,
+          "count": 18
+        },
+        {
+          "partner": 51,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 36,
+      "count": 127,
+      "rate_pct": 11.24,
+      "current_gap": 4,
+      "max_gap": 44,
+      "mean_gap": 7.9,
+      "gap_ratio": 0.41,
+      "likelihood_harmonic": 9.45,
+      "likelihood_hot": 11.24,
+      "likelihood_cold": 6.25,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 31,
+          "count": 17
+        },
+        {
+          "partner": 4,
+          "count": 17
+        },
+        {
+          "partner": 54,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 37,
+      "count": 115,
+      "rate_pct": 10.18,
+      "current_gap": 5,
+      "max_gap": 49,
+      "mean_gap": 8.77,
+      "gap_ratio": 0.51,
+      "likelihood_harmonic": 9.07,
+      "likelihood_hot": 10.18,
+      "likelihood_cold": 6.57,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 44,
+          "count": 16
+        },
+        {
+          "partner": 24,
+          "count": 16
+        },
+        {
+          "partner": 4,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 38,
+      "count": 105,
+      "rate_pct": 9.29,
+      "current_gap": 14,
+      "max_gap": 46,
+      "mean_gap": 9.7,
+      "gap_ratio": 1.42,
+      "likelihood_harmonic": 9.79,
+      "likelihood_hot": 9.29,
+      "likelihood_cold": 10.36,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 50,
+          "count": 17
+        },
+        {
+          "partner": 48,
+          "count": 15
+        },
+        {
+          "partner": 36,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 39,
+      "count": 105,
+      "rate_pct": 9.29,
+      "current_gap": 4,
+      "max_gap": 49,
+      "mean_gap": 9.79,
+      "gap_ratio": 0.41,
+      "likelihood_harmonic": 8.58,
+      "likelihood_hot": 9.29,
+      "likelihood_cold": 6.25,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 10,
+          "count": 18
+        },
+        {
+          "partner": 6,
+          "count": 17
+        },
+        {
+          "partner": 21,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 40,
+      "count": 108,
+      "rate_pct": 9.56,
+      "current_gap": 0,
+      "max_gap": 33,
+      "mean_gap": 8.99,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 8.35,
+      "likelihood_hot": 9.56,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 41,
+          "count": 17
+        },
+        {
+          "partner": 16,
+          "count": 17
+        },
+        {
+          "partner": 58,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 41,
+      "count": 123,
+      "rate_pct": 10.88,
+      "current_gap": 2,
+      "max_gap": 35,
+      "mean_gap": 8.24,
+      "gap_ratio": 0.2,
+      "likelihood_harmonic": 9.11,
+      "likelihood_hot": 10.88,
+      "likelihood_cold": 5.63,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 40,
+          "count": 17
+        },
+        {
+          "partner": 44,
+          "count": 17
+        },
+        {
+          "partner": 46,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 42,
+      "count": 125,
+      "rate_pct": 11.06,
+      "current_gap": 9,
+      "max_gap": 40,
+      "mean_gap": 7.92,
+      "gap_ratio": 0.92,
+      "likelihood_harmonic": 9.91,
+      "likelihood_hot": 11.06,
+      "likelihood_cold": 8.07,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 44,
+          "count": 21
+        },
+        {
+          "partner": 9,
+          "count": 17
+        },
+        {
+          "partner": 36,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 43,
+      "count": 116,
+      "rate_pct": 10.27,
+      "current_gap": 0,
+      "max_gap": 39,
+      "mean_gap": 8.72,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 8.67,
+      "likelihood_hot": 10.27,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 23,
+          "count": 18
+        },
+        {
+          "partner": 6,
+          "count": 18
+        },
+        {
+          "partner": 26,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 44,
+      "count": 138,
+      "rate_pct": 12.21,
+      "current_gap": 12,
+      "max_gap": 36,
+      "mean_gap": 7.15,
+      "gap_ratio": 1.22,
+      "likelihood_harmonic": 10.82,
+      "likelihood_hot": 12.21,
+      "likelihood_cold": 9.37,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 42,
+          "count": 21
+        },
+        {
+          "partner": 7,
+          "count": 18
+        },
+        {
+          "partner": 41,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 45,
+      "count": 125,
+      "rate_pct": 11.06,
+      "current_gap": 6,
+      "max_gap": 47,
+      "mean_gap": 8.02,
+      "gap_ratio": 0.61,
+      "likelihood_harmonic": 9.57,
+      "likelihood_hot": 11.06,
+      "likelihood_cold": 6.91,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 20,
+          "count": 17
+        },
+        {
+          "partner": 30,
+          "count": 16
+        },
+        {
+          "partner": 56,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 46,
+      "count": 111,
+      "rate_pct": 9.82,
+      "current_gap": 6,
+      "max_gap": 47,
+      "mean_gap": 9.18,
+      "gap_ratio": 0.61,
+      "likelihood_harmonic": 9.01,
+      "likelihood_hot": 9.82,
+      "likelihood_cold": 6.91,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 41,
+          "count": 17
+        },
+        {
+          "partner": 5,
+          "count": 15
+        },
+        {
+          "partner": 42,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 47,
+      "count": 119,
+      "rate_pct": 10.53,
+      "current_gap": 0,
+      "max_gap": 45,
+      "mean_gap": 8.5,
+      "gap_ratio": 0.0,
+      "likelihood_harmonic": 8.79,
+      "likelihood_hot": 10.53,
+      "likelihood_cold": 5.09,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 17,
+          "count": 17
+        },
+        {
+          "partner": 52,
+          "count": 15
+        },
+        {
+          "partner": 57,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 48,
+      "count": 118,
+      "rate_pct": 10.44,
+      "current_gap": 18,
+      "max_gap": 45,
+      "mean_gap": 8.5,
+      "gap_ratio": 1.83,
+      "likelihood_harmonic": 11.01,
+      "likelihood_hot": 10.44,
+      "likelihood_cold": 12.72,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 56,
+          "count": 16
+        },
+        {
+          "partner": 50,
+          "count": 15
+        },
+        {
+          "partner": 38,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 49,
+      "count": 119,
+      "rate_pct": 10.53,
+      "current_gap": 9,
+      "max_gap": 39,
+      "mean_gap": 8.45,
+      "gap_ratio": 0.92,
+      "likelihood_harmonic": 9.67,
+      "likelihood_hot": 10.53,
+      "likelihood_cold": 8.07,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 18,
+          "count": 20
+        },
+        {
+          "partner": 44,
+          "count": 16
+        },
+        {
+          "partner": 59,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 50,
+      "count": 121,
+      "rate_pct": 10.71,
+      "current_gap": 2,
+      "max_gap": 37,
+      "mean_gap": 8.3,
+      "gap_ratio": 0.2,
+      "likelihood_harmonic": 9.03,
+      "likelihood_hot": 10.71,
+      "likelihood_cold": 5.63,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 56,
+          "count": 17
+        },
+        {
+          "partner": 38,
+          "count": 17
+        },
+        {
+          "partner": 53,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 51,
+      "count": 121,
+      "rate_pct": 10.71,
+      "current_gap": 9,
+      "max_gap": 45,
+      "mean_gap": 8.14,
+      "gap_ratio": 0.92,
+      "likelihood_harmonic": 9.75,
+      "likelihood_hot": 10.71,
+      "likelihood_cold": 8.07,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 53,
+          "count": 17
+        },
+        {
+          "partner": 35,
+          "count": 17
+        },
+        {
+          "partner": 32,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 52,
+      "count": 115,
+      "rate_pct": 10.18,
+      "current_gap": 8,
+      "max_gap": 27,
+      "mean_gap": 8.79,
+      "gap_ratio": 0.81,
+      "likelihood_harmonic": 9.39,
+      "likelihood_hot": 10.18,
+      "likelihood_cold": 7.64,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 55,
+          "count": 17
+        },
+        {
+          "partner": 44,
+          "count": 15
+        },
+        {
+          "partner": 47,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 53,
+      "count": 108,
+      "rate_pct": 9.56,
+      "current_gap": 3,
+      "max_gap": 32,
+      "mean_gap": 9.36,
+      "gap_ratio": 0.31,
+      "likelihood_harmonic": 8.61,
+      "likelihood_hot": 9.56,
+      "likelihood_cold": 5.95,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 26,
+          "count": 18
+        },
+        {
+          "partner": 51,
+          "count": 17
+        },
+        {
+          "partner": 50,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 54,
+      "count": 110,
+      "rate_pct": 9.73,
+      "current_gap": 4,
+      "max_gap": 41,
+      "mean_gap": 9.24,
+      "gap_ratio": 0.41,
+      "likelihood_harmonic": 8.78,
+      "likelihood_hot": 9.73,
+      "likelihood_cold": 6.25,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 59,
+          "count": 15
+        },
+        {
+          "partner": 36,
+          "count": 15
+        },
+        {
+          "partner": 49,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 55,
+      "count": 111,
+      "rate_pct": 9.82,
+      "current_gap": 31,
+      "max_gap": 38,
+      "mean_gap": 8.92,
+      "gap_ratio": 3.15,
+      "likelihood_harmonic": 14.26,
+      "likelihood_hot": 9.82,
+      "likelihood_cold": 24.61,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 6,
+          "count": 18
+        },
+        {
+          "partner": 11,
+          "count": 17
+        },
+        {
+          "partner": 52,
+          "count": 17
+        }
+      ]
+    },
+    {
+      "ball": 56,
+      "count": 129,
+      "rate_pct": 11.42,
+      "current_gap": 4,
+      "max_gap": 34,
+      "mean_gap": 7.75,
+      "gap_ratio": 0.41,
+      "likelihood_harmonic": 9.53,
+      "likelihood_hot": 11.42,
+      "likelihood_cold": 6.25,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 50,
+          "count": 17
+        },
+        {
+          "partner": 16,
+          "count": 17
+        },
+        {
+          "partner": 48,
+          "count": 16
+        }
+      ]
+    },
+    {
+      "ball": 57,
+      "count": 102,
+      "rate_pct": 9.03,
+      "current_gap": 36,
+      "max_gap": 55,
+      "mean_gap": 9.72,
+      "gap_ratio": 3.66,
+      "likelihood_harmonic": 16.02,
+      "likelihood_hot": 9.03,
+      "likelihood_cold": 31.75,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 27,
+          "count": 16
+        },
+        {
+          "partner": 47,
+          "count": 15
+        },
+        {
+          "partner": 45,
+          "count": 14
+        }
+      ]
+    },
+    {
+      "ball": 58,
+      "count": 103,
+      "rate_pct": 9.12,
+      "current_gap": 8,
+      "max_gap": 60,
+      "mean_gap": 9.98,
+      "gap_ratio": 0.81,
+      "likelihood_harmonic": 8.91,
+      "likelihood_hot": 9.12,
+      "likelihood_cold": 7.64,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 40,
+          "count": 16
+        },
+        {
+          "partner": 42,
+          "count": 15
+        },
+        {
+          "partner": 44,
+          "count": 15
+        }
+      ]
+    },
+    {
+      "ball": 59,
+      "count": 118,
+      "rate_pct": 10.44,
+      "current_gap": 12,
+      "max_gap": 49,
+      "mean_gap": 8.5,
+      "gap_ratio": 1.22,
+      "likelihood_harmonic": 10.02,
+      "likelihood_hot": 10.44,
+      "likelihood_cold": 9.37,
+      "likelihood_equal": 10.17,
+      "top_pairs": [
+        {
+          "partner": 49,
+          "count": 16
+        },
+        {
+          "partner": 17,
+          "count": 16
+        },
+        {
+          "partner": 56,
+          "count": 15
+        }
+      ]
+    }
+  ],
+  "cooccurrence_matrix": [
+    [
+      0,
+      7,
+      9,
+      13,
+      7,
+      12,
+      10,
+      10,
+      17,
+      7,
+      11,
+      8,
+      9,
+      6,
+      10,
+      8,
+      13,
+      4,
+      9,
+      10,
+      14,
+      9,
+      5,
+      8,
+      9,
+      11,
+      8,
+      8,
+      8,
+      11,
+      10,
+      9,
+      4,
+      13,
+      10,
+      13,
+      8,
+      4,
+      7,
+      9,
+      9,
+      14,
+      10,
+      9,
+      13,
+      14,
+      13,
+      7,
+      14,
+      11,
+      11,
+      5,
+      12,
+      11,
+      5,
+      13,
+      5,
+      10,
+      11
+    ],
+    [
+      7,
+      0,
+      10,
+      8,
+      6,
+      7,
+      8,
+      13,
+      8,
+      5,
+      7,
+      12,
+      7,
+      3,
+      11,
+      8,
+      11,
+      7,
+      9,
+      8,
+      13,
+      7,
+      9,
+      8,
+      8,
+      6,
+      12,
+      8,
+      6,
+      5,
+      14,
+      13,
+      8,
+      7,
+      6,
+      9,
+      10,
+      11,
+      8,
+      8,
+      12,
+      8,
+      9,
+      8,
+      8,
+      5,
+      8,
+      10,
+      5,
+      6,
+      7,
+      8,
+      8,
+      10,
+      8,
+      3,
+      6,
+      4,
+      6
+    ],
+    [
+      9,
+      10,
+      0,
+      12,
+      14,
+      11,
+      4,
+      6,
+      12,
+      7,
+      4,
+      10,
+      7,
+      6,
+      14,
+      8,
+      8,
+      4,
+      11,
+      6,
+      11,
+      7,
+      7,
+      14,
+      11,
+      9,
+      11,
+      9,
+      7,
+      9,
+      7,
+      9,
+      7,
+      9,
+      13,
+      5,
+      11,
+      10,
+      11,
+      11,
+      6,
+      12,
+      6,
+      10,
+      12,
+      10,
+      10,
+      8,
+      10,
+      9,
+      15,
+      12,
+      5,
+      9,
+      12,
+      10,
+      9,
+      13,
+      11
+    ],
+    [
+      13,
+      8,
+      12,
+      0,
+      9,
+      9,
+      11,
+      7,
+      15,
+      13,
+      12,
+      8,
+      8,
+      7,
+      9,
+      15,
+      9,
+      13,
+      12,
+      10,
+      8,
+      7,
+      5,
+      11,
+      7,
+      9,
+      14,
+      7,
+      6,
+      16,
+      11,
+      11,
+      7,
+      10,
+      8,
+      17,
+      15,
+      9,
+      11,
+      6,
+      12,
+      8,
+      11,
+      8,
+      4,
+      9,
+      5,
+      11,
+      12,
+      10,
+      7,
+      10,
+      8,
+      13,
+      9,
+      15,
+      5,
+      8,
+      10
+    ],
+    [
+      7,
+      6,
+      14,
+      9,
+      0,
+      10,
+      6,
+      11,
+      12,
+      14,
+      10,
+      8,
+      11,
+      10,
+      11,
+      11,
+      11,
+      12,
+      11,
+      9,
+      8,
+      12,
+      8,
+      12,
+      6,
+      15,
+      4,
+      8,
+      12,
+      12,
+      13,
+      9,
+      17,
+      10,
+      12,
+      11,
+      10,
+      11,
+      10,
+      8,
+      17,
+      11,
+      8,
+      14,
+      9,
+      15,
+      6,
+      7,
+      9,
+      8,
+      13,
+      7,
+      11,
+      5,
+      10,
+      12,
+      4,
+      5,
+      13
+    ],
+    [
+      12,
+      7,
+      11,
+      9,
+      10,
+      0,
+      12,
+      10,
+      8,
+      12,
+      14,
+      3,
+      3,
+      6,
+      12,
+      15,
+      13,
+      9,
+      14,
+      10,
+      11,
+      8,
+      7,
+      14,
+      9,
+      14,
+      10,
+      12,
+      18,
+      6,
+      8,
+      13,
+      8,
+      8,
+      6,
+      10,
+      7,
+      10,
+      17,
+      14,
+      11,
+      13,
+      18,
+      11,
+      6,
+      12,
+      9,
+      7,
+      9,
+      9,
+      9,
+      10,
+      9,
+      12,
+      18,
+      10,
+      9,
+      8,
+      10
+    ],
+    [
+      10,
+      8,
+      4,
+      11,
+      6,
+      12,
+      0,
+      10,
+      15,
+      6,
+      12,
+      5,
+      10,
+      10,
+      9,
+      13,
+      11,
+      7,
+      13,
+      15,
+      9,
+      13,
+      13,
+      11,
+      10,
+      10,
+      10,
+      14,
+      11,
+      6,
+      13,
+      6,
+      11,
+      7,
+      11,
+      5,
+      11,
+      11,
+      7,
+      9,
+      7,
+      9,
+      13,
+      18,
+      12,
+      9,
+      15,
+      12,
+      10,
+      12,
+      13,
+      10,
+      8,
+      11,
+      15,
+      13,
+      3,
+      10,
+      10
+    ],
+    [
+      10,
+      13,
+      6,
+      7,
+      11,
+      10,
+      10,
+      0,
+      9,
+      6,
+      12,
+      10,
+      10,
+      2,
+      8,
+      15,
+      6,
+      7,
+      8,
+      12,
+      13,
+      8,
+      5,
+      16,
+      8,
+      11,
+      12,
+      11,
+      10,
+      15,
+      10,
+      9,
+      10,
+      12,
+      4,
+      9,
+      14,
+      10,
+      5,
+      7,
+      10,
+      5,
+      14,
+      10,
+      10,
+      8,
+      11,
+      10,
+      11,
+      9,
+      10,
+      15,
+      8,
+      11,
+      15,
+      12,
+      8,
+      11,
+      6
+    ],
+    [
+      17,
+      8,
+      12,
+      15,
+      12,
+      8,
+      15,
+      9,
+      0,
+      9,
+      14,
+      21,
+      10,
+      7,
+      7,
+      14,
+      16,
+      11,
+      7,
+      12,
+      11,
+      9,
+      9,
+      15,
+      10,
+      9,
+      13,
+      13,
+      10,
+      10,
+      12,
+      9,
+      16,
+      12,
+      14,
+      13,
+      9,
+      12,
+      5,
+      6,
+      8,
+      17,
+      14,
+      15,
+      13,
+      10,
+      14,
+      9,
+      10,
+      13,
+      15,
+      9,
+      5,
+      11,
+      9,
+      13,
+      13,
+      11,
+      10
+    ],
+    [
+      7,
+      5,
+      7,
+      13,
+      14,
+      12,
+      6,
+      6,
+      9,
+      0,
+      9,
+      10,
+      13,
+      8,
+      9,
+      14,
+      9,
+      12,
+      8,
+      10,
+      6,
+      11,
+      8,
+      8,
+      12,
+      5,
+      14,
+      8,
+      7,
+      10,
+      10,
+      11,
+      9,
+      7,
+      6,
+      8,
+      8,
+      9,
+      18,
+      6,
+      9,
+      14,
+      9,
+      13,
+      9,
+      14,
+      9,
+      10,
+      11,
+      4,
+      14,
+      8,
+      11,
+      12,
+      7,
+      11,
+      8,
+      12,
+      8
+    ],
+    [
+      11,
+      7,
+      4,
+      12,
+      10,
+      14,
+      12,
+      12,
+      14,
+      9,
+      0,
+      10,
+      6,
+      9,
+      8,
+      11,
+      10,
+      10,
+      8,
+      9,
+      10,
+      7,
+      5,
+      12,
+      11,
+      4,
+      14,
+      7,
+      11,
+      7,
+      10,
+      12,
+      15,
+      10,
+      9,
+      10,
+      10,
+      8,
+      7,
+      9,
+      11,
+      14,
+      9,
+      15,
+      10,
+      14,
+      11,
+      10,
+      7,
+      8,
+      12,
+      13,
+      9,
+      8,
+      17,
+      12,
+      5,
+      4,
+      7
+    ],
+    [
+      8,
+      12,
+      10,
+      8,
+      8,
+      3,
+      5,
+      10,
+      21,
+      10,
+      10,
+      0,
+      10,
+      6,
+      8,
+      4,
+      13,
+      8,
+      6,
+      7,
+      14,
+      10,
+      8,
+      8,
+      11,
+      10,
+      11,
+      9,
+      10,
+      7,
+      10,
+      15,
+      4,
+      14,
+      15,
+      10,
+      11,
+      8,
+      8,
+      10,
+      10,
+      11,
+      6,
+      11,
+      12,
+      10,
+      8,
+      8,
+      9,
+      13,
+      4,
+      10,
+      11,
+      7,
+      12,
+      5,
+      8,
+      11,
+      9
+    ],
+    [
+      9,
+      7,
+      7,
+      8,
+      11,
+      3,
+      10,
+      10,
+      10,
+      13,
+      6,
+      10,
+      0,
+      8,
+      9,
+      10,
+      10,
+      9,
+      11,
+      7,
+      11,
+      10,
+      9,
+      10,
+      6,
+      8,
+      12,
+      8,
+      8,
+      13,
+      12,
+      8,
+      7,
+      7,
+      9,
+      7,
+      7,
+      7,
+      13,
+      11,
+      5,
+      7,
+      7,
+      8,
+      7,
+      13,
+      10,
+      9,
+      9,
+      8,
+      6,
+      11,
+      6,
+      9,
+      8,
+      9,
+      6,
+      15,
+      6
+    ],
+    [
+      6,
+      3,
+      6,
+      7,
+      10,
+      6,
+      10,
+      2,
+      7,
+      8,
+      9,
+      6,
+      8,
+      0,
+      9,
+      11,
+      13,
+      9,
+      9,
+      13,
+      6,
+      10,
+      12,
+      5,
+      4,
+      7,
+      7,
+      9,
+      10,
+      7,
+      10,
+      8,
+      9,
+      6,
+      9,
+      11,
+      8,
+      5,
+      6,
+      7,
+      8,
+      6,
+      12,
+      12,
+      15,
+      12,
+      9,
+      9,
+      15,
+      12,
+      8,
+      6,
+      7,
+      4,
+      2,
+      11,
+      6,
+      6,
+      12
+    ],
+    [
+      10,
+      11,
+      14,
+      9,
+      11,
+      12,
+      9,
+      8,
+      7,
+      9,
+      8,
+      8,
+      9,
+      9,
+      0,
+      7,
+      9,
+      8,
+      11,
+      12,
+      13,
+      9,
+      13,
+      9,
+      9,
+      8,
+      13,
+      6,
+      7,
+      8,
+      9,
+      4,
+      6,
+      12,
+      11,
+      11,
+      13,
+      9,
+      10,
+      7,
+      11,
+      11,
+      10,
+      13,
+      9,
+      9,
+      11,
+      10,
+      12,
+      14,
+      13,
+      12,
+      11,
+      10,
+      13,
+      8,
+      9,
+      6,
+      15
+    ],
+    [
+      8,
+      8,
+      8,
+      15,
+      11,
+      15,
+      13,
+      15,
+      14,
+      14,
+      11,
+      4,
+      10,
+      11,
+      7,
+      0,
+      13,
+      18,
+      9,
+      18,
+      11,
+      8,
+      13,
+      12,
+      13,
+      14,
+      9,
+      11,
+      14,
+      12,
+      14,
+      15,
+      4,
+      8,
+      8,
+      15,
+      12,
+      9,
+      6,
+      17,
+      12,
+      13,
+      15,
+      12,
+      14,
+      10,
+      15,
+      14,
+      13,
+      12,
+      15,
+      13,
+      6,
+      11,
+      12,
+      17,
+      12,
+      9,
+      8
+    ],
+    [
+      13,
+      11,
+      8,
+      9,
+      11,
+      13,
+      11,
+      6,
+      16,
+      9,
+      10,
+      13,
+      10,
+      13,
+      9,
+      13,
+      0,
+      5,
+      10,
+      8,
+      10,
+      8,
+      6,
+      17,
+      10,
+      8,
+      5,
+      8,
+      9,
+      12,
+      17,
+      8,
+      6,
+      8,
+      10,
+      15,
+      8,
+      8,
+      8,
+      6,
+      15,
+      12,
+      11,
+      11,
+      10,
+      8,
+      17,
+      15,
+      8,
+      7,
+      10,
+      11,
+      12,
+      10,
+      7,
+      7,
+      8,
+      5,
+      16
+    ],
+    [
+      4,
+      7,
+      4,
+      13,
+      12,
+      9,
+      7,
+      7,
+      11,
+      12,
+      10,
+      8,
+      9,
+      9,
+      8,
+      18,
+      5,
+      0,
+      8,
+      9,
+      13,
+      12,
+      9,
+      13,
+      6,
+      13,
+      11,
+      13,
+      15,
+      10,
+      8,
+      9,
+      12,
+      7,
+      14,
+      14,
+      11,
+      9,
+      9,
+      13,
+      9,
+      15,
+      6,
+      8,
+      10,
+      10,
+      10,
+      9,
+      20,
+      7,
+      10,
+      8,
+      11,
+      13,
+      6,
+      7,
+      11,
+      6,
+      13
+    ],
+    [
+      9,
+      9,
+      11,
+      12,
+      11,
+      14,
+      13,
+      8,
+      7,
+      8,
+      8,
+      6,
+      11,
+      9,
+      11,
+      9,
+      10,
+      8,
+      0,
+      12,
+      10,
+      8,
+      10,
+      6,
+      10,
+      6,
+      5,
+      7,
+      14,
+      11,
+      8,
+      9,
+      7,
+      6,
+      18,
+      14,
+      8,
+      4,
+      12,
+      8,
+      6,
+      9,
+      6,
+      11,
+      12,
+      10,
+      9,
+      9,
+      8,
+      10,
+      14,
+      7,
+      11,
+      11,
+      13,
+      6,
+      4,
+      5,
+      7
+    ],
+    [
+      10,
+      8,
+      6,
+      10,
+      9,
+      10,
+      15,
+      12,
+      12,
+      10,
+      9,
+      7,
+      7,
+      13,
+      12,
+      18,
+      8,
+      9,
+      12,
+      0,
+      10,
+      10,
+      11,
+      10,
+      8,
+      12,
+      10,
+      5,
+      7,
+      13,
+      15,
+      10,
+      8,
+      5,
+      9,
+      8,
+      10,
+      7,
+      8,
+      7,
+      10,
+      9,
+      11,
+      15,
+      17,
+      12,
+      13,
+      12,
+      8,
+      10,
+      15,
+      9,
+      8,
+      12,
+      6,
+      11,
+      12,
+      5,
+      10
+    ],
+    [
+      14,
+      13,
+      11,
+      8,
+      8,
+      11,
+      9,
+      13,
+      11,
+      6,
+      10,
+      14,
+      11,
+      6,
+      13,
+      11,
+      10,
+      13,
+      10,
+      10,
+      0,
+      7,
+      7,
+      11,
+      11,
+      8,
+      8,
+      10,
+      11,
+      9,
+      10,
+      15,
+      8,
+      12,
+      9,
+      9,
+      9,
+      5,
+      15,
+      9,
+      10,
+      10,
+      12,
+      11,
+      10,
+      14,
+      14,
+      9,
+      8,
+      7,
+      15,
+      10,
+      4,
+      7,
+      11,
+      12,
+      3,
+      10,
+      13
+    ],
+    [
+      9,
+      7,
+      7,
+      7,
+      12,
+      8,
+      13,
+      8,
+      9,
+      11,
+      7,
+      10,
+      10,
+      10,
+      9,
+      8,
+      8,
+      12,
+      8,
+      10,
+      7,
+      0,
+      8,
+      9,
+      6,
+      9,
+      14,
+      5,
+      9,
+      12,
+      11,
+      10,
+      3,
+      4,
+      5,
+      10,
+      4,
+      7,
+      7,
+      11,
+      6,
+      12,
+      12,
+      12,
+      8,
+      10,
+      8,
+      6,
+      16,
+      9,
+      13,
+      12,
+      15,
+      6,
+      10,
+      15,
+      13,
+      9,
+      14
+    ],
+    [
+      5,
+      9,
+      7,
+      5,
+      8,
+      7,
+      13,
+      5,
+      9,
+      8,
+      5,
+      8,
+      9,
+      12,
+      13,
+      13,
+      6,
+      9,
+      10,
+      11,
+      7,
+      8,
+      0,
+      6,
+      8,
+      11,
+      9,
+      11,
+      9,
+      6,
+      17,
+      9,
+      8,
+      5,
+      14,
+      13,
+      10,
+      8,
+      5,
+      11,
+      8,
+      7,
+      18,
+      11,
+      13,
+      9,
+      11,
+      9,
+      8,
+      13,
+      10,
+      11,
+      7,
+      8,
+      7,
+      16,
+      7,
+      10,
+      10
+    ],
+    [
+      8,
+      8,
+      14,
+      11,
+      12,
+      14,
+      11,
+      16,
+      15,
+      8,
+      12,
+      8,
+      10,
+      5,
+      9,
+      12,
+      17,
+      13,
+      6,
+      10,
+      11,
+      9,
+      6,
+      0,
+      11,
+      14,
+      6,
+      11,
+      14,
+      18,
+      10,
+      12,
+      17,
+      9,
+      9,
+      11,
+      16,
+      13,
+      9,
+      10,
+      11,
+      13,
+      11,
+      8,
+      13,
+      9,
+      6,
+      11,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      8,
+      16,
+      12,
+      7,
+      10
+    ],
+    [
+      9,
+      8,
+      11,
+      7,
+      6,
+      9,
+      10,
+      8,
+      10,
+      12,
+      11,
+      11,
+      6,
+      4,
+      9,
+      13,
+      10,
+      6,
+      10,
+      8,
+      11,
+      6,
+      8,
+      11,
+      0,
+      11,
+      15,
+      9,
+      10,
+      11,
+      14,
+      10,
+      13,
+      14,
+      11,
+      13,
+      10,
+      9,
+      10,
+      8,
+      12,
+      12,
+      9,
+      15,
+      12,
+      10,
+      13,
+      10,
+      6,
+      13,
+      12,
+      5,
+      8,
+      11,
+      11,
+      9,
+      11,
+      10,
+      9
+    ],
+    [
+      11,
+      6,
+      9,
+      9,
+      15,
+      14,
+      10,
+      11,
+      9,
+      5,
+      4,
+      10,
+      8,
+      7,
+      8,
+      14,
+      8,
+      13,
+      6,
+      12,
+      8,
+      9,
+      11,
+      14,
+      11,
+      0,
+      7,
+      11,
+      5,
+      5,
+      7,
+      6,
+      17,
+      7,
+      8,
+      10,
+      11,
+      13,
+      8,
+      10,
+      13,
+      12,
+      17,
+      13,
+      12,
+      14,
+      4,
+      12,
+      8,
+      9,
+      8,
+      10,
+      18,
+      4,
+      12,
+      10,
+      10,
+      12,
+      5
+    ],
+    [
+      8,
+      12,
+      11,
+      14,
+      4,
+      10,
+      10,
+      12,
+      13,
+      14,
+      14,
+      11,
+      12,
+      7,
+      13,
+      9,
+      5,
+      11,
+      5,
+      10,
+      8,
+      14,
+      9,
+      6,
+      15,
+      7,
+      0,
+      8,
+      12,
+      11,
+      15,
+      18,
+      12,
+      14,
+      10,
+      15,
+      10,
+      6,
+      8,
+      8,
+      12,
+      11,
+      9,
+      6,
+      15,
+      8,
+      10,
+      12,
+      10,
+      8,
+      11,
+      8,
+      9,
+      14,
+      10,
+      11,
+      16,
+      4,
+      15
+    ],
+    [
+      8,
+      8,
+      9,
+      7,
+      8,
+      12,
+      14,
+      11,
+      13,
+      8,
+      7,
+      9,
+      8,
+      9,
+      6,
+      11,
+      8,
+      13,
+      7,
+      5,
+      10,
+      5,
+      11,
+      11,
+      9,
+      11,
+      8,
+      0,
+      11,
+      11,
+      9,
+      8,
+      7,
+      9,
+      8,
+      10,
+      9,
+      10,
+      8,
+      7,
+      15,
+      8,
+      9,
+      10,
+      13,
+      10,
+      14,
+      10,
+      7,
+      9,
+      10,
+      10,
+      7,
+      10,
+      2,
+      10,
+      12,
+      5,
+      6
+    ],
+    [
+      8,
+      6,
+      7,
+      6,
+      12,
+      18,
+      11,
+      10,
+      10,
+      7,
+      11,
+      10,
+      8,
+      10,
+      7,
+      14,
+      9,
+      15,
+      14,
+      7,
+      11,
+      9,
+      9,
+      14,
+      10,
+      5,
+      12,
+      11,
+      0,
+      13,
+      10,
+      12,
+      8,
+      6,
+      8,
+      7,
+      10,
+      11,
+      9,
+      16,
+      12,
+      9,
+      5,
+      15,
+      13,
+      11,
+      12,
+      9,
+      12,
+      9,
+      7,
+      9,
+      9,
+      9,
+      11,
+      12,
+      11,
+      10,
+      14
+    ],
+    [
+      11,
+      5,
+      9,
+      16,
+      12,
+      6,
+      6,
+      15,
+      10,
+      10,
+      7,
+      7,
+      13,
+      7,
+      8,
+      12,
+      12,
+      10,
+      11,
+      13,
+      9,
+      12,
+      6,
+      18,
+      11,
+      5,
+      11,
+      11,
+      13,
+      0,
+      11,
+      10,
+      10,
+      9,
+      8,
+      12,
+      8,
+      10,
+      10,
+      5,
+      16,
+      7,
+      8,
+      8,
+      16,
+      7,
+      10,
+      8,
+      5,
+      14,
+      10,
+      14,
+      8,
+      8,
+      5,
+      10,
+      7,
+      6,
+      9
+    ],
+    [
+      10,
+      14,
+      7,
+      11,
+      13,
+      8,
+      13,
+      10,
+      12,
+      10,
+      10,
+      10,
+      12,
+      10,
+      9,
+      14,
+      17,
+      8,
+      8,
+      15,
+      10,
+      11,
+      17,
+      10,
+      14,
+      7,
+      15,
+      9,
+      10,
+      11,
+      0,
+      9,
+      8,
+      13,
+      16,
+      17,
+      8,
+      10,
+      10,
+      9,
+      8,
+      8,
+      13,
+      10,
+      13,
+      8,
+      8,
+      13,
+      12,
+      9,
+      10,
+      11,
+      11,
+      8,
+      15,
+      10,
+      10,
+      8,
+      10
+    ],
+    [
+      9,
+      13,
+      9,
+      11,
+      9,
+      13,
+      6,
+      9,
+      9,
+      11,
+      12,
+      15,
+      8,
+      8,
+      4,
+      15,
+      8,
+      9,
+      9,
+      10,
+      15,
+      10,
+      9,
+      12,
+      10,
+      6,
+      18,
+      8,
+      12,
+      10,
+      9,
+      0,
+      13,
+      7,
+      11,
+      12,
+      11,
+      5,
+      10,
+      8,
+      16,
+      11,
+      10,
+      8,
+      10,
+      10,
+      6,
+      10,
+      10,
+      12,
+      15,
+      3,
+      8,
+      10,
+      8,
+      10,
+      6,
+      6,
+      13
+    ],
+    [
+      4,
+      8,
+      7,
+      7,
+      17,
+      8,
+      11,
+      10,
+      16,
+      9,
+      15,
+      4,
+      7,
+      9,
+      6,
+      4,
+      6,
+      12,
+      7,
+      8,
+      8,
+      3,
+      8,
+      17,
+      13,
+      17,
+      12,
+      7,
+      8,
+      10,
+      8,
+      13,
+      0,
+      12,
+      18,
+      8,
+      10,
+      12,
+      9,
+      3,
+      10,
+      8,
+      8,
+      10,
+      10,
+      10,
+      5,
+      10,
+      5,
+      11,
+      12,
+      6,
+      12,
+      6,
+      7,
+      9,
+      13,
+      8,
+      4
+    ],
+    [
+      13,
+      7,
+      9,
+      10,
+      10,
+      8,
+      7,
+      12,
+      12,
+      7,
+      10,
+      14,
+      7,
+      6,
+      12,
+      8,
+      8,
+      7,
+      6,
+      5,
+      12,
+      4,
+      5,
+      9,
+      14,
+      7,
+      14,
+      9,
+      6,
+      9,
+      13,
+      7,
+      12,
+      0,
+      8,
+      8,
+      6,
+      5,
+      9,
+      8,
+      10,
+      8,
+      11,
+      7,
+      6,
+      6,
+      9,
+      13,
+      4,
+      11,
+      9,
+      12,
+      8,
+      8,
+      8,
+      11,
+      13,
+      10,
+      8
+    ],
+    [
+      10,
+      6,
+      13,
+      8,
+      12,
+      6,
+      11,
+      4,
+      14,
+      6,
+      9,
+      15,
+      9,
+      9,
+      11,
+      8,
+      10,
+      14,
+      18,
+      9,
+      9,
+      5,
+      14,
+      9,
+      11,
+      8,
+      10,
+      8,
+      8,
+      8,
+      16,
+      11,
+      18,
+      8,
+      0,
+      12,
+      10,
+      7,
+      10,
+      5,
+      9,
+      13,
+      4,
+      15,
+      14,
+      10,
+      12,
+      13,
+      13,
+      14,
+      17,
+      14,
+      12,
+      13,
+      9,
+      9,
+      6,
+      11,
+      8
+    ],
+    [
+      13,
+      9,
+      5,
+      17,
+      11,
+      10,
+      5,
+      9,
+      13,
+      8,
+      10,
+      10,
+      7,
+      11,
+      11,
+      15,
+      15,
+      14,
+      14,
+      8,
+      9,
+      10,
+      13,
+      11,
+      13,
+      10,
+      15,
+      10,
+      7,
+      12,
+      17,
+      12,
+      8,
+      8,
+      12,
+      0,
+      8,
+      14,
+      13,
+      10,
+      8,
+      15,
+      10,
+      10,
+      12,
+      13,
+      13,
+      12,
+      12,
+      10,
+      9,
+      12,
+      6,
+      15,
+      10,
+      14,
+      10,
+      4,
+      13
+    ],
+    [
+      8,
+      10,
+      11,
+      15,
+      10,
+      7,
+      11,
+      14,
+      9,
+      8,
+      10,
+      11,
+      7,
+      8,
+      13,
+      12,
+      8,
+      11,
+      8,
+      10,
+      9,
+      4,
+      10,
+      16,
+      10,
+      11,
+      10,
+      9,
+      10,
+      8,
+      8,
+      11,
+      10,
+      6,
+      10,
+      8,
+      0,
+      11,
+      8,
+      10,
+      10,
+      11,
+      6,
+      16,
+      9,
+      7,
+      11,
+      8,
+      12,
+      12,
+      12,
+      14,
+      7,
+      6,
+      12,
+      9,
+      13,
+      8,
+      12
+    ],
+    [
+      4,
+      11,
+      10,
+      9,
+      11,
+      10,
+      11,
+      10,
+      12,
+      9,
+      8,
+      8,
+      7,
+      5,
+      9,
+      9,
+      8,
+      9,
+      4,
+      7,
+      5,
+      7,
+      8,
+      13,
+      9,
+      13,
+      6,
+      10,
+      11,
+      10,
+      10,
+      5,
+      12,
+      5,
+      7,
+      14,
+      11,
+      0,
+      5,
+      9,
+      9,
+      6,
+      12,
+      10,
+      11,
+      8,
+      13,
+      15,
+      11,
+      17,
+      6,
+      5,
+      9,
+      9,
+      11,
+      9,
+      6,
+      8,
+      9
+    ],
+    [
+      7,
+      8,
+      11,
+      11,
+      10,
+      17,
+      7,
+      5,
+      5,
+      18,
+      7,
+      8,
+      13,
+      6,
+      10,
+      6,
+      8,
+      9,
+      12,
+      8,
+      15,
+      7,
+      5,
+      9,
+      10,
+      8,
+      8,
+      8,
+      9,
+      10,
+      10,
+      10,
+      9,
+      9,
+      10,
+      13,
+      8,
+      5,
+      0,
+      7,
+      10,
+      10,
+      8,
+      13,
+      9,
+      10,
+      6,
+      9,
+      6,
+      12,
+      10,
+      6,
+      11,
+      5,
+      7,
+      9,
+      7,
+      14,
+      7
+    ],
+    [
+      9,
+      8,
+      11,
+      6,
+      8,
+      14,
+      9,
+      7,
+      6,
+      6,
+      9,
+      10,
+      11,
+      7,
+      7,
+      17,
+      6,
+      13,
+      8,
+      7,
+      9,
+      11,
+      11,
+      10,
+      8,
+      10,
+      8,
+      7,
+      16,
+      5,
+      9,
+      8,
+      3,
+      8,
+      5,
+      10,
+      10,
+      9,
+      7,
+      0,
+      17,
+      8,
+      13,
+      14,
+      8,
+      5,
+      12,
+      5,
+      11,
+      11,
+      9,
+      7,
+      11,
+      9,
+      11,
+      15,
+      6,
+      16,
+      9
+    ],
+    [
+      9,
+      12,
+      6,
+      12,
+      17,
+      11,
+      7,
+      10,
+      8,
+      9,
+      11,
+      10,
+      5,
+      8,
+      11,
+      12,
+      15,
+      9,
+      6,
+      10,
+      10,
+      6,
+      8,
+      11,
+      12,
+      13,
+      12,
+      15,
+      12,
+      16,
+      8,
+      16,
+      10,
+      10,
+      9,
+      8,
+      10,
+      9,
+      10,
+      17,
+      0,
+      9,
+      13,
+      17,
+      13,
+      17,
+      12,
+      8,
+      10,
+      9,
+      12,
+      6,
+      10,
+      10,
+      7,
+      12,
+      10,
+      6,
+      14
+    ],
+    [
+      14,
+      8,
+      12,
+      8,
+      11,
+      13,
+      9,
+      5,
+      17,
+      14,
+      14,
+      11,
+      7,
+      6,
+      11,
+      13,
+      12,
+      15,
+      9,
+      9,
+      10,
+      12,
+      7,
+      13,
+      12,
+      12,
+      11,
+      8,
+      9,
+      7,
+      8,
+      11,
+      8,
+      8,
+      13,
+      15,
+      11,
+      6,
+      10,
+      8,
+      9,
+      0,
+      14,
+      21,
+      5,
+      14,
+      9,
+      8,
+      14,
+      12,
+      13,
+      9,
+      11,
+      11,
+      9,
+      10,
+      10,
+      15,
+      14
+    ],
+    [
+      10,
+      9,
+      6,
+      11,
+      8,
+      18,
+      13,
+      14,
+      14,
+      9,
+      9,
+      6,
+      7,
+      12,
+      10,
+      15,
+      11,
+      6,
+      6,
+      11,
+      12,
+      12,
+      18,
+      11,
+      9,
+      17,
+      9,
+      9,
+      5,
+      8,
+      13,
+      10,
+      8,
+      11,
+      4,
+      10,
+      6,
+      12,
+      8,
+      13,
+      13,
+      14,
+      0,
+      11,
+      10,
+      6,
+      12,
+      9,
+      8,
+      11,
+      7,
+      10,
+      5,
+      7,
+      11,
+      12,
+      8,
+      7,
+      9
+    ],
+    [
+      9,
+      8,
+      10,
+      8,
+      14,
+      11,
+      18,
+      10,
+      15,
+      13,
+      15,
+      11,
+      8,
+      12,
+      13,
+      12,
+      11,
+      8,
+      11,
+      15,
+      11,
+      12,
+      11,
+      8,
+      15,
+      13,
+      6,
+      10,
+      15,
+      8,
+      10,
+      8,
+      10,
+      7,
+      15,
+      10,
+      16,
+      10,
+      13,
+      14,
+      17,
+      21,
+      11,
+      0,
+      13,
+      7,
+      15,
+      12,
+      16,
+      14,
+      10,
+      15,
+      16,
+      14,
+      11,
+      11,
+      6,
+      15,
+      12
+    ],
+    [
+      13,
+      8,
+      12,
+      4,
+      9,
+      6,
+      12,
+      10,
+      13,
+      9,
+      10,
+      12,
+      7,
+      15,
+      9,
+      14,
+      10,
+      10,
+      12,
+      17,
+      10,
+      8,
+      13,
+      13,
+      12,
+      12,
+      15,
+      13,
+      13,
+      16,
+      13,
+      10,
+      10,
+      6,
+      14,
+      12,
+      9,
+      11,
+      9,
+      8,
+      13,
+      5,
+      10,
+      13,
+      0,
+      12,
+      11,
+      9,
+      9,
+      7,
+      12,
+      10,
+      7,
+      13,
+      9,
+      15,
+      14,
+      9,
+      8
+    ],
+    [
+      14,
+      5,
+      10,
+      9,
+      15,
+      12,
+      9,
+      8,
+      10,
+      14,
+      14,
+      10,
+      13,
+      12,
+      9,
+      10,
+      8,
+      10,
+      10,
+      12,
+      14,
+      10,
+      9,
+      9,
+      10,
+      14,
+      8,
+      10,
+      11,
+      7,
+      8,
+      10,
+      10,
+      6,
+      10,
+      13,
+      7,
+      8,
+      10,
+      5,
+      17,
+      14,
+      6,
+      7,
+      12,
+      0,
+      4,
+      11,
+      3,
+      7,
+      8,
+      9,
+      9,
+      9,
+      4,
+      8,
+      7,
+      7,
+      10
+    ],
+    [
+      13,
+      8,
+      10,
+      5,
+      6,
+      9,
+      15,
+      11,
+      14,
+      9,
+      11,
+      8,
+      10,
+      9,
+      11,
+      15,
+      17,
+      10,
+      9,
+      13,
+      14,
+      8,
+      11,
+      6,
+      13,
+      4,
+      10,
+      14,
+      12,
+      10,
+      8,
+      6,
+      5,
+      9,
+      12,
+      13,
+      11,
+      13,
+      6,
+      12,
+      12,
+      9,
+      12,
+      15,
+      11,
+      4,
+      0,
+      12,
+      13,
+      9,
+      8,
+      15,
+      7,
+      7,
+      9,
+      11,
+      15,
+      10,
+      6
+    ],
+    [
+      7,
+      10,
+      8,
+      11,
+      7,
+      7,
+      12,
+      10,
+      9,
+      10,
+      10,
+      8,
+      9,
+      9,
+      10,
+      14,
+      15,
+      9,
+      9,
+      12,
+      9,
+      6,
+      9,
+      11,
+      10,
+      12,
+      12,
+      10,
+      9,
+      8,
+      13,
+      10,
+      10,
+      13,
+      13,
+      12,
+      8,
+      15,
+      9,
+      5,
+      8,
+      8,
+      9,
+      12,
+      9,
+      11,
+      12,
+      0,
+      6,
+      15,
+      9,
+      13,
+      9,
+      11,
+      8,
+      16,
+      10,
+      12,
+      12
+    ],
+    [
+      14,
+      5,
+      10,
+      12,
+      9,
+      9,
+      10,
+      11,
+      10,
+      11,
+      7,
+      9,
+      9,
+      15,
+      12,
+      13,
+      8,
+      20,
+      8,
+      8,
+      8,
+      16,
+      8,
+      10,
+      6,
+      8,
+      10,
+      7,
+      12,
+      5,
+      12,
+      10,
+      5,
+      4,
+      13,
+      12,
+      12,
+      11,
+      6,
+      11,
+      10,
+      14,
+      8,
+      16,
+      9,
+      3,
+      13,
+      6,
+      0,
+      12,
+      11,
+      9,
+      14,
+      14,
+      9,
+      11,
+      12,
+      12,
+      16
+    ],
+    [
+      11,
+      6,
+      9,
+      10,
+      8,
+      9,
+      12,
+      9,
+      13,
+      4,
+      8,
+      13,
+      8,
+      12,
+      14,
+      12,
+      7,
+      7,
+      10,
+      10,
+      7,
+      9,
+      13,
+      10,
+      13,
+      9,
+      8,
+      9,
+      9,
+      14,
+      9,
+      12,
+      11,
+      11,
+      14,
+      10,
+      12,
+      17,
+      12,
+      11,
+      9,
+      12,
+      11,
+      14,
+      7,
+      7,
+      9,
+      15,
+      12,
+      0,
+      6,
+      7,
+      16,
+      11,
+      9,
+      17,
+      10,
+      13,
+      8
+    ],
+    [
+      11,
+      7,
+      15,
+      7,
+      13,
+      9,
+      13,
+      10,
+      15,
+      14,
+      12,
+      4,
+      6,
+      8,
+      13,
+      15,
+      10,
+      10,
+      14,
+      15,
+      15,
+      13,
+      10,
+      10,
+      12,
+      8,
+      11,
+      10,
+      7,
+      10,
+      10,
+      15,
+      12,
+      9,
+      17,
+      9,
+      12,
+      6,
+      10,
+      9,
+      12,
+      13,
+      7,
+      10,
+      12,
+      8,
+      8,
+      9,
+      11,
+      6,
+      0,
+      10,
+      17,
+      4,
+      9,
+      12,
+      7,
+      8,
+      6
+    ],
+    [
+      5,
+      8,
+      12,
+      10,
+      7,
+      10,
+      10,
+      15,
+      9,
+      8,
+      13,
+      10,
+      11,
+      6,
+      12,
+      13,
+      11,
+      8,
+      7,
+      9,
+      10,
+      12,
+      11,
+      10,
+      5,
+      10,
+      8,
+      10,
+      9,
+      14,
+      11,
+      3,
+      6,
+      12,
+      14,
+      12,
+      14,
+      5,
+      6,
+      7,
+      6,
+      9,
+      10,
+      15,
+      10,
+      9,
+      15,
+      13,
+      9,
+      7,
+      10,
+      0,
+      6,
+      10,
+      17,
+      14,
+      7,
+      12,
+      13
+    ],
+    [
+      12,
+      8,
+      5,
+      8,
+      11,
+      9,
+      8,
+      8,
+      5,
+      11,
+      9,
+      11,
+      6,
+      7,
+      11,
+      6,
+      12,
+      11,
+      11,
+      8,
+      4,
+      15,
+      7,
+      10,
+      8,
+      18,
+      9,
+      7,
+      9,
+      8,
+      11,
+      8,
+      12,
+      8,
+      12,
+      6,
+      7,
+      9,
+      11,
+      11,
+      10,
+      11,
+      5,
+      16,
+      7,
+      9,
+      7,
+      9,
+      14,
+      16,
+      17,
+      6,
+      0,
+      7,
+      9,
+      11,
+      8,
+      5,
+      6
+    ],
+    [
+      11,
+      10,
+      9,
+      13,
+      5,
+      12,
+      11,
+      11,
+      11,
+      12,
+      8,
+      7,
+      9,
+      4,
+      10,
+      11,
+      10,
+      13,
+      11,
+      12,
+      7,
+      6,
+      8,
+      10,
+      11,
+      4,
+      14,
+      10,
+      9,
+      8,
+      8,
+      10,
+      6,
+      8,
+      13,
+      15,
+      6,
+      9,
+      5,
+      9,
+      10,
+      11,
+      7,
+      14,
+      13,
+      9,
+      7,
+      11,
+      14,
+      11,
+      4,
+      10,
+      7,
+      0,
+      6,
+      8,
+      7,
+      10,
+      15
+    ],
+    [
+      5,
+      8,
+      12,
+      9,
+      10,
+      18,
+      15,
+      15,
+      9,
+      7,
+      17,
+      12,
+      8,
+      2,
+      13,
+      12,
+      7,
+      6,
+      13,
+      6,
+      11,
+      10,
+      7,
+      8,
+      11,
+      12,
+      10,
+      2,
+      11,
+      5,
+      15,
+      8,
+      7,
+      8,
+      9,
+      10,
+      12,
+      11,
+      7,
+      11,
+      7,
+      9,
+      11,
+      11,
+      9,
+      4,
+      9,
+      8,
+      9,
+      9,
+      9,
+      17,
+      9,
+      6,
+      0,
+      12,
+      11,
+      7,
+      9
+    ],
+    [
+      13,
+      3,
+      10,
+      15,
+      12,
+      10,
+      13,
+      12,
+      13,
+      11,
+      12,
+      5,
+      9,
+      11,
+      8,
+      17,
+      7,
+      7,
+      6,
+      11,
+      12,
+      15,
+      16,
+      16,
+      9,
+      10,
+      11,
+      10,
+      12,
+      10,
+      10,
+      10,
+      9,
+      11,
+      9,
+      14,
+      9,
+      9,
+      9,
+      15,
+      12,
+      10,
+      12,
+      11,
+      15,
+      8,
+      11,
+      16,
+      11,
+      17,
+      12,
+      14,
+      11,
+      8,
+      12,
+      0,
+      8,
+      11,
+      15
+    ],
+    [
+      5,
+      6,
+      9,
+      5,
+      4,
+      9,
+      3,
+      8,
+      13,
+      8,
+      5,
+      8,
+      6,
+      6,
+      9,
+      12,
+      8,
+      11,
+      4,
+      12,
+      3,
+      13,
+      7,
+      12,
+      11,
+      10,
+      16,
+      12,
+      11,
+      7,
+      10,
+      6,
+      13,
+      13,
+      6,
+      10,
+      13,
+      6,
+      7,
+      6,
+      10,
+      10,
+      8,
+      6,
+      14,
+      7,
+      15,
+      10,
+      12,
+      10,
+      7,
+      7,
+      8,
+      7,
+      11,
+      8,
+      0,
+      6,
+      11
+    ],
+    [
+      10,
+      4,
+      13,
+      8,
+      5,
+      8,
+      10,
+      11,
+      11,
+      12,
+      4,
+      11,
+      15,
+      6,
+      6,
+      9,
+      5,
+      6,
+      5,
+      5,
+      10,
+      9,
+      10,
+      7,
+      10,
+      12,
+      4,
+      5,
+      10,
+      6,
+      8,
+      6,
+      8,
+      10,
+      11,
+      4,
+      8,
+      8,
+      14,
+      16,
+      6,
+      15,
+      7,
+      15,
+      9,
+      7,
+      10,
+      12,
+      12,
+      13,
+      8,
+      12,
+      5,
+      10,
+      7,
+      11,
+      6,
+      0,
+      10
+    ],
+    [
+      11,
+      6,
+      11,
+      10,
+      13,
+      10,
+      10,
+      6,
+      10,
+      8,
+      7,
+      9,
+      6,
+      12,
+      15,
+      8,
+      16,
+      13,
+      7,
+      10,
+      13,
+      14,
+      10,
+      10,
+      9,
+      5,
+      15,
+      6,
+      14,
+      9,
+      10,
+      13,
+      4,
+      8,
+      8,
+      13,
+      12,
+      9,
+      7,
+      9,
+      14,
+      14,
+      9,
+      12,
+      8,
+      10,
+      6,
+      12,
+      16,
+      8,
+      6,
+      13,
+      6,
+      15,
+      9,
+      15,
+      11,
+      10,
+      0
+    ]
+  ],
+  "recent_draws": [
+    {
+      "draw_number": 3195,
+      "date": "2026-08-05",
+      "day": "Wednesday",
+      "balls": [
+        5,
+        16,
+        21,
+        40,
+        43,
+        47
+      ],
+      "bonus": 35
+    },
+    {
+      "draw_number": 3194,
+      "date": "2026-08-01",
+      "day": "Saturday",
+      "balls": [
+        2,
+        12,
+        24,
+        25,
+        40,
+        47
+      ],
+      "bonus": 50
+    },
+    {
+      "draw_number": 3193,
+      "date": "2026-07-29",
+      "day": "Wednesday",
+      "balls": [
+        1,
+        24,
+        30,
+        35,
+        41,
+        50
+      ],
+      "bonus": 33
+    },
+    {
+      "draw_number": 3192,
+      "date": "2026-07-25",
+      "day": "Saturday",
+      "balls": [
+        5,
+        10,
+        19,
+        29,
+        34,
+        53
+      ],
+      "bonus": 17
+    },
+    {
+      "draw_number": 3191,
+      "date": "2026-07-22",
+      "day": "Wednesday",
+      "balls": [
+        18,
+        30,
+        36,
+        39,
+        54,
+        56
+      ],
+      "bonus": 11
+    },
+    {
+      "draw_number": 3190,
+      "date": "2026-07-18",
+      "day": "Saturday",
+      "balls": [
+        12,
+        13,
+        21,
+        23,
+        35,
+        37
+      ],
+      "bonus": 47
+    },
+    {
+      "draw_number": 3189,
+      "date": "2026-07-15",
+      "day": "Wednesday",
+      "balls": [
+        19,
+        29,
+        35,
+        36,
+        45,
+        46
+      ],
+      "bonus": 32
+    },
+    {
+      "draw_number": 3188,
+      "date": "2026-07-11",
+      "day": "Saturday",
+      "balls": [
+        3,
+        9,
+        17,
+        23,
+        25,
+        47
+      ],
+      "bonus": 32
+    },
+    {
+      "draw_number": 3187,
+      "date": "2026-07-08",
+      "day": "Wednesday",
+      "balls": [
+        2,
+        13,
+        29,
+        47,
+        52,
+        58
+      ],
+      "bonus": 45
+    },
+    {
+      "draw_number": 3186,
+      "date": "2026-07-04",
+      "day": "Saturday",
+      "balls": [
+        15,
+        21,
+        36,
+        42,
+        49,
+        51
+      ],
+      "bonus": 23
+    },
+    {
+      "draw_number": 3185,
+      "date": "2026-07-01",
+      "day": "Wednesday",
+      "balls": [
+        7,
+        9,
+        10,
+        35,
+        45,
+        51
+      ],
+      "bonus": 32
+    },
+    {
+      "draw_number": 3184,
+      "date": "2026-06-27",
+      "day": "Saturday",
+      "balls": [
+        4,
+        22,
+        23,
+        41,
+        49,
+        56
+      ],
+      "bonus": 42
+    },
+    {
+      "draw_number": 3183,
+      "date": "2026-06-24",
+      "day": "Wednesday",
+      "balls": [
+        6,
+        11,
+        16,
+        32,
+        44,
+        59
+      ],
+      "bonus": 40
+    },
+    {
+      "draw_number": 3182,
+      "date": "2026-06-20",
+      "day": "Saturday",
+      "balls": [
+        10,
+        24,
+        31,
+        39,
+        45,
+        59
+      ],
+      "bonus": 50
+    },
+    {
+      "draw_number": 3181,
+      "date": "2026-06-17",
+      "day": "Wednesday",
+      "balls": [
+        1,
+        3,
+        16,
+        26,
+        38,
+        51
+      ],
+      "bonus": 58
+    },
+    {
+      "draw_number": 3180,
+      "date": "2026-06-13",
+      "day": "Saturday",
+      "balls": [
+        1,
+        11,
+        18,
+        21,
+        38,
+        51
+      ],
+      "bonus": 8
+    },
+    {
+      "draw_number": 3179,
+      "date": "2026-06-10",
+      "day": "Wednesday",
+      "balls": [
+        8,
+        14,
+        16,
+        41,
+        43,
+        56
+      ],
+      "bonus": 28
+    },
+    {
+      "draw_number": 3178,
+      "date": "2026-06-06",
+      "day": "Saturday",
+      "balls": [
+        13,
+        17,
+        20,
+        24,
+        31,
+        41
+      ],
+      "bonus": 4
+    },
+    {
+      "draw_number": 3177,
+      "date": "2026-06-03",
+      "day": "Wednesday",
+      "balls": [
+        3,
+        34,
+        36,
+        41,
+        47,
+        48
+      ],
+      "bonus": 8
+    },
+    {
+      "draw_number": 3176,
+      "date": "2026-05-30",
+      "day": "Saturday",
+      "balls": [
+        14,
+        20,
+        21,
+        25,
+        31,
+        44
+      ],
+      "bonus": 11
+    },
+    {
+      "draw_number": 3175,
+      "date": "2026-05-27",
+      "day": "Wednesday",
+      "balls": [
+        7,
+        13,
+        30,
+        34,
+        48,
+        50
+      ],
+      "bonus": 43
+    },
+    {
+      "draw_number": 3174,
+      "date": "2026-05-23",
+      "day": "Saturday",
+      "balls": [
+        16,
+        25,
+        29,
+        48,
+        50,
+        59
+      ],
+      "bonus": 3
+    },
+    {
+      "draw_number": 3173,
+      "date": "2026-05-20",
+      "day": "Wednesday",
+      "balls": [
+        1,
+        8,
+        25,
+        50,
+        53,
+        54
+      ],
+      "bonus": 46
+    },
+    {
+      "draw_number": 3172,
+      "date": "2026-05-16",
+      "day": "Saturday",
+      "balls": [
+        5,
+        12,
+        13,
+        26,
+        31,
+        35
+      ],
+      "bonus": 17
+    },
+    {
+      "draw_number": 3171,
+      "date": "2026-05-13",
+      "day": "Wednesday",
+      "balls": [
+        4,
+        6,
+        10,
+        18,
+        49,
+        54
+      ],
+      "bonus": 50
+    },
+    {
+      "draw_number": 3170,
+      "date": "2026-05-09",
+      "day": "Saturday",
+      "balls": [
+        3,
+        24,
+        30,
+        32,
+        45,
+        51
+      ],
+      "bonus": 22
+    },
+    {
+      "draw_number": 3169,
+      "date": "2026-05-06",
+      "day": "Wednesday",
+      "balls": [
+        14,
+        20,
+        22,
+        27,
+        32,
+        51
+      ],
+      "bonus": 52
+    },
+    {
+      "draw_number": 3168,
+      "date": "2026-05-02",
+      "day": "Saturday",
+      "balls": [
+        1,
+        6,
+        10,
+        15,
+        29,
+        47
+      ],
+      "bonus": 57
+    },
+    {
+      "draw_number": 3167,
+      "date": "2026-04-29",
+      "day": "Wednesday",
+      "balls": [
+        2,
+        7,
+        9,
+        12,
+        18,
+        19
+      ],
+      "bonus": 46
+    },
+    {
+      "draw_number": 3166,
+      "date": "2026-04-25",
+      "day": "Saturday",
+      "balls": [
+        2,
+        4,
+        10,
+        13,
+        21,
+        32
+      ],
+      "bonus": 35
+    },
+    {
+      "draw_number": 3165,
+      "date": "2026-04-22",
+      "day": "Wednesday",
+      "balls": [
+        18,
+        29,
+        30,
+        40,
+        41,
+        45
+      ],
+      "bonus": 57
+    },
+    {
+      "draw_number": 3164,
+      "date": "2026-04-18",
+      "day": "Saturday",
+      "balls": [
+        5,
+        9,
+        12,
+        13,
+        19,
+        55
+      ],
+      "bonus": 8
+    },
+    {
+      "draw_number": 3163,
+      "date": "2026-04-15",
+      "day": "Wednesday",
+      "balls": [
+        18,
+        19,
+        35,
+        42,
+        48,
+        52
+      ],
+      "bonus": 27
+    },
+    {
+      "draw_number": 3162,
+      "date": "2026-04-11",
+      "day": "Saturday",
+      "balls": [
+        40,
+        44,
+        45,
+        49,
+        52,
+        58
+      ],
+      "bonus": 18
+    },
+    {
+      "draw_number": 3161,
+      "date": "2026-04-08",
+      "day": "Wednesday",
+      "balls": [
+        6,
+        15,
+        16,
+        17,
+        28,
+        41
+      ],
+      "bonus": 34
+    },
+    {
+      "draw_number": 3160,
+      "date": "2026-04-04",
+      "day": "Saturday",
+      "balls": [
+        11,
+        25,
+        42,
+        46,
+        48,
+        54
+      ],
+      "bonus": 55
+    },
+    {
+      "draw_number": 3159,
+      "date": "2026-04-01",
+      "day": "Wednesday",
+      "balls": [
+        13,
+        26,
+        27,
+        28,
+        36,
+        57
+      ],
+      "bonus": 16
+    },
+    {
+      "draw_number": 3158,
+      "date": "2026-03-28",
+      "day": "Saturday",
+      "balls": [
+        1,
+        15,
+        19,
+        36,
+        39,
+        51
+      ],
+      "bonus": 24
+    },
+    {
+      "draw_number": 3157,
+      "date": "2026-03-25",
+      "day": "Wednesday",
+      "balls": [
+        1,
+        20,
+        28,
+        31,
+        49,
+        50
+      ],
+      "bonus": 52
+    },
+    {
+      "draw_number": 3156,
+      "date": "2026-03-21",
+      "day": "Saturday",
+      "balls": [
+        1,
+        19,
+        23,
+        31,
+        35,
+        45
+      ],
+      "bonus": 32
+    },
+    {
+      "draw_number": 3155,
+      "date": "2026-03-18",
+      "day": "Wednesday",
+      "balls": [
+        1,
+        20,
+        34,
+        49,
+        53,
+        58
+      ],
+      "bonus": 9
+    },
+    {
+      "draw_number": 3154,
+      "date": "2026-03-14",
+      "day": "Saturday",
+      "balls": [
+        6,
+        17,
+        20,
+        24,
+        27,
+        29
+      ],
+      "bonus": 10
+    },
+    {
+      "draw_number": 3153,
+      "date": "2026-03-11",
+      "day": "Wednesday",
+      "balls": [
+        15,
+        20,
+        23,
+        31,
+        35,
+        59
+      ],
+      "bonus": 52
+    },
+    {
+      "draw_number": 3152,
+      "date": "2026-03-07",
+      "day": "Saturday",
+      "balls": [
+        28,
+        34,
+        37,
+        41,
+        57,
+        59
+      ],
+      "bonus": 54
+    },
+    {
+      "draw_number": 3151,
+      "date": "2026-03-04",
+      "day": "Wednesday",
+      "balls": [
+        12,
+        30,
+        35,
+        38,
+        39,
+        41
+      ],
+      "bonus": 48
+    },
+    {
+      "draw_number": 3150,
+      "date": "2026-02-28",
+      "day": "Saturday",
+      "balls": [
+        9,
+        18,
+        29,
+        35,
+        36,
+        56
+      ],
+      "bonus": 45
+    },
+    {
+      "draw_number": 3149,
+      "date": "2026-02-25",
+      "day": "Wednesday",
+      "balls": [
+        2,
+        3,
+        21,
+        23,
+        31,
+        43
+      ],
+      "bonus": 30
+    },
+    {
+      "draw_number": 3148,
+      "date": "2026-02-21",
+      "day": "Saturday",
+      "balls": [
+        9,
+        29,
+        34,
+        41,
+        54,
+        57
+      ],
+      "bonus": 11
+    },
+    {
+      "draw_number": 3147,
+      "date": "2026-02-18",
+      "day": "Wednesday",
+      "balls": [
+        15,
+        16,
+        20,
+        25,
+        48,
+        57
+      ],
+      "bonus": 19
+    },
+    {
+      "draw_number": 3146,
+      "date": "2026-02-14",
+      "day": "Saturday",
+      "balls": [
+        6,
+        7,
+        10,
+        17,
+        40,
+        59
+      ],
+      "bonus": 42
+    }
+  ],
+  "horse_racing": {
+    "preset_races": [
+      {
+        "race_id": "cheltenham_cup",
+        "race_name": "Cheltenham Gold Cup Steeplechase (Grade 1)",
+        "course": "Cheltenham",
+        "distance": "3m 2f",
+        "going": "Good to Soft",
+        "runners": [
+          {
+            "name": "Galopin Des Champs",
+            "form": "1-1-1-2-1",
+            "official_rating": 178,
+            "cd_winner": "C&D",
+            "jockey": "P. Townend",
+            "trainer": "W. P. Mullins",
+            "jockey_win_pct": 24.0,
+            "trainer_strike_rate": 28.0,
+            "days_since_run": 28,
+            "bookie_odds_dec": 2.5
+          },
+          {
+            "name": "Fastorslow",
+            "form": "2-1-2-1-2",
+            "official_rating": 174,
+            "cd_winner": "C",
+            "jockey": "J. J. Slevin",
+            "trainer": "M. Brassil",
+            "jockey_win_pct": 16.0,
+            "trainer_strike_rate": 18.0,
+            "days_since_run": 35,
+            "bookie_odds_dec": 5.5
+          },
+          {
+            "name": "Gerri Colombe",
+            "form": "1-2-1-1-3",
+            "official_rating": 170,
+            "cd_winner": "D",
+            "jockey": "J. W. Kennedy",
+            "trainer": "G. Elliott",
+            "jockey_win_pct": 20.0,
+            "trainer_strike_rate": 21.0,
+            "days_since_run": 42,
+            "bookie_odds_dec": 8.0
+          },
+          {
+            "name": "L'Homme Presse",
+            "form": "1-2-1-4-2",
+            "official_rating": 166,
+            "cd_winner": "C&D",
+            "jockey": "C. Deutsch",
+            "trainer": "V. Williams",
+            "jockey_win_pct": 15.0,
+            "trainer_strike_rate": 17.0,
+            "days_since_run": 21,
+            "bookie_odds_dec": 12.0
+          },
+          {
+            "name": "Bravemansgame",
+            "form": "2-2-3-2-5",
+            "official_rating": 168,
+            "cd_winner": "D",
+            "jockey": "H. Cobden",
+            "trainer": "P. Nicholls",
+            "jockey_win_pct": 22.0,
+            "trainer_strike_rate": 23.0,
+            "days_since_run": 30,
+            "bookie_odds_dec": 15.0
+          },
+          {
+            "name": "Hewick",
+            "form": "1-4-1-P-1",
+            "official_rating": 165,
+            "cd_winner": "None",
+            "jockey": "G. Sheehan",
+            "trainer": "J. Hanlon",
+            "jockey_win_pct": 14.0,
+            "trainer_strike_rate": 14.0,
+            "days_since_run": 60,
+            "bookie_odds_dec": 21.0
+          }
+        ],
+        "analyzed_runners": [
+          {
+            "name": "Galopin Des Champs",
+            "form": "1-1-1-2-1",
+            "official_rating": 178,
+            "cd_winner": "C&D",
+            "jockey": "P. Townend",
+            "trainer": "W. P. Mullins",
+            "bookie_odds_dec": 2.5,
+            "form_score": 9.3,
+            "rating_score": 10.0,
+            "composite_score": 9.79,
+            "win_prob_pct": 34.58,
+            "fair_odds_dec": 2.89,
+            "value_edge_pct": -13.5,
+            "value_status": "Underpriced / Short"
+          },
+          {
+            "name": "Fastorslow",
+            "form": "2-1-2-1-2",
+            "official_rating": 174,
+            "cd_winner": "C",
+            "jockey": "J. J. Slevin",
+            "trainer": "M. Brassil",
+            "bookie_odds_dec": 5.5,
+            "form_score": 8.2,
+            "rating_score": 8.5,
+            "composite_score": 8.32,
+            "win_prob_pct": 19.16,
+            "fair_odds_dec": 5.22,
+            "value_edge_pct": 5.4,
+            "value_status": "Fair Value"
+          },
+          {
+            "name": "Gerri Colombe",
+            "form": "1-2-1-1-3",
+            "official_rating": 170,
+            "cd_winner": "D",
+            "jockey": "J. W. Kennedy",
+            "trainer": "G. Elliott",
+            "bookie_odds_dec": 8.0,
+            "form_score": 8.2,
+            "rating_score": 6.9,
+            "composite_score": 7.92,
+            "win_prob_pct": 16.38,
+            "fair_odds_dec": 6.11,
+            "value_edge_pct": 30.9,
+            "value_status": "High Value Overlay"
+          },
+          {
+            "name": "L'Homme Presse",
+            "form": "1-2-1-4-2",
+            "official_rating": 166,
+            "cd_winner": "C&D",
+            "jockey": "C. Deutsch",
+            "trainer": "V. Williams",
+            "bookie_odds_dec": 12.0,
+            "form_score": 7.1,
+            "rating_score": 5.4,
+            "composite_score": 7.44,
+            "win_prob_pct": 13.5,
+            "fair_odds_dec": 7.41,
+            "value_edge_pct": 61.9,
+            "value_status": "High Value Overlay"
+          },
+          {
+            "name": "Bravemansgame",
+            "form": "2-2-3-2-5",
+            "official_rating": 168,
+            "cd_winner": "D",
+            "jockey": "H. Cobden",
+            "trainer": "P. Nicholls",
+            "bookie_odds_dec": 15.0,
+            "form_score": 5.1,
+            "rating_score": 6.2,
+            "composite_score": 6.79,
+            "win_prob_pct": 10.38,
+            "fair_odds_dec": 9.63,
+            "value_edge_pct": 55.8,
+            "value_status": "High Value Overlay"
+          },
+          {
+            "name": "Hewick",
+            "form": "1-4-1-P-1",
+            "official_rating": 165,
+            "cd_winner": "NONE",
+            "jockey": "G. Sheehan",
+            "trainer": "J. Hanlon",
+            "bookie_odds_dec": 21.0,
+            "form_score": 6.6,
+            "rating_score": 5.0,
+            "composite_score": 5.41,
+            "win_prob_pct": 6.0,
+            "fair_odds_dec": 16.67,
+            "value_edge_pct": 26.0,
+            "value_status": "High Value Overlay"
+          }
+        ]
+      },
+      {
+        "race_id": "ascor_sprint",
+        "race_name": "Royal Ascot Platinum Jubilee Stakes (Group 1)",
+        "course": "Ascot",
+        "distance": "6f",
+        "going": "Good",
+        "runners": [
+          {
+            "name": "Kinross",
+            "form": "1-2-1-2-1",
+            "official_rating": 118,
+            "cd_winner": "C&D",
+            "jockey": "F. Dettori",
+            "trainer": "R. Beckett",
+            "jockey_win_pct": 21.0,
+            "trainer_strike_rate": 22.0,
+            "days_since_run": 21,
+            "bookie_odds_dec": 3.5
+          },
+          {
+            "name": "Art Power",
+            "form": "1-4-1-8-1",
+            "official_rating": 116,
+            "cd_winner": "C&D",
+            "jockey": "D. Allan",
+            "trainer": "T. Easterby",
+            "jockey_win_pct": 15.0,
+            "trainer_strike_rate": 16.0,
+            "days_since_run": 28,
+            "bookie_odds_dec": 7.0
+          },
+          {
+            "name": "Highfield Princess",
+            "form": "2-1-3-1-2",
+            "official_rating": 117,
+            "cd_winner": "C",
+            "jockey": "J. Hart",
+            "trainer": "J. Quinn",
+            "jockey_win_pct": 18.0,
+            "trainer_strike_rate": 19.0,
+            "days_since_run": 14,
+            "bookie_odds_dec": 4.5
+          },
+          {
+            "name": "Rohaan",
+            "form": "4-1-7-3-1",
+            "official_rating": 112,
+            "cd_winner": "C&D",
+            "jockey": "R. Ryan",
+            "trainer": "D. Evans",
+            "jockey_win_pct": 16.0,
+            "trainer_strike_rate": 15.0,
+            "days_since_run": 18,
+            "bookie_odds_dec": 11.0
+          },
+          {
+            "name": "Shaquille",
+            "form": "1-1-1-1-9",
+            "official_rating": 120,
+            "cd_winner": "D",
+            "jockey": "O. Murphy",
+            "trainer": "J. Camacho",
+            "jockey_win_pct": 22.0,
+            "trainer_strike_rate": 20.0,
+            "days_since_run": 45,
+            "bookie_odds_dec": 5.0
+          }
+        ],
+        "analyzed_runners": [
+          {
+            "name": "Kinross",
+            "form": "1-2-1-2-1",
+            "official_rating": 118,
+            "cd_winner": "C&D",
+            "jockey": "F. Dettori",
+            "trainer": "R. Beckett",
+            "bookie_odds_dec": 3.5,
+            "form_score": 8.8,
+            "rating_score": 8.8,
+            "composite_score": 9.27,
+            "win_prob_pct": 29.57,
+            "fair_odds_dec": 3.38,
+            "value_edge_pct": 3.6,
+            "value_status": "Fair Value"
+          },
+          {
+            "name": "Shaquille",
+            "form": "1-1-1-1-9",
+            "official_rating": 120,
+            "cd_winner": "D",
+            "jockey": "O. Murphy",
+            "trainer": "J. Camacho",
+            "bookie_odds_dec": 5.0,
+            "form_score": 7.3,
+            "rating_score": 10.0,
+            "composite_score": 8.59,
+            "win_prob_pct": 22.52,
+            "fair_odds_dec": 4.44,
+            "value_edge_pct": 12.6,
+            "value_status": "Fair Value"
+          },
+          {
+            "name": "Highfield Princess",
+            "form": "2-1-3-1-2",
+            "official_rating": 117,
+            "cd_winner": "C",
+            "jockey": "J. Hart",
+            "trainer": "J. Quinn",
+            "bookie_odds_dec": 4.5,
+            "form_score": 7.8,
+            "rating_score": 8.1,
+            "composite_score": 8.21,
+            "win_prob_pct": 19.36,
+            "fair_odds_dec": 5.17,
+            "value_edge_pct": -13.0,
+            "value_status": "Underpriced / Short"
+          },
+          {
+            "name": "Art Power",
+            "form": "1-4-1-8-1",
+            "official_rating": 116,
+            "cd_winner": "C&D",
+            "jockey": "D. Allan",
+            "trainer": "T. Easterby",
+            "bookie_odds_dec": 7.0,
+            "form_score": 6.6,
+            "rating_score": 7.5,
+            "composite_score": 7.88,
+            "win_prob_pct": 16.93,
+            "fair_odds_dec": 5.91,
+            "value_edge_pct": 18.4,
+            "value_status": "High Value Overlay"
+          },
+          {
+            "name": "Rohaan",
+            "form": "4-1-7-3-1",
+            "official_rating": 112,
+            "cd_winner": "C&D",
+            "jockey": "R. Ryan",
+            "trainer": "D. Evans",
+            "bookie_odds_dec": 11.0,
+            "form_score": 5.9,
+            "rating_score": 5.0,
+            "composite_score": 6.94,
+            "win_prob_pct": 11.63,
+            "fair_odds_dec": 8.6,
+            "value_edge_pct": 27.9,
+            "value_status": "High Value Overlay"
+          }
+        ]
+      }
+    ]
+  }
+};
+        let lottoData = embeddedLottoData;
+        let freqChart = null;
+
+        async function initApp() {
+            try {
+                const res = await fetch('lotto_data.json');
+                if (!res.ok) throw new Error('Data fetch failed');
+                lottoData = await res.json();
+                renderOverview();
+                renderLikelihoodTable();
+                renderGapGrid();
+                populatePairSelect();
+                generateTickets();
+                populateRacingPresets();
+            } catch (err) {
+                console.error("Data loading error:", err);
+                document.getElementById('header-draw-count').innerText = "Dataset ready";
+            }
+        }
+
+        function switchTab(tabId) {
+            const tabs = ['overview', 'likelihood', 'gaps', 'cooccurrence', 'generator', 'racing', 'hosting'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`content-${t}`);
+                if (content) content.classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) {
+                    btn.classList.remove('border-amber-500', 'text-amber-400', 'border-emerald-500', 'text-emerald-400');
+                    btn.classList.add('border-transparent', 'text-gray-400');
+                }
+            });
+
+            const activeContent = document.getElementById(`content-${tabId}`);
+            if (activeContent) activeContent.classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-gray-400');
+                if (tabId === 'racing') {
+                    activeBtn.classList.add('border-emerald-500', 'text-emerald-400');
+                } else {
+                    activeBtn.classList.add('border-amber-500', 'text-amber-400');
+                }
+            }
+
+            if (tabId === 'likelihood' && lottoData) {
+                renderFreqChart();
+            }
+        }
+
+        function renderOverview() {
+            if (!lottoData) return;
+            document.getElementById('stat-total-draws').innerText = lottoData.total_draws;
+            document.getElementById('stat-date-range').innerText = `${lottoData.start_date} to ${lottoData.end_date}`;
+            document.getElementById('header-draw-count').innerText = `${lottoData.total_draws} Draws Analyzed`;
+
+            const chi = lottoData.chi_square;
+            if (chi) {
+                document.getElementById('stat-chi2-status').innerText = chi.is_uniform ? "Uniform Random" : "Empirical Deviation";
+                document.getElementById('stat-chi2-pval').innerText = `p-value: ${chi.p_value.toFixed(4)}`;
+            }
+
+            const latest = lottoData.recent_draws[0];
+            if (latest) {
+                document.getElementById('latest-draw-date').innerText = `Draw #${latest.draw_number} (${latest.date})`;
+                const ballContainer = document.getElementById('latest-draw-balls');
+                let html = '';
+                latest.balls.forEach(b => {
+                    html += `<div class="lotto-ball">${b}</div>`;
+                });
+                html += `<span class="text-xs font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="lotto-ball lotto-ball-bonus">${latest.bonus}</div>`;
+                ballContainer.innerHTML = html;
+            }
+
+            const tbody = document.getElementById('recent-draws-tbody');
+            let rowsHtml = '';
+            lottoData.recent_draws.slice(0, 10).forEach(d => {
+                const sum = d.balls.reduce((a, b) => a + b, 0);
+                const odds = d.balls.filter(b => b % 2 !== 0).length;
+                const evens = 6 - odds;
+                const ballsStr = d.balls.map(b => `<span class="inline-block bg-slate-900 text-amber-400 font-bold px-2 py-0.5 rounded border border-gray-700 mr-1">${b}</span>`).join('');
+                
+                rowsHtml += `
+                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
+                        <td class="px-4 py-2.5 font-bold text-amber-400">#${d.draw_number}</td>
+                        <td class="px-4 py-2.5">${d.date}</td>
+                        <td class="px-4 py-2.5 text-gray-400">${d.day}</td>
+                        <td class="px-4 py-2.5">${ballsStr}</td>
+                        <td class="px-4 py-2.5 font-bold text-pink-400">${d.bonus}</td>
+                        <td class="px-4 py-2.5 font-mono">${sum}</td>
+                        <td class="px-4 py-2.5 text-xs">${odds}:${evens}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = rowsHtml;
+        }
+
+        function renderFreqChart() {
+            if (!lottoData || freqChart) return;
+            const ctx = document.getElementById('freqChart').getContext('2d');
+            const labels = lottoData.ball_stats.map(b => `Ball ${b.ball}`);
+            const counts = lottoData.ball_stats.map(b => b.count);
+
+            freqChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Times Drawn',
+                        data: counts,
+                        backgroundColor: 'rgba(234, 179, 8, 0.7)',
+                        borderColor: 'rgba(234, 179, 8, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: false, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderLikelihoodTable() {
+            if (!lottoData) return;
+            const tbody = document.getElementById('likelihood-tbody');
+            const stats = [...lottoData.ball_stats].sort((a, b) => b.likelihood_harmonic - a.likelihood_harmonic);
+
+            let html = '';
+            stats.forEach(b => {
+                let badge = `<span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded text-xs">Normal</span>`;
+                if (b.gap_ratio >= 1.5) {
+                    badge = `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded text-xs font-semibold">Overdue (${b.current_gap} gaps)</span>`;
+                } else if (b.rate_pct > 11.5) {
+                    badge = `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-semibold">Hot</span>`;
+                }
+
+                html += `
+                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
+                        <td class="px-4 py-2.5 font-bold text-white flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-bold inline-flex items-center justify-center text-xs">${b.ball}</span>
+                        </td>
+                        <td class="px-4 py-2.5 font-bold text-amber-400">${b.likelihood_harmonic}%</td>
+                        <td class="px-4 py-2.5 text-gray-300">${b.likelihood_hot}%</td>
+                        <td class="px-4 py-2.5 text-gray-300">${b.likelihood_cold}%</td>
+                        <td class="px-4 py-2.5 font-mono">${b.count}</td>
+                        <td class="px-4 py-2.5 text-gray-400">${b.rate_pct}%</td>
+                        <td class="px-4 py-2.5 font-mono">${b.current_gap} draws</td>
+                        <td class="px-4 py-2.5">${badge}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function renderGapGrid() {
+            if (!lottoData) return;
+            const container = document.getElementById('gap-grid');
+            let html = '';
+            lottoData.ball_stats.forEach(b => {
+                let colorClass = "bg-slate-800 text-gray-300 border-gray-700";
+                if (b.gap_ratio >= 1.5) {
+                    colorClass = "bg-red-900/60 text-red-300 border-red-600 shadow-red-900/50 shadow";
+                } else if (b.current_gap <= 3) {
+                    colorClass = "bg-green-900/60 text-green-300 border-green-600";
+                }
+
+                html += `<div onclick="showGapDetail(${b.ball})" class="grid-ball border ${colorClass} shadow">${b.ball}</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function showGapDetail(ballNum) {
+            if (!lottoData) return;
+            const b = lottoData.ball_stats.find(x => x.ball === ballNum);
+            if (!b) return;
+
+            document.getElementById('gap-detail-content').innerHTML = `
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700">
+                        <span class="text-xs text-gray-400">Ball Number</span>
+                        <div class="text-xl font-bold text-amber-400">#${b.ball}</div>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700">
+                        <span class="text-xs text-gray-400">Current Gap</span>
+                        <div class="text-xl font-bold text-white">${b.current_gap} draws</div>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700">
+                        <span class="text-xs text-gray-400">Mean Gap</span>
+                        <div class="text-xl font-bold text-gray-300">${b.mean_gap} draws</div>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-700">
+                        <span class="text-xs text-gray-400">Historical Max Gap</span>
+                        <div class="text-xl font-bold text-gray-300">${b.max_gap} draws</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function populatePairSelect() {
+            if (!lottoData) return;
+            const sel = document.getElementById('pair-ball-select');
+            let html = '';
+            for (let i = 1; i <= 59; i++) {
+                html += `<option value="${i}">Ball ${i}</option>`;
+            }
+            sel.innerHTML = html;
+            renderPairAnalysis();
+        }
+
+        function renderPairAnalysis() {
+            if (!lottoData) return;
+            const selBall = parseInt(document.getElementById('pair-ball-select').value);
+            const b = lottoData.ball_stats.find(x => x.ball === selBall);
+            if (!b) return;
+
+            const container = document.getElementById('pair-top-partners');
+            let html = '';
+            b.top_pairs.forEach((p, idx) => {
+                html += `
+                    <div class="bg-slate-900 p-4 rounded-xl border border-gray-700 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-xs">#${idx + 1}</span>
+                            <div>
+                                <div class="text-md font-bold text-white">Partner Ball #${p.partner}</div>
+                                <div class="text-xs text-gray-400">Co-occurred ${p.count} times</div>
+                            </div>
+                        </div>
+                        <div class="lotto-ball">${p.partner}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function generateTickets() {
+            if (!lottoData) return;
+            const count = parseInt(document.getElementById('gen-count').value) || 5;
+            const oddEvenFilter = document.getElementById('gen-odd-even').checked;
+            const sumFilter = document.getElementById('gen-sum-filter').checked;
+            const stats = lottoData.ball_stats;
+            const tickets = [];
+
+            for (let t = 0; t < count; t++) {
+                let chosen = [];
+                let attempts = 0;
+                while (chosen.length < 6 && attempts < 500) {
+                    attempts++;
+                    const bObj = stats[Math.floor(Math.random() * stats.length)];
+                    if (!chosen.includes(bObj.ball)) chosen.push(bObj.ball);
+
+                    if (chosen.length === 6) {
+                        chosen.sort((a, b) => a - b);
+                        const tSum = chosen.reduce((x, y) => x + y, 0);
+                        const odds = chosen.filter(x => x % 2 !== 0).length;
+                        if (sumFilter && (tSum < 115 || tSum > 245)) { chosen = []; continue; }
+                        if (oddEvenFilter && (odds < 2 || odds > 4)) { chosen = []; continue; }
+                    }
+                }
+
+                if (chosen.length === 6) {
+                    const tSum = chosen.reduce((x, y) => x + y, 0);
+                    const odds = chosen.filter(x => x % 2 !== 0).length;
+                    const evens = 6 - odds;
+                    let totalLh = 0;
+                    const breakdown = chosen.map(num => {
+                        const info = stats.find(s => s.ball === num);
+                        const lh = info ? info.likelihood_harmonic : 10.17;
+                        totalLh += lh;
+                        return { ball: num, likelihood_pct: lh, count: info ? info.count : 0, gap: info ? info.current_gap : 0 };
+                    });
+                    const avgLh = (totalLh / 6).toFixed(2);
+                    const harmony = ((avgLh / 10.17) * 100).toFixed(1);
+
+                    tickets.push({ id: t + 1, numbers: chosen, sum: tSum, oddEven: `${odds}:${evens}`, avgLh: avgLh, harmony: harmony, breakdown: breakdown });
+                }
+            }
+
+            renderTicketsOutput(tickets);
+        }
+
+        function renderTicketsOutput(tickets) {
+            const container = document.getElementById('tickets-container');
+            if (tickets.length === 0) {
+                container.innerHTML = `<div class="bg-lotto-card p-6 rounded-xl border border-gray-700 text-center text-gray-400">No tickets generated under current strict filters. Try adjusting filter options.</div>`;
+                return;
+            }
+
+            let html = '';
+            tickets.forEach(t => {
+                const ballsHtml = t.numbers.map(n => `<div class="lotto-ball">${n}</div>`).join('');
+                let breakdownRows = t.breakdown.map(b => `
+                    <tr class="border-b border-gray-800 text-xs">
+                        <td class="px-3 py-1.5 font-bold text-amber-400">Ball ${b.ball}</td>
+                        <td class="px-3 py-1.5 font-semibold text-white">${b.likelihood_pct}%</td>
+                        <td class="px-3 py-1.5 text-gray-400">${b.count} draws</td>
+                        <td class="px-3 py-1.5 text-gray-400">${b.gap} draws ago</td>
+                    </tr>
+                `).join('');
+
+                html += `
+                    <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-amber-500/20 text-amber-400 font-bold px-2.5 py-0.5 rounded-full text-xs border border-amber-500/30">Line #${t.id}</span>
+                                <span class="text-xs text-gray-400">Sum: <strong class="text-white">${t.sum}</strong></span>
+                                <span class="text-xs text-gray-400">Odd/Even: <strong class="text-white">${t.oddEven}</strong></span>
+                            </div>
+                            <div class="text-xs text-amber-400 bg-slate-900 px-3 py-1 rounded-lg border border-gray-700">
+                                Line Harmony Score: <strong>${t.harmony}%</strong>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 py-1">${ballsHtml}</div>
+                        <details class="text-xs bg-slate-900/60 rounded-lg p-3 border border-gray-800">
+                            <summary class="cursor-pointer font-semibold text-gray-300 hover:text-amber-400 flex items-center justify-between">
+                                <span><i class="fa-solid fa-calculator text-amber-400 mr-1"></i> View Number Likelihood Breakdown</span>
+                                <i class="fa-solid fa-chevron-down text-gray-500"></i>
+                            </summary>
+                            <div class="mt-3 overflow-x-auto">
+                                <table class="w-full text-left text-gray-300">
+                                    <thead class="text-gray-400 border-b border-gray-700 text-xxs uppercase">
+                                        <tr><th class="px-3 py-1">Ball</th><th class="px-3 py-1">Likelihood %</th><th class="px-3 py-1">Total Frequency</th><th class="px-3 py-1">Recency Gap</th></tr>
+                                    </thead>
+                                    <tbody>${breakdownRows}</tbody>
+                                </table>
+                            </div>
+                        </details>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            window.latestGeneratedTickets = tickets;
+        }
+
+        function copyTicketsText() {
+            if (!window.latestGeneratedTickets) return;
+            const text = window.latestGeneratedTickets.map(t => `Line ${t.id}: ${t.numbers.join(', ')} (Sum: ${t.sum})`).join('\n');
+            navigator.clipboard.writeText(text);
+            alert('Copied tickets to clipboard!');
+        }
+
+        function exportTicketsCSV() {
+            if (!window.latestGeneratedTickets) return;
+            let csv = "Line,Ball_1,Ball_2,Ball_3,Ball_4,Ball_5,Ball_6,Sum,Odd_Even,Harmony_Score\n";
+            window.latestGeneratedTickets.forEach(t => {
+                csv += `${t.id},${t.numbers.join(',')},${t.sum},${t.oddEven},${t.harmony}%\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lotto_tickets.csv';
+            a.click();
+        }
+
+        /* HORSE RACING FUNCTIONS */
+        function populateRacingPresets() {
+            if (!lottoData || !lottoData.horse_racing) return;
+            const sel = document.getElementById('racing-preset-select');
+            let html = '';
+            lottoData.horse_racing.preset_races.forEach(r => {
+                html += `<option value="${r.race_id}">${r.race_name}</option>`;
+            });
+            sel.innerHTML = html;
+            loadSelectedRace();
+        }
+
+        function loadSelectedRace() {
+            if (!lottoData || !lottoData.horse_racing) return;
+            const selId = document.getElementById('racing-preset-select').value;
+            const race = lottoData.horse_racing.preset_races.find(r => r.race_id === selId);
+            if (!race) return;
+
+            document.getElementById('race-title').innerText = race.race_name;
+            document.getElementById('race-course').innerText = race.course;
+            document.getElementById('race-distance').innerText = race.distance;
+            document.getElementById('race-going').innerText = race.going;
+
+            const tbody = document.getElementById('racing-tbody');
+            let rowsHtml = '';
+
+            race.analyzed_runners.forEach(r => {
+                let valBadge = `<span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded text-xs">Fair</span>`;
+                if (r.value_status.includes('High Value')) {
+                    valBadge = `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-0.5 rounded-full text-xs font-bold">High Value Overlay (+${r.value_edge_pct}%)</span>`;
+                } else if (r.value_status.includes('Underpriced')) {
+                    valBadge = `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded text-xs font-semibold">Short Odds</span>`;
+                }
+
+                let cdBadge = `<span class="bg-slate-900 text-gray-400 px-2 py-0.5 rounded text-xs">${r.cd_winner}</span>`;
+                if (r.cd_winner === 'C&D') {
+                    cdBadge = `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-bold">C&D Winner</span>`;
+                }
+
+                rowsHtml += `
+                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
+                        <td class="px-4 py-3 font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-horse text-emerald-400 text-xs"></i> ${r.name}
+                        </td>
+                        <td class="px-4 py-3 font-mono text-gray-300">${r.form}</td>
+                        <td class="px-4 py-3 font-mono text-gray-300">${r.official_rating}</td>
+                        <td class="px-4 py-3">${cdBadge}</td>
+                        <td class="px-4 py-3 text-xs text-gray-400">${r.jockey} / ${r.trainer}</td>
+                        <td class="px-4 py-3 font-bold text-amber-400">${r.bookie_odds_dec}</td>
+                        <td class="px-4 py-3 font-bold text-emerald-400">${r.win_prob_pct}%</td>
+                        <td class="px-4 py-3 font-mono text-white">${r.fair_odds_dec}</td>
+                        <td class="px-4 py-3">${valBadge}</td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = rowsHtml;
+
+            // Render Forecast & Trifecta recommendations
+            const topRunners = race.analyzed_runners;
+            if (topRunners.length >= 2) {
+                document.getElementById('forecast-box').innerHTML = `
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400">1st Place Choice:</span>
+                            <div class="font-bold text-white">${topRunners[0].name} (${topRunners[0].win_prob_pct}% win prob)</div>
+                        </div>
+                        <span class="text-emerald-400 font-bold">1st</span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400">2nd Place Choice:</span>
+                            <div class="font-bold text-white">${topRunners[1].name} (${topRunners[1].win_prob_pct}% win prob)</div>
+                        </div>
+                        <span class="text-emerald-400 font-bold">2nd</span>
+                    </div>
+                `;
+            }
+
+            if (topRunners.length >= 3) {
+                document.getElementById('trifecta-box').innerHTML = `
+                    <div class="bg-slate-900 p-3 rounded-lg border border-gray-800">
+                        <div class="text-xs text-gray-400 mb-1">Recommended Trifecta Combination:</div>
+                        <div class="font-bold text-emerald-400 text-md">
+                            1st: ${topRunners[0].name} &rarr; 2nd: ${topRunners[1].name} &rarr; 3rd: ${topRunners[2].name}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
