@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - UK & Irish Lotto, Casino, Sports, Stocks Predictor Suite</title>
+    <title>Drawly - Operational Quantitative Analytics Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,13 +12,15 @@
             theme: {
                 extend: {
                     colors: {
-                        lotto: {
-                            gold: '#F59E0B',
-                            navy: '#0F172A',
-                            card: '#1E293B',
-                            accent: '#3B82F6',
-                            ball: '#EAB308',
-                            bonus: '#EC4899'
+                        ops: {
+                            bg: '#090d16',
+                            card: '#131b2a',
+                            panel: '#1a2436',
+                            border: '#2a364f',
+                            accent: '#f59e0b',
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            purple: '#a855f7'
                         }
                     }
                 }
@@ -29,146 +31,153 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .lotto-ball {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
+        body {
+            background-color: #090d16;
+            color: #cbd5e1;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        /* Crisp Operational Ball Badges */
+        .ops-ball {
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.1rem;
-            color: #000;
-            background: radial-gradient(circle at 35% 35%, #fffbcf, #eab308 60%, #ca8a04);
-            box-shadow: 0 4px 10px rgba(234, 179, 8, 0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
-            border: 2px solid #fef08a;
+            font-size: 0.95rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #fef08a;
+            background-color: #0f172a;
+            border: 1px solid #f59e0b;
         }
-        .lotto-ball-bonus {
-            background: radial-gradient(circle at 35% 35%, #fce7f3, #ec4899 60%, #be185d);
-            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4), inset -2px -2px 4px rgba(0,0,0,0.3);
-            border: 2px solid #fbcfe8;
-            color: #fff;
+        .ops-ball-bonus {
+            color: #fbcfe8;
+            background-color: #1e1b4b;
+            border: 1px solid #ec4899;
         }
-        .grid-ball {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+        .grid-ball-ops {
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.2s ease-in-out;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            transition: all 0.15s ease-in-out;
             cursor: pointer;
         }
-        .grid-ball:hover {
-            transform: scale(1.12);
+        .grid-ball-ops:hover {
+            border-color: #f59e0b;
+            color: #ffffff;
         }
     </style>
 </head>
-<body class="bg-lotto-navy text-gray-100 min-h-screen font-sans flex flex-col">
+<body class="bg-ops-bg text-slate-300 min-h-screen font-sans flex flex-col antialiased">
 
-    <!-- Header Navigation -->
-    <header class="bg-lotto-card border-b border-gray-700 sticky top-0 z-50 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    <!-- Operational Header Navigation -->
+    <header class="bg-ops-card border-b border-ops-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg">
-                    \(\Sigma\)
+                <div class="w-8 h-8 rounded-sm bg-amber-500 flex items-center justify-center text-slate-950 font-black text-sm tracking-tighter">
+                    OPS
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                        Drawly Predictor Suite <span class="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">Multi-Domain Engine</span>
+                    <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+                        DRAWLY ANALYTICS <span class="text-xs bg-slate-800 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded-sm font-mono">SYSTEM READY</span>
                     </h1>
-                    <p class="text-xs text-gray-400">UK & Irish Lotto &bull; Casino &bull; Sports &bull; Racing &bull; Stocks</p>
                 </div>
             </div>
             
             <!-- Game Selector Dropdown -->
-            <div class="flex items-center gap-3">
-                <label class="text-xs font-semibold text-gray-300 uppercase">Select Lottery Game:</label>
-                <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-amber-500/50 text-amber-400 font-bold px-3 py-1.5 rounded-lg text-sm focus:outline-none">
-                    <option value="uk" selected>ðŸ‡¬ðŸ‡§ UK National Lotto (6/59)</option>
-                    <option value="irish">ðŸ‡®ðŸ‡ª Irish National Lotto (6/47)</option>
+            <div class="flex items-center gap-2 text-xs">
+                <span class="text-slate-400 font-mono uppercase">Lottery Dataset:</span>
+                <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-ops-border text-amber-400 font-mono font-bold px-3 py-1 rounded-sm focus:outline-none">
+                    <option value="uk" selected>UK Lotto (6/59)</option>
+                    <option value="irish">Irish Lotto (6/47)</option>
                 </select>
             </div>
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full space-y-4">
         
         <!-- Navigation Tabs -->
-        <div class="flex flex-wrap border-b border-gray-700 mb-6 gap-2" id="tab-nav">
-            <button onclick="switchTab('overview')" id="tab-overview" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-amber-500 text-amber-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-chart-pie"></i> Lotto Overview
+        <div class="flex flex-wrap border-b border-ops-border text-xs font-mono gap-1" id="tab-nav">
+            <button onclick="switchTab('overview')" id="tab-overview" class="px-3 py-1.5 font-bold border-b-2 border-amber-500 text-amber-400 bg-slate-900/60 rounded-t-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-chart-pie"></i> OVERVIEW
             </button>
-            <button onclick="switchTab('generator')" id="tab-generator" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-1.5 bg-amber-500/10 rounded-t-lg">
-                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Lotto Generator
+            <button onclick="switchTab('generator')" id="tab-generator" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> LOTTO GENERATOR
             </button>
-            <button onclick="switchTab('casino')" id="tab-casino" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-rose-400 hover:text-rose-300 flex items-center gap-1.5 bg-rose-500/10 rounded-t-lg">
-                <i class="fa-solid fa-dice text-rose-400"></i> Roulette & Casino
+            <button onclick="switchTab('casino')" id="tab-casino" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-dice"></i> ROULETTE & CASINO
             </button>
-            <button onclick="switchTab('blackjack')" id="tab-blackjack" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-amber-300 hover:text-amber-200 flex items-center gap-1.5 bg-amber-500/10 rounded-t-lg">
-                <i class="fa-solid fa-spade text-amber-300"></i> Blackjack & Baccarat
+            <button onclick="switchTab('blackjack')" id="tab-blackjack" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-spade"></i> BLACKJACK MATRIX
             </button>
-            <button onclick="switchTab('racing')" id="tab-racing" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 bg-emerald-500/10 rounded-t-lg">
-                <i class="fa-solid fa-horse-head text-emerald-400"></i> Horse & Greyhound
+            <button onclick="switchTab('racing')" id="tab-racing" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-horse-head"></i> RACING PREDICTOR
             </button>
-            <button onclick="switchTab('football')" id="tab-football" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-purple-400 hover:text-purple-300 flex items-center gap-1.5 bg-purple-500/10 rounded-t-lg">
-                <i class="fa-solid fa-futbol text-purple-400"></i> Football & Tennis
+            <button onclick="switchTab('football')" id="tab-football" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-futbol"></i> FOOTBALL & TENNIS
             </button>
-            <button onclick="switchTab('nba')" id="tab-nba" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 bg-indigo-500/10 rounded-t-lg">
-                <i class="fa-solid fa-basketball text-indigo-400"></i> NBA Basketball
+            <button onclick="switchTab('nba')" id="tab-nba" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-basketball"></i> NBA SPREAD
             </button>
-            <button onclick="switchTab('stocks')" id="tab-stocks" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 bg-cyan-500/10 rounded-t-lg">
-                <i class="fa-solid fa-arrow-trend-up text-cyan-400"></i> Stock Radar
+            <button onclick="switchTab('stocks')" id="tab-stocks" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-trend-up"></i> STOCK RADAR
             </button>
-            <button onclick="switchTab('hosting')" id="tab-hosting" class="px-3.5 py-2 text-xs font-semibold border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-server"></i> Enhance Host
+            <button onclick="switchTab('hosting')" id="tab-hosting" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-server"></i> DEPLOYMENT
             </button>
         </div>
 
         <!-- TAB 1: OVERVIEW -->
-        <div id="content-overview" class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Total Draws Analyzed</div>
-                    <div class="text-3xl font-bold text-white mt-1" id="stat-total-draws">--</div>
-                    <div class="text-xs text-amber-400 mt-2" id="stat-date-range">--</div>
+        <div id="content-overview" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Total Draws Analyzed</div>
+                    <div class="text-2xl font-bold font-mono text-white mt-0.5" id="stat-total-draws">--</div>
+                    <div class="text-xs text-amber-400 font-mono mt-1" id="stat-date-range">--</div>
                 </div>
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Theoretical Ball Odds</div>
-                    <div class="text-3xl font-bold text-amber-400 mt-1" id="stat-theo-prob">--%</div>
-                    <div class="text-xs text-gray-400 mt-2" id="stat-theo-formula">--</div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Theoretical Odds</div>
+                    <div class="text-2xl font-bold font-mono text-amber-400 mt-0.5" id="stat-theo-prob">--%</div>
+                    <div class="text-xs text-slate-400 font-mono mt-1" id="stat-theo-formula">--</div>
                 </div>
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Expected Return Gap</div>
-                    <div class="text-3xl font-bold text-blue-400 mt-1" id="stat-exp-gap">-- Draws</div>
-                    <div class="text-xs text-gray-400 mt-2">Poisson return interval</div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Expected Return Gap</div>
+                    <div class="text-2xl font-bold font-mono text-cyan-400 mt-0.5" id="stat-exp-gap">-- Draws</div>
+                    <div class="text-xs text-slate-400 font-mono mt-1">Poisson Expected Return</div>
                 </div>
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Statistical Uniformity</div>
-                    <div class="text-xl font-bold text-green-400 mt-2" id="stat-chi2-status">Chi-Square Test</div>
-                    <div class="text-xs text-gray-400 mt-1" id="stat-chi2-pval">p-value evaluation</div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Chi-Square Test</div>
+                    <div class="text-lg font-bold font-mono text-emerald-400 mt-0.5" id="stat-chi2-status">Chi-Square Test</div>
+                    <div class="text-xs text-slate-400 font-mono mt-1" id="stat-chi2-pval">p-value evaluation</div>
                 </div>
             </div>
 
-            <div class="bg-slate-800/80 p-6 rounded-xl border border-amber-500/30 shadow-lg">
-                <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-trophy text-amber-400"></i> Latest Draw Result
-                    <span class="text-xs font-normal text-gray-400" id="latest-draw-date">--</span>
-                </h3>
-                <div class="flex flex-wrap items-center gap-3 mt-4" id="latest-draw-balls"></div>
+            <!-- Latest Draw Operational Banner -->
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">LATEST DRAW RESULT <span class="text-white ml-2" id="latest-draw-date">--</span></h3>
+                    <div class="flex flex-wrap items-center gap-2 mt-2" id="latest-draw-balls"></div>
+                </div>
             </div>
 
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <h3 class="text-lg font-bold text-white mb-4">Recent Historical Draws</h3>
+            <!-- Historical Draws Table -->
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">HISTORICAL DRAW LOG (LAST 10 DRAWS)</h3>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-300">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/60 border-b border-gray-700">
+                    <table class="w-full text-xs text-left text-slate-300 font-mono">
+                        <thead class="bg-slate-900 text-slate-400 uppercase border-b border-ops-border">
                             <tr>
-                                <th class="px-4 py-3">Draw #</th><th class="px-4 py-3">Date</th><th class="px-4 py-3">Day</th>
-                                <th class="px-4 py-3">Main Balls</th><th class="px-4 py-3">Bonus</th><th class="px-4 py-3">Sum</th><th class="px-4 py-3">Odd/Even</th>
+                                <th class="px-3 py-2">Draw #</th><th class="px-3 py-2">Date</th><th class="px-3 py-2">Day</th>
+                                <th class="px-3 py-2">Main Balls</th><th class="px-3 py-2">Bonus</th><th class="px-3 py-2">Sum</th><th class="px-3 py-2">Odd/Even</th>
                             </tr>
                         </thead>
                         <tbody id="recent-draws-tbody"></tbody>
@@ -178,76 +187,72 @@
         </div>
 
         <!-- TAB 2: TICKET GENERATOR -->
-        <div id="content-generator" class="space-y-6 hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-5">
-                    <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Strategy Configuration</h3>
+        <div id="content-generator" class="space-y-4 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border space-y-4">
+                    <h3 class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-sliders"></i> GENERATOR LOGIC MODEL</h3>
                     <div>
-                        <label class="text-xs font-semibold text-gray-300 uppercase">Logic Model</label>
-                        <select id="gen-model" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
+                        <label class="text-xxs font-mono uppercase text-slate-400">Logic Model</label>
+                        <select id="gen-model" class="w-full mt-1 bg-slate-900 border border-ops-border text-white text-xs rounded-sm p-2 font-mono">
                             <option value="harmonic">Balanced Harmonic Model (Recommended)</option>
                             <option value="hot">Hot Trend Model</option>
                             <option value="cold">Cold Overdue Model</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-300 uppercase">Number of Tickets</label>
-                        <input type="number" id="gen-count" value="5" min="1" max="20" class="w-full mt-1 bg-slate-900 border border-gray-700 text-white text-sm rounded-lg p-2.5">
+                        <label class="text-xxs font-mono uppercase text-slate-400">Lines Count</label>
+                        <input type="number" id="gen-count" value="5" min="1" max="20" class="w-full mt-1 bg-slate-900 border border-ops-border text-white text-xs rounded-sm p-2 font-mono">
                     </div>
-                    <button onclick="generateTickets()" class="w-full bg-amber-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Logical Tickets
+                    <button onclick="generateTickets()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold font-mono text-xs py-2.5 px-4 rounded-sm transition">
+                        EXECUTE GENERATOR
                     </button>
                 </div>
-                <div class="lg:col-span-2 space-y-4">
-                    <div id="tickets-container" class="space-y-4"></div>
+                <div class="lg:col-span-2 space-y-3">
+                    <div id="tickets-container" class="space-y-3"></div>
                 </div>
             </div>
         </div>
 
         <!-- CASINO TAB -->
-        <div id="content-casino" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-rose-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-rose-400 flex items-center gap-2"><i class="fa-solid fa-dice"></i> Roulette Sector & Probability Engine</h3>
+        <div id="content-casino" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                <h3 class="text-xs font-mono font-bold text-rose-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-dice"></i> ROULETTE WHEEL SECTOR ANALYTICS</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="roulette-cards"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roulette-cards"></div>
         </div>
 
         <!-- BLACKJACK TAB -->
-        <div id="content-blackjack" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-amber-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-amber-300 flex items-center gap-2"><i class="fa-solid fa-spade"></i> Blackjack Basic Strategy Matrix</h3>
-            </div>
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                <div class="flex flex-wrap items-center gap-4 text-xs">
+        <div id="content-blackjack" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                <h3 class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-spade"></i> BLACKJACK BASIC STRATEGY MATRIX</h3>
+                <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
                     <div>
-                        <label class="text-gray-400">Player Hand Total:</label>
-                        <input type="number" id="bj-player" value="16" min="4" max="21" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-3 py-1.5 rounded ml-2 w-20">
+                        <span class="text-slate-400">Player Total:</span>
+                        <input type="number" id="bj-player" value="16" min="4" max="21" class="bg-slate-900 border border-ops-border text-amber-400 font-bold px-2 py-1 rounded-sm ml-2 w-16">
                     </div>
                     <div>
-                        <label class="text-gray-400">Dealer Upcard:</label>
-                        <select id="bj-dealer" class="bg-slate-900 border border-gray-700 text-amber-400 font-bold px-3 py-1.5 rounded ml-2">
+                        <span class="text-slate-400">Dealer Upcard:</span>
+                        <select id="bj-dealer" class="bg-slate-900 border border-ops-border text-amber-400 font-bold px-2 py-1 rounded-sm ml-2">
                             <option value="2">2</option><option value="6" selected>6</option><option value="10">10</option><option value="A">A</option>
                         </select>
                     </div>
-                    <button onclick="calculateBlackjackDecision()" class="bg-amber-500 text-slate-950 font-bold px-4 py-1.5 rounded">Calculate Decision</button>
+                    <button onclick="calculateBlackjackDecision()" class="bg-amber-500 text-slate-950 font-bold font-mono px-3 py-1 rounded-sm">CALCULATE DECISION</button>
                 </div>
-                <div id="bj-decision-out" class="mt-4 p-4 bg-slate-900 rounded-lg border border-gray-800 text-sm"></div>
+                <div id="bj-decision-out" class="mt-3 p-3 bg-slate-900 rounded-sm border border-ops-border text-xs font-mono"></div>
             </div>
         </div>
 
-        <!-- HORSE & GREYHOUND RACING TAB -->
-        <div id="content-racing" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-emerald-500/30 p-6 rounded-xl shadow-xl">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-horse-head"></i> Horse & Greyhound Racing Predictor</h3>
-                    <select id="racing-preset-select" onchange="loadSelectedRace()" class="bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold px-3 py-2 rounded-lg text-sm"></select>
-                </div>
+        <!-- RACING TAB -->
+        <div id="content-racing" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider"><i class="fa-solid fa-horse-head"></i> HORSE & GREYHOUND PREDICTOR</h3>
+                <select id="racing-preset-select" onchange="loadSelectedRace()" class="bg-slate-900 border border-ops-border text-emerald-400 font-mono font-bold px-3 py-1 rounded-sm text-xs"></select>
             </div>
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-300">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/80 border-b border-gray-700">
-                            <tr><th>Runner</th><th>Form</th><th>OR</th><th>C&D</th><th>Bookie Odds</th><th>Win Prob</th><th>Fair Odds</th><th>Value Status</th></tr>
+                    <table class="w-full text-xs text-left text-slate-300 font-mono">
+                        <thead class="bg-slate-900 text-slate-400 uppercase border-b border-ops-border">
+                            <tr><th class="px-3 py-2">Runner</th><th class="px-3 py-2">Form</th><th class="px-3 py-2">OR</th><th class="px-3 py-2">C&D</th><th class="px-3 py-2">Bookie Odds</th><th class="px-3 py-2">Win Prob</th><th class="px-3 py-2">Fair Odds</th><th class="px-3 py-2">Value Status</th></tr>
                         </thead>
                         <tbody id="racing-tbody"></tbody>
                     </table>
@@ -256,40 +261,32 @@
         </div>
 
         <!-- FOOTBALL & TENNIS TAB -->
-        <div id="content-football" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-purple-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-futbol"></i> Football (xG Poisson) & Tennis Match Predictor</h3>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <h4 class="text-md font-bold text-purple-400 mb-3">Football Match (xG 1X2)</h4>
-                    <div id="fb-summary" class="text-xs space-y-2"></div>
+        <div id="content-football" class="space-y-4 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">FOOTBALL MATCH PREDICTOR (POISSON XG)</h4>
+                    <div id="fb-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
-                <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
-                    <h4 class="text-md font-bold text-purple-400 mb-3">Tennis ELO Surface Match</h4>
-                    <div id="tennis-summary" class="text-xs space-y-2"></div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">TENNIS ELO MATCH PREDICTOR</h4>
+                    <div id="tennis-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
             </div>
         </div>
 
         <!-- NBA BASKETBALL TAB -->
-        <div id="content-nba" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-indigo-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-indigo-400 flex items-center gap-2"><i class="fa-solid fa-basketball"></i> NBA Basketball Point Spread Engine</h3>
-            </div>
-            <div id="nba-card" class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow text-sm"></div>
+        <div id="content-nba" class="space-y-4 hidden">
+            <div id="nba-card" class="bg-ops-card p-4 rounded-sm border border-ops-border text-xs font-mono"></div>
         </div>
 
-        <!-- STOCK EXPLOSION RADAR TAB -->
-        <div id="content-stocks" class="space-y-6 hidden">
-            <div class="bg-slate-900/90 border border-cyan-500/30 p-6 rounded-xl shadow-xl">
-                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-rocket"></i> Stock Explosion Radar</h3>
-            </div>
-            <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow">
+        <!-- STOCK RADAR TAB -->
+        <div id="content-stocks" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                <h3 class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-arrow-trend-up"></i> STOCK BREAKOUT RADAR</h3>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-300">
-                        <thead class="text-xs text-gray-400 uppercase bg-slate-900/80 border-b border-gray-700">
-                            <tr><th>Ticker</th><th>Sector</th><th>Price</th><th>Volume Surge</th><th>Revenue YoY</th><th>Short Float</th><th>Explosion Score</th><th>Target Upside</th></tr>
+                    <table class="w-full text-xs text-left text-slate-300 font-mono">
+                        <thead class="bg-slate-900 text-slate-400 uppercase border-b border-ops-border">
+                            <tr><th class="px-3 py-2">Ticker</th><th class="px-3 py-2">Sector</th><th class="px-3 py-2">Price</th><th class="px-3 py-2">Volume Surge</th><th class="px-3 py-2">Revenue YoY</th><th class="px-3 py-2">Short Float</th><th class="px-3 py-2">Score</th><th class="px-3 py-2">Target Upside</th></tr>
                         </thead>
                         <tbody id="stocks-tbody"></tbody>
                     </table>
@@ -298,17 +295,17 @@
         </div>
 
         <!-- ENHANCE HOST SETUP -->
-        <div id="content-hosting" class="space-y-6 hidden">
-            <div class="bg-lotto-card p-6 rounded-xl border border-gray-700 shadow space-y-4">
-                <h3 class="text-xl font-bold text-amber-400"><i class="fa-solid fa-server"></i> Enhance Host Deployment</h3>
-                <p class="text-sm text-gray-300">Upload contents of `public_html/` directly into your Enhance Host account.</p>
+        <div id="content-hosting" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+                <h3 class="text-xs font-bold text-amber-400 uppercase">ENHANCE HOST DEPLOYMENT INSTRUCTIONS</h3>
+                <p class="text-slate-300">Upload contents of `public_html/` directly into your Enhance Host account.</p>
             </div>
         </div>
 
     </main>
 
-    <footer class="bg-lotto-card border-t border-gray-800 py-4 px-4 text-center text-xs text-gray-400 mt-auto">
-        Drawly Analytics Engine &bull; UK & Irish Lotto &bull; Responsible Gaming Notice
+    <footer class="bg-ops-card border-t border-ops-border py-3 px-4 text-center text-xs font-mono text-slate-500 mt-auto">
+        DRAWLY ANALYTICS ENGINE &bull; OPERATIONAL QUANTITATIVE SYSTEM
     </footer>
 
     <script>
@@ -17235,8 +17232,8 @@
                 document.getElementById('latest-draw-date').innerText = `Draw #${latest.draw_number} (${latest.date})`;
                 const ballContainer = document.getElementById('latest-draw-balls');
                 let html = '';
-                latest.balls.forEach(b => { html += `<div class="lotto-ball">${b}</div>`; });
-                html += `<span class="text-xs font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="lotto-ball lotto-ball-bonus">${latest.bonus}</div>`;
+                latest.balls.forEach(b => { html += `<div class="ops-ball">${b}</div>`; });
+                html += `<span class="text-xs font-mono font-bold text-pink-400 uppercase ml-2">Bonus:</span><div class="ops-ball ops-ball-bonus">${latest.bonus}</div>`;
                 ballContainer.innerHTML = html;
             }
 
@@ -17246,16 +17243,16 @@
                 const sum = d.balls.reduce((a, b) => a + b, 0);
                 const odds = d.balls.filter(b => b % 2 !== 0).length;
                 const evens = 6 - odds;
-                const ballsStr = d.balls.map(b => `<span class="inline-block bg-slate-900 text-amber-400 font-bold px-2 py-0.5 rounded border border-gray-700 mr-1">${b}</span>`).join('');
+                const ballsStr = d.balls.map(b => `<span class="inline-block bg-slate-900 text-amber-400 font-mono font-bold px-1.5 py-0.5 rounded-sm border border-ops-border mr-1">${b}</span>`).join('');
                 rowsHtml += `
-                    <tr class="border-b border-gray-800 hover:bg-slate-800/40">
-                        <td class="px-4 py-2.5 font-bold text-amber-400">#${d.draw_number}</td>
-                        <td class="px-4 py-2.5">${d.date}</td>
-                        <td class="px-4 py-2.5 text-gray-400">${d.day}</td>
-                        <td class="px-4 py-2.5">${ballsStr}</td>
-                        <td class="px-4 py-2.5 font-bold text-pink-400">${d.bonus}</td>
-                        <td class="px-4 py-2.5 font-mono">${sum}</td>
-                        <td class="px-4 py-2.5 text-xs">${odds}:${evens}</td>
+                    <tr class="border-b border-slate-800 hover:bg-slate-900/40">
+                        <td class="px-3 py-2 font-bold text-amber-400">#${d.draw_number}</td>
+                        <td class="px-3 py-2">${d.date}</td>
+                        <td class="px-3 py-2 text-slate-400">${d.day}</td>
+                        <td class="px-3 py-2">${ballsStr}</td>
+                        <td class="px-3 py-2 font-bold text-pink-400">${d.bonus}</td>
+                        <td class="px-3 py-2 font-mono">${sum}</td>
+                        <td class="px-3 py-2 text-xs">${odds}:${evens}</td>
                     </tr>
                 `;
             });
@@ -17270,7 +17267,7 @@
                 const btn = document.getElementById(`tab-${t}`);
                 if (btn) {
                     btn.classList.remove('border-amber-500', 'text-amber-400');
-                    btn.classList.add('border-transparent', 'text-gray-400');
+                    btn.classList.add('border-transparent', 'text-slate-400');
                 }
             });
 
@@ -17278,7 +17275,7 @@
             if (activeContent) activeContent.classList.remove('hidden');
             const activeBtn = document.getElementById(`tab-${tabId}`);
             if (activeBtn) {
-                activeBtn.classList.remove('border-transparent', 'text-gray-400');
+                activeBtn.classList.remove('border-transparent', 'text-slate-400');
                 activeBtn.classList.add('border-amber-500', 'text-amber-400');
             }
         }
@@ -17300,11 +17297,11 @@
 
             let html = '';
             tickets.forEach(t => {
-                const ballsHtml = t.numbers.map(n => `<div class="lotto-ball">${n}</div>`).join('');
+                const ballsHtml = t.numbers.map(n => `<div class="ops-ball">${n}</div>`).join('');
                 html += `
-                    <div class="bg-lotto-card p-5 rounded-xl border border-gray-700 shadow space-y-3">
-                        <div class="text-xs text-amber-400 font-bold">Line #${t.id} (${currentGame.toUpperCase()} Lotto | Sum: ${t.sum})</div>
-                        <div class="flex items-center gap-3">${ballsHtml}</div>
+                    <div class="bg-ops-card p-3 rounded-sm border border-ops-border space-y-2">
+                        <div class="text-xs font-mono text-amber-400 font-bold">LINE #${t.id} (${currentGame.toUpperCase()} | SUM: ${t.sum})</div>
+                        <div class="flex items-center gap-2">${ballsHtml}</div>
                     </div>
                 `;
             });
@@ -17315,9 +17312,9 @@
             if (!lottoData || !lottoData.casino) return;
             const r = lottoData.casino.roulette;
             document.getElementById('roulette-cards').innerHTML = `
-                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Single Number Odds</div><div class="text-2xl font-bold text-rose-400">${r.single_num_prob_pct}%</div></div>
-                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Red / Black Probability</div><div class="text-2xl font-bold text-rose-400">${r.even_money_prob_pct}%</div></div>
-                <div class="bg-lotto-card p-4 rounded-xl border border-gray-700"><div class="text-xs text-gray-400">Dozen Odds (12 Nums)</div><div class="text-2xl font-bold text-rose-400">${r.dozen_prob_pct}%</div></div>
+                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Single Number Odds</div><div class="text-xl font-bold font-mono text-rose-400">${r.single_num_prob_pct}%</div></div>
+                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Red / Black Probability</div><div class="text-xl font-bold font-mono text-rose-400">${r.even_money_prob_pct}%</div></div>
+                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Dozen Odds (12 Nums)</div><div class="text-xl font-bold font-mono text-rose-400">${r.dozen_prob_pct}%</div></div>
             `;
         }
 
@@ -17330,7 +17327,7 @@
             else if (p === 11) { action = "DOUBLE DOWN"; rationale = "Double 11 against any dealer upcard."; }
             else if (p >= 13 && ['2','3','4','5','6'].includes(d)) { action = "STAND"; rationale = "Dealer is stiff (high bust chance)."; }
 
-            document.getElementById('bj-decision-out').innerHTML = `Recommended Decision: <strong class="text-amber-400 text-lg">${action}</strong><br><span class="text-xs text-gray-400">${rationale}</span>`;
+            document.getElementById('bj-decision-out').innerHTML = `Decision: <strong class="text-amber-400 text-sm font-mono">${action}</strong> | <span class="text-slate-400">${rationale}</span>`;
         }
 
         function populateRacingPresets() {
@@ -17351,15 +17348,15 @@
             let rowsHtml = '';
             race.analyzed_runners.forEach(r => {
                 rowsHtml += `
-                    <tr class="border-b border-gray-800">
-                        <td class="px-4 py-3 font-bold text-white">${r.name}</td>
-                        <td class="px-4 py-3 text-gray-400">${r.form}</td>
-                        <td class="px-4 py-3">${r.official_rating}</td>
-                        <td class="px-4 py-3">${r.cd_winner}</td>
-                        <td class="px-4 py-3 text-amber-400 font-bold">$${r.bookie_odds_dec}</td>
-                        <td class="px-4 py-3 text-emerald-400 font-bold">${r.win_prob_pct}%</td>
-                        <td class="px-4 py-3 font-mono">$${r.fair_odds_dec}</td>
-                        <td class="px-4 py-3 text-xs">${r.value_status}</td>
+                    <tr class="border-b border-slate-800">
+                        <td class="px-3 py-2 font-bold text-white">${r.name}</td>
+                        <td class="px-3 py-2 text-slate-400">${r.form}</td>
+                        <td class="px-3 py-2">${r.official_rating}</td>
+                        <td class="px-3 py-2">${r.cd_winner}</td>
+                        <td class="px-3 py-2 text-amber-400 font-bold">$${r.bookie_odds_dec}</td>
+                        <td class="px-3 py-2 text-emerald-400 font-bold">${r.win_prob_pct}%</td>
+                        <td class="px-3 py-2 font-mono">$${r.fair_odds_dec}</td>
+                        <td class="px-3 py-2 text-xs">${r.value_status}</td>
                     </tr>
                 `;
             });
@@ -17371,15 +17368,15 @@
             let rowsHtml = '';
             lottoData.stock_radar.stocks.forEach(s => {
                 rowsHtml += `
-                    <tr class="border-b border-gray-800">
-                        <td class="px-4 py-3 font-bold text-white">${s.ticker} (${s.company})</td>
-                        <td class="px-4 py-3 text-xs text-gray-400">${s.sector}</td>
-                        <td class="px-4 py-3 font-mono">$${s.price.toFixed(2)}</td>
-                        <td class="px-4 py-3 font-bold text-amber-400">${s.volume_surge_ratio}x</td>
-                        <td class="px-4 py-3 text-emerald-400">+${s.revenue_growth_yoy}%</td>
-                        <td class="px-4 py-3 text-pink-400">${s.short_float_pct}%</td>
-                        <td class="px-4 py-3 font-bold text-cyan-400 text-md">${s.explosion_score}/100</td>
-                        <td class="px-4 py-3 font-bold text-emerald-400">+${s.target_upside_pct}%</td>
+                    <tr class="border-b border-slate-800">
+                        <td class="px-3 py-2 font-bold text-white">${s.ticker} (${s.company})</td>
+                        <td class="px-3 py-2 text-xs text-slate-400">${s.sector}</td>
+                        <td class="px-3 py-2 font-mono">$${s.price.toFixed(2)}</td>
+                        <td class="px-3 py-2 font-bold text-amber-400">${s.volume_surge_ratio}x</td>
+                        <td class="px-3 py-2 text-emerald-400">+${s.revenue_growth_yoy}%</td>
+                        <td class="px-3 py-2 text-pink-400">${s.short_float_pct}%</td>
+                        <td class="px-3 py-2 font-bold text-cyan-400 text-sm">${s.explosion_score}/100</td>
+                        <td class="px-3 py-2 font-bold text-emerald-400">+${s.target_upside_pct}%</td>
                     </tr>
                 `;
             });
