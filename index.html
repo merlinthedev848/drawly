@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - High-Probability Quantitative Analytics & Predictors</title>
+    <title>Drawly - Instant Load High-Probability Quantitative Analytics</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -68,7 +68,7 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                        DRAWLY HIGH-PROBABILITY ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">+EV VERIFIED</span>
+                        DRAWLY INSTANT ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">INSTANT LOADED</span>
                     </h1>
                 </div>
             </div>
@@ -193,7 +193,7 @@
             </div>
         </div>
 
-        <!-- FOOTBALL & TENNIS TAB (HIGH PROBABILITY 75%+) -->
+        <!-- FOOTBALL & TENNIS TAB -->
         <div id="content-football" class="space-y-4 hidden">
             <div class="bg-ops-card p-4 rounded-sm border border-ops-border border-l-4 border-l-emerald-500">
                 <div class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">HIGH PROBABILITY SELECTIONS (>75% WIN PROBABILITY)</div>
@@ -296,20 +296,28 @@
         let lottoData = null;
         let currentGame = 'uk';
 
-        async function initApp() {
-            try {
-                const res = await fetch('lotto_data.json');
-                if (!res.ok) throw new Error('Data fetch failed');
-                lottoData = await res.json();
-                renderCurrentGame();
-                generateTickets();
-                populateRacingPresets();
-                renderStockRadar();
-                renderCasinoData();
-                renderExpandedSports();
-            } catch (err) {
-                console.error("Data error:", err);
+        function initApp() {
+            if (typeof embeddedLottoData !== 'undefined') {
+                lottoData = embeddedLottoData;
+                runRenderPipeline();
+            } else {
+                fetch('lotto_data.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        lottoData = data;
+                        runRenderPipeline();
+                    })
+                    .catch(err => console.error("Data loading error:", err));
             }
+        }
+
+        function runRenderPipeline() {
+            renderCurrentGame();
+            generateTickets();
+            populateRacingPresets();
+            renderStockRadar();
+            renderCasinoData();
+            renderExpandedSports();
         }
 
         function changeLottoGame() {
@@ -511,7 +519,12 @@
             document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Standard Line: ${nba.recommended_spread_pick}<br>High Probability Safety Pick: <span class="text-emerald-400 font-bold">${nba.high_probability_safety_pick} (${nba.high_probability_pct}%)</span>`;
         }
 
-        window.onload = initApp;
+        // Instant DOM launch trigger
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
     </script>
 </body>
 </html>

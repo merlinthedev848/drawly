@@ -31,7 +31,7 @@ def process_lotto_game(game_type="uk", total_balls=59):
     df_lh_cold = compute_number_likelihoods(df_freq, df_gaps, cooc_matrix, model="cold", total_balls=total_balls)
 
     recent_draws = []
-    for idx, row in df_raw.iloc[::-1].iterrows():
+    for idx, row in df_raw.iloc[-25:][::-1].iterrows():
         recent_draws.append({
             'draw_number': int(row['draw_number']),
             'date': row['draw_date'].strftime('%Y-%m-%d'),
@@ -80,8 +80,7 @@ def process_lotto_game(game_type="uk", total_balls=59):
         'theo_draw_prob': float(np.round(theo_draw_prob * 100, 2)),
         'chi_square': chi_square,
         'ball_stats': ball_stats,
-        'cooccurrence_matrix': cooc_matrix.tolist(),
-        'recent_draws': recent_draws[:50]
+        'recent_draws': recent_draws
     }
 
 def build_export_data():
@@ -110,7 +109,6 @@ def build_export_data():
         'theo_draw_prob': uk_lotto['theo_draw_prob'],
         'chi_square': uk_lotto['chi_square'],
         'ball_stats': uk_lotto['ball_stats'],
-        'cooccurrence_matrix': uk_lotto['cooccurrence_matrix'],
         'recent_draws': uk_lotto['recent_draws'],
         'lotto_games': {
             'uk': uk_lotto,
@@ -139,10 +137,10 @@ def build_export_data():
     
     out_dir = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(out_dir, "lotto_data.json")
-    with open(json_path, "w") as f:
-        json.dump(data_payload, f, indent=2)
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(data_payload, f, separators=(',', ':'))
         
-    print(f"Exported dataset JSON with UK & Irish Lotto to {json_path}")
+    print(f"Exported optimized high-speed dataset JSON to {json_path}")
     return data_payload
 
 if __name__ == "__main__":

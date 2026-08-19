@@ -16,6 +16,7 @@ def package_public_html():
     with open(html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
 
+    # Inject pre-parsed data into index.html for zero-latency instant launch
     embedded_script = f"const embeddedLottoData = {data_json_str};\n        let lottoData = embeddedLottoData;"
     target_pattern = "let lottoData = null;"
 
@@ -30,9 +31,7 @@ def package_public_html():
     with open(dist_json_path, "w", encoding="utf-8") as f:
         f.write(data_json_str)
 
-    print(f"Successfully packaged Enhance Host public_html directory at {dist_dir}")
-    print(f"  - {dist_html_path}")
-    print(f"  - {dist_json_path}")
+    print(f"Successfully packaged instant-load public_html directory at {dist_dir}")
 
 if __name__ == "__main__":
     package_public_html()
