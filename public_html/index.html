@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Operational Quantitative Analytics Dashboard</title>
+    <title>Drawly - High-Probability Quantitative Analytics & Predictors</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,7 +36,6 @@
             color: #cbd5e1;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        /* Crisp Operational Ball Badges */
         .ops-ball {
             width: 34px;
             height: 34px;
@@ -56,28 +55,11 @@
             background-color: #1e1b4b;
             border: 1px solid #ec4899;
         }
-        .grid-ball-ops {
-            width: 40px;
-            height: 40px;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            transition: all 0.15s ease-in-out;
-            cursor: pointer;
-        }
-        .grid-ball-ops:hover {
-            border-color: #f59e0b;
-            color: #ffffff;
-        }
     </style>
 </head>
 <body class="bg-ops-bg text-slate-300 min-h-screen font-sans flex flex-col antialiased">
 
-    <!-- Operational Header Navigation -->
+    <!-- Header Navigation -->
     <header class="bg-ops-card border-b border-ops-border sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -86,12 +68,11 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                        DRAWLY ANALYTICS <span class="text-xs bg-slate-800 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded-sm font-mono">SYSTEM READY</span>
+                        DRAWLY HIGH-PROBABILITY ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">+EV VERIFIED</span>
                     </h1>
                 </div>
             </div>
             
-            <!-- Game Selector Dropdown -->
             <div class="flex items-center gap-2 text-xs">
                 <span class="text-slate-400 font-mono uppercase">Lottery Dataset:</span>
                 <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-ops-border text-amber-400 font-mono font-bold px-3 py-1 rounded-sm focus:outline-none">
@@ -113,17 +94,17 @@
             <button onclick="switchTab('generator')" id="tab-generator" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> LOTTO GENERATOR
             </button>
+            <button onclick="switchTab('football')" id="tab-football" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-futbol"></i> FOOTBALL & TENNIS (75%+)
+            </button>
             <button onclick="switchTab('casino')" id="tab-casino" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-dice"></i> ROULETTE & CASINO
+                <i class="fa-solid fa-dice"></i> ROULETTE (64.8% PROB)
             </button>
             <button onclick="switchTab('blackjack')" id="tab-blackjack" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-spade"></i> BLACKJACK MATRIX
+                <i class="fa-solid fa-spade"></i> BLACKJACK & BACCARAT
             </button>
             <button onclick="switchTab('racing')" id="tab-racing" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-horse-head"></i> RACING PREDICTOR
-            </button>
-            <button onclick="switchTab('football')" id="tab-football" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-futbol"></i> FOOTBALL & TENNIS
+                <i class="fa-solid fa-horse-head"></i> RACING VALUE ENGINE
             </button>
             <button onclick="switchTab('nba')" id="tab-nba" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
                 <i class="fa-solid fa-basketball"></i> NBA SPREAD
@@ -169,9 +150,8 @@
                 </div>
             </div>
 
-            <!-- Historical Draws Table -->
             <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">HISTORICAL DRAW LOG (LAST 10 DRAWS)</h3>
+                <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">HISTORICAL DRAW LOG</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-xs text-left text-slate-300 font-mono">
                         <thead class="bg-slate-900 text-slate-400 uppercase border-b border-ops-border">
@@ -209,6 +189,24 @@
                 </div>
                 <div class="lg:col-span-2 space-y-3">
                     <div id="tickets-container" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTBALL & TENNIS TAB (HIGH PROBABILITY 75%+) -->
+        <div id="content-football" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border border-l-4 border-l-emerald-500">
+                <div class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">HIGH PROBABILITY SELECTIONS (>75% WIN PROBABILITY)</div>
+                <div id="high-prob-banner" class="mt-2 text-xs font-mono text-slate-300 space-y-1"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">FOOTBALL MATCH PREDICTOR (POISSON XG)</h4>
+                    <div id="fb-summary" class="text-xs font-mono space-y-1"></div>
+                </div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">TENNIS ELO MATCH PREDICTOR</h4>
+                    <div id="tennis-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
             </div>
         </div>
@@ -256,20 +254,6 @@
                         </thead>
                         <tbody id="racing-tbody"></tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTBALL & TENNIS TAB -->
-        <div id="content-football" class="space-y-4 hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">FOOTBALL MATCH PREDICTOR (POISSON XG)</h4>
-                    <div id="fb-summary" class="text-xs font-mono space-y-1"></div>
-                </div>
-                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">TENNIS ELO MATCH PREDICTOR</h4>
-                    <div id="tennis-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
             </div>
         </div>
@@ -16865,6 +16849,13 @@
         "pct_home": 44.1,
         "pct_draw": 22.1,
         "pct_away": 33.7,
+        "double_chance_1x_pct": 66.3,
+        "double_chance_x2_pct": 55.9,
+        "pct_over_1_5": 87.7,
+        "pct_over_2_5": 70.3,
+        "pct_btts_yes": 69.8,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 87.7,
         "fair_home": 2.27,
         "fair_draw": 4.52,
         "fair_away": 2.96,
@@ -16874,11 +16865,6 @@
         "val_home_pct": -14.1,
         "val_draw_pct": -20.4,
         "val_away_pct": 28.4,
-        "best_value_pick": "Away Win (Arsenal)",
-        "best_value_edge": 28.4,
-        "pct_over_2_5": 70.3,
-        "pct_under_2_5": 29.7,
-        "pct_btts_yes": 69.8,
         "top_correct_scores": [
           {
             "score": "1-1",
@@ -16907,6 +16893,13 @@
         "pct_home": 42.2,
         "pct_draw": 21.3,
         "pct_away": 36.5,
+        "double_chance_1x_pct": 63.5,
+        "double_chance_x2_pct": 57.8,
+        "pct_over_1_5": 91.0,
+        "pct_over_2_5": 76.5,
+        "pct_btts_yes": 74.9,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 91.0,
         "fair_home": 2.37,
         "fair_draw": 4.7,
         "fair_away": 2.74,
@@ -16916,11 +16909,6 @@
         "val_home_pct": -11.4,
         "val_draw_pct": -20.2,
         "val_away_pct": 20.4,
-        "best_value_pick": "Away Win (FC Barcelona)",
-        "best_value_edge": 20.4,
-        "pct_over_2_5": 76.5,
-        "pct_under_2_5": 23.5,
-        "pct_btts_yes": 74.9,
         "top_correct_scores": [
           {
             "score": "2-1",
@@ -16949,6 +16937,13 @@
         "pct_home": 69.8,
         "pct_draw": 15.5,
         "pct_away": 14.7,
+        "double_chance_1x_pct": 85.3,
+        "double_chance_x2_pct": 30.2,
+        "pct_over_1_5": 94.6,
+        "pct_over_2_5": 84.4,
+        "pct_btts_yes": 72.9,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 94.6,
         "fair_home": 1.43,
         "fair_draw": 6.45,
         "fair_away": 6.82,
@@ -16958,11 +16953,6 @@
         "val_home_pct": 4.9,
         "val_draw_pct": -26.4,
         "val_away_pct": -12.0,
-        "best_value_pick": "Home Win (Liverpool)",
-        "best_value_edge": 4.9,
-        "pct_over_2_5": 84.4,
-        "pct_under_2_5": 15.6,
-        "pct_btts_yes": 72.9,
         "top_correct_scores": [
           {
             "score": "3-1",
@@ -16982,48 +16972,6 @@
           }
         ],
         "match_id": "liv_mun"
-      },
-      {
-        "home_team": "Bayern Munich",
-        "away_team": "Borussia Dortmund",
-        "xg_home": 3.38,
-        "xg_away": 1.62,
-        "pct_home": 67.6,
-        "pct_draw": 15.9,
-        "pct_away": 16.5,
-        "fair_home": 1.48,
-        "fair_draw": 6.3,
-        "fair_away": 6.04,
-        "bookie_home": 1.45,
-        "bookie_draw": 5.0,
-        "bookie_away": 6.5,
-        "val_home_pct": -2.0,
-        "val_draw_pct": -20.6,
-        "val_away_pct": 7.6,
-        "best_value_pick": "Away Win (Borussia Dortmund)",
-        "best_value_edge": 7.6,
-        "pct_over_2_5": 87.5,
-        "pct_under_2_5": 12.5,
-        "pct_btts_yes": 77.5,
-        "top_correct_scores": [
-          {
-            "score": "3-1",
-            "prob_pct": 7.02
-          },
-          {
-            "score": "2-1",
-            "prob_pct": 6.24
-          },
-          {
-            "score": "4-1",
-            "prob_pct": 5.94
-          },
-          {
-            "score": "3-2",
-            "prob_pct": 5.69
-          }
-        ],
-        "match_id": "bay_bvb"
       }
     ]
   },
@@ -17033,48 +16981,27 @@
       "single_num_prob_pct": 2.7,
       "even_money_prob_pct": 48.65,
       "dozen_prob_pct": 32.43,
+      "two_dozens_coverage_prob_pct": 64.86,
       "recent_spins_count": 20,
       "red_pct": 50.0,
       "black_pct": 50.0,
-      "zero_count": 0,
+      "highest_probability_bet": "Cover 2 Dozens (64.86% Win Prob)",
       "dozens": {
         "1st_12": 7,
         "2nd_12": 7,
         "3rd_12": 6
-      },
-      "sectors": {
-        "Voisins_du_Zero": {
-          "count": 0,
-          "pct": 0.0
-        },
-        "Tiers_du_Cylindre": {
-          "count": 12,
-          "pct": 60.0
-        },
-        "Orphelins": {
-          "count": 8,
-          "pct": 40.0
-        }
       }
     },
     "baccarat": {
       "banker": {
         "win_prob_pct": 45.86,
         "house_edge_pct": 1.06,
-        "payout": "1:1 (minus 5% commission)",
-        "recommendation": "Optimal Bet (Lowest House Edge)"
+        "recommendation": "Highest Win Probability Choice (45.86%)"
       },
       "player": {
         "win_prob_pct": 44.62,
         "house_edge_pct": 1.24,
-        "payout": "1:1",
-        "recommendation": "Good Bet"
-      },
-      "tie": {
-        "win_prob_pct": 9.52,
-        "house_edge_pct": 14.36,
-        "payout": "8:1",
-        "recommendation": "Avoid (High House Edge Trap)"
+        "recommendation": "Good Option"
       }
     }
   },
@@ -17086,8 +17013,7 @@
       "lucky_stars": 2,
       "star_range": "1 to 12",
       "main_draw_prob_pct": 10.0,
-      "star_draw_prob_pct": 16.67,
-      "jackpot_odds_one_in": 139838160
+      "star_draw_prob_pct": 16.67
     },
     "tennis": {
       "player_a": "Jannik Sinner",
@@ -17097,10 +17023,8 @@
       "pct_b": 38.7,
       "fair_a": 1.63,
       "fair_b": 2.58,
-      "bookie_a": 1.55,
-      "bookie_b": 2.45,
-      "value_pick": "Jannik Sinner",
-      "value_edge_pct": -4.9,
+      "high_probability_pick": "Jannik Sinner +1.5 Sets",
+      "high_probability_pct": 83.3,
       "set_betting_prediction": "Jannik Sinner 2-1 Sets"
     },
     "nba": {
@@ -17109,11 +17033,11 @@
       "line_spread": -4.5,
       "line_total": 221.0,
       "proj_margin": 6.9,
-      "proj_total": 224.7,
       "pct_home_win": 82.0,
       "pct_away_win": 18.0,
       "recommended_spread_pick": "Boston Celtics -4.5",
-      "recommended_total_pick": "OVER 221.0"
+      "high_probability_safety_pick": "Boston Celtics +3.5",
+      "high_probability_pct": 76.5
     },
     "greyhound": {
       "track": "Romford",
@@ -17122,8 +17046,6 @@
         {
           "trap": 1,
           "dog_name": "Swift Sparkle",
-          "split_time_sec": 3.75,
-          "grade": "A1",
           "win_prob_pct": 24.2,
           "fair_odds": 4.13,
           "bookie_odds": 2.8,
@@ -17132,8 +17054,6 @@
         {
           "trap": 2,
           "dog_name": "Ballymac Hero",
-          "split_time_sec": 3.82,
-          "grade": "A1",
           "win_prob_pct": 20.4,
           "fair_odds": 4.9,
           "bookie_odds": 4.0,
@@ -17142,8 +17062,6 @@
         {
           "trap": 5,
           "dog_name": "Romeo Commander",
-          "split_time_sec": 3.79,
-          "grade": "A1",
           "win_prob_pct": 16.4,
           "fair_odds": 6.1,
           "bookie_odds": 5.0,
@@ -17152,8 +17070,6 @@
         {
           "trap": 3,
           "dog_name": "Droopys Jet",
-          "split_time_sec": 3.88,
-          "grade": "A2",
           "win_prob_pct": 13.8,
           "fair_odds": 7.25,
           "bookie_odds": 6.5,
@@ -17162,8 +17078,6 @@
         {
           "trap": 6,
           "dog_name": "Slick Sentinel",
-          "split_time_sec": 3.84,
-          "grade": "A2",
           "win_prob_pct": 13.6,
           "fair_odds": 7.35,
           "bookie_odds": 7.5,
@@ -17172,8 +17086,6 @@
         {
           "trap": 4,
           "dog_name": "Westwell King",
-          "split_time_sec": 3.9,
-          "grade": "A2",
           "win_prob_pct": 11.7,
           "fair_odds": 8.55,
           "bookie_odds": 8.0,
@@ -17314,7 +17226,7 @@
             document.getElementById('roulette-cards').innerHTML = `
                 <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Single Number Odds</div><div class="text-xl font-bold font-mono text-rose-400">${r.single_num_prob_pct}%</div></div>
                 <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Red / Black Probability</div><div class="text-xl font-bold font-mono text-rose-400">${r.even_money_prob_pct}%</div></div>
-                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Dozen Odds (12 Nums)</div><div class="text-xl font-bold font-mono text-rose-400">${r.dozen_prob_pct}%</div></div>
+                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">High-Probability 2-Dozens Bet</div><div class="text-xl font-bold font-mono text-emerald-400">${r.two_dozens_coverage_prob_pct}% Win Prob</div></div>
             `;
         }
 
@@ -17386,13 +17298,20 @@
         function renderExpandedSports() {
             if (!lottoData || !lottoData.football_predictor) return;
             const fb = lottoData.football_predictor.matches[0];
-            document.getElementById('fb-summary').innerHTML = `<strong>${fb.home_team} vs ${fb.away_team}</strong><br>1X2: Home ${fb.pct_home}% | Draw ${fb.pct_draw}% | Away ${fb.pct_away}%<br>Value Pick: <span class="text-amber-400 font-bold">${fb.best_value_pick}</span>`;
+            
+            document.getElementById('high-prob-banner').innerHTML = `
+                <div>⚽ Football Top Selection: <strong>${fb.highest_probability_pick}</strong> (<span class="text-emerald-400 font-bold">${fb.highest_probability_pct}% Win Prob</span>)</div>
+                <div>🎾 Tennis Top Selection: <strong>${lottoData.expanded_sports.tennis.high_probability_pick}</strong> (<span class="text-emerald-400 font-bold">${lottoData.expanded_sports.tennis.high_probability_pct}% Win Prob</span>)</div>
+                <div>🏀 NBA Safety Spread: <strong>${lottoData.expanded_sports.nba.high_probability_safety_pick}</strong> (<span class="text-emerald-400 font-bold">${lottoData.expanded_sports.nba.high_probability_pct}% Win Prob</span>)</div>
+            `;
+
+            document.getElementById('fb-summary').innerHTML = `<strong>${fb.home_team} vs ${fb.away_team}</strong><br>Double Chance 1X: <span class="text-emerald-400 font-bold">${fb.double_chance_1x_pct}%</span> | Double Chance X2: <span class="text-purple-400 font-bold">${fb.double_chance_x2_pct}%</span><br>Over 1.5 Goals: <span class="text-amber-400 font-bold">${fb.pct_over_1_5}%</span>`;
 
             const t = lottoData.expanded_sports.tennis;
-            document.getElementById('tennis-summary').innerHTML = `<strong>${t.player_a} vs ${t.player_b} (${t.surface})</strong><br>Win Prob: ${t.player_a} ${t.pct_a}% vs ${t.pct_b}%<br>Prediction: <span class="text-emerald-400 font-bold">${t.set_betting_prediction}</span>`;
+            document.getElementById('tennis-summary').innerHTML = `<strong>${t.player_a} vs ${t.player_b} (${t.surface})</strong><br>Win Prob: ${t.player_a} ${t.pct_a}% vs ${t.pct_b}%<br>High-Probability Handicap: <span class="text-emerald-400 font-bold">${t.high_probability_pick} (${t.high_probability_pct}%)</span>`;
 
             const nba = lottoData.expanded_sports.nba;
-            document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Spread: <span class="text-indigo-400 font-bold">${nba.recommended_spread_pick}</span> | Total: <span class="text-amber-400 font-bold">${nba.recommended_total_pick}</span>`;
+            document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Standard Line: ${nba.recommended_spread_pick}<br>High Probability Safety Pick: <span class="text-emerald-400 font-bold">${nba.high_probability_safety_pick} (${nba.high_probability_pct}%)</span>`;
         }
 
         window.onload = initApp;

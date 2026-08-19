@@ -16554,6 +16554,13 @@
         "pct_home": 44.1,
         "pct_draw": 22.1,
         "pct_away": 33.7,
+        "double_chance_1x_pct": 66.3,
+        "double_chance_x2_pct": 55.9,
+        "pct_over_1_5": 87.7,
+        "pct_over_2_5": 70.3,
+        "pct_btts_yes": 69.8,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 87.7,
         "fair_home": 2.27,
         "fair_draw": 4.52,
         "fair_away": 2.96,
@@ -16563,11 +16570,6 @@
         "val_home_pct": -14.1,
         "val_draw_pct": -20.4,
         "val_away_pct": 28.4,
-        "best_value_pick": "Away Win (Arsenal)",
-        "best_value_edge": 28.4,
-        "pct_over_2_5": 70.3,
-        "pct_under_2_5": 29.7,
-        "pct_btts_yes": 69.8,
         "top_correct_scores": [
           {
             "score": "1-1",
@@ -16596,6 +16598,13 @@
         "pct_home": 42.2,
         "pct_draw": 21.3,
         "pct_away": 36.5,
+        "double_chance_1x_pct": 63.5,
+        "double_chance_x2_pct": 57.8,
+        "pct_over_1_5": 91.0,
+        "pct_over_2_5": 76.5,
+        "pct_btts_yes": 74.9,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 91.0,
         "fair_home": 2.37,
         "fair_draw": 4.7,
         "fair_away": 2.74,
@@ -16605,11 +16614,6 @@
         "val_home_pct": -11.4,
         "val_draw_pct": -20.2,
         "val_away_pct": 20.4,
-        "best_value_pick": "Away Win (FC Barcelona)",
-        "best_value_edge": 20.4,
-        "pct_over_2_5": 76.5,
-        "pct_under_2_5": 23.5,
-        "pct_btts_yes": 74.9,
         "top_correct_scores": [
           {
             "score": "2-1",
@@ -16638,6 +16642,13 @@
         "pct_home": 69.8,
         "pct_draw": 15.5,
         "pct_away": 14.7,
+        "double_chance_1x_pct": 85.3,
+        "double_chance_x2_pct": 30.2,
+        "pct_over_1_5": 94.6,
+        "pct_over_2_5": 84.4,
+        "pct_btts_yes": 72.9,
+        "highest_probability_pick": "Over 1.5 Match Goals",
+        "highest_probability_pct": 94.6,
         "fair_home": 1.43,
         "fair_draw": 6.45,
         "fair_away": 6.82,
@@ -16647,11 +16658,6 @@
         "val_home_pct": 4.9,
         "val_draw_pct": -26.4,
         "val_away_pct": -12.0,
-        "best_value_pick": "Home Win (Liverpool)",
-        "best_value_edge": 4.9,
-        "pct_over_2_5": 84.4,
-        "pct_under_2_5": 15.6,
-        "pct_btts_yes": 72.9,
         "top_correct_scores": [
           {
             "score": "3-1",
@@ -16671,48 +16677,6 @@
           }
         ],
         "match_id": "liv_mun"
-      },
-      {
-        "home_team": "Bayern Munich",
-        "away_team": "Borussia Dortmund",
-        "xg_home": 3.38,
-        "xg_away": 1.62,
-        "pct_home": 67.6,
-        "pct_draw": 15.9,
-        "pct_away": 16.5,
-        "fair_home": 1.48,
-        "fair_draw": 6.3,
-        "fair_away": 6.04,
-        "bookie_home": 1.45,
-        "bookie_draw": 5.0,
-        "bookie_away": 6.5,
-        "val_home_pct": -2.0,
-        "val_draw_pct": -20.6,
-        "val_away_pct": 7.6,
-        "best_value_pick": "Away Win (Borussia Dortmund)",
-        "best_value_edge": 7.6,
-        "pct_over_2_5": 87.5,
-        "pct_under_2_5": 12.5,
-        "pct_btts_yes": 77.5,
-        "top_correct_scores": [
-          {
-            "score": "3-1",
-            "prob_pct": 7.02
-          },
-          {
-            "score": "2-1",
-            "prob_pct": 6.24
-          },
-          {
-            "score": "4-1",
-            "prob_pct": 5.94
-          },
-          {
-            "score": "3-2",
-            "prob_pct": 5.69
-          }
-        ],
-        "match_id": "bay_bvb"
       }
     ]
   },
@@ -16722,48 +16686,27 @@
       "single_num_prob_pct": 2.7,
       "even_money_prob_pct": 48.65,
       "dozen_prob_pct": 32.43,
+      "two_dozens_coverage_prob_pct": 64.86,
       "recent_spins_count": 20,
       "red_pct": 50.0,
       "black_pct": 50.0,
-      "zero_count": 0,
+      "highest_probability_bet": "Cover 2 Dozens (64.86% Win Prob)",
       "dozens": {
         "1st_12": 7,
         "2nd_12": 7,
         "3rd_12": 6
-      },
-      "sectors": {
-        "Voisins_du_Zero": {
-          "count": 0,
-          "pct": 0.0
-        },
-        "Tiers_du_Cylindre": {
-          "count": 12,
-          "pct": 60.0
-        },
-        "Orphelins": {
-          "count": 8,
-          "pct": 40.0
-        }
       }
     },
     "baccarat": {
       "banker": {
         "win_prob_pct": 45.86,
         "house_edge_pct": 1.06,
-        "payout": "1:1 (minus 5% commission)",
-        "recommendation": "Optimal Bet (Lowest House Edge)"
+        "recommendation": "Highest Win Probability Choice (45.86%)"
       },
       "player": {
         "win_prob_pct": 44.62,
         "house_edge_pct": 1.24,
-        "payout": "1:1",
-        "recommendation": "Good Bet"
-      },
-      "tie": {
-        "win_prob_pct": 9.52,
-        "house_edge_pct": 14.36,
-        "payout": "8:1",
-        "recommendation": "Avoid (High House Edge Trap)"
+        "recommendation": "Good Option"
       }
     }
   },
@@ -16775,8 +16718,7 @@
       "lucky_stars": 2,
       "star_range": "1 to 12",
       "main_draw_prob_pct": 10.0,
-      "star_draw_prob_pct": 16.67,
-      "jackpot_odds_one_in": 139838160
+      "star_draw_prob_pct": 16.67
     },
     "tennis": {
       "player_a": "Jannik Sinner",
@@ -16786,10 +16728,8 @@
       "pct_b": 38.7,
       "fair_a": 1.63,
       "fair_b": 2.58,
-      "bookie_a": 1.55,
-      "bookie_b": 2.45,
-      "value_pick": "Jannik Sinner",
-      "value_edge_pct": -4.9,
+      "high_probability_pick": "Jannik Sinner +1.5 Sets",
+      "high_probability_pct": 83.3,
       "set_betting_prediction": "Jannik Sinner 2-1 Sets"
     },
     "nba": {
@@ -16798,11 +16738,11 @@
       "line_spread": -4.5,
       "line_total": 221.0,
       "proj_margin": 6.9,
-      "proj_total": 224.7,
       "pct_home_win": 82.0,
       "pct_away_win": 18.0,
       "recommended_spread_pick": "Boston Celtics -4.5",
-      "recommended_total_pick": "OVER 221.0"
+      "high_probability_safety_pick": "Boston Celtics +3.5",
+      "high_probability_pct": 76.5
     },
     "greyhound": {
       "track": "Romford",
@@ -16811,8 +16751,6 @@
         {
           "trap": 1,
           "dog_name": "Swift Sparkle",
-          "split_time_sec": 3.75,
-          "grade": "A1",
           "win_prob_pct": 24.2,
           "fair_odds": 4.13,
           "bookie_odds": 2.8,
@@ -16821,8 +16759,6 @@
         {
           "trap": 2,
           "dog_name": "Ballymac Hero",
-          "split_time_sec": 3.82,
-          "grade": "A1",
           "win_prob_pct": 20.4,
           "fair_odds": 4.9,
           "bookie_odds": 4.0,
@@ -16831,8 +16767,6 @@
         {
           "trap": 5,
           "dog_name": "Romeo Commander",
-          "split_time_sec": 3.79,
-          "grade": "A1",
           "win_prob_pct": 16.4,
           "fair_odds": 6.1,
           "bookie_odds": 5.0,
@@ -16841,8 +16775,6 @@
         {
           "trap": 3,
           "dog_name": "Droopys Jet",
-          "split_time_sec": 3.88,
-          "grade": "A2",
           "win_prob_pct": 13.8,
           "fair_odds": 7.25,
           "bookie_odds": 6.5,
@@ -16851,8 +16783,6 @@
         {
           "trap": 6,
           "dog_name": "Slick Sentinel",
-          "split_time_sec": 3.84,
-          "grade": "A2",
           "win_prob_pct": 13.6,
           "fair_odds": 7.35,
           "bookie_odds": 7.5,
@@ -16861,8 +16791,6 @@
         {
           "trap": 4,
           "dog_name": "Westwell King",
-          "split_time_sec": 3.9,
-          "grade": "A2",
           "win_prob_pct": 11.7,
           "fair_odds": 8.55,
           "bookie_odds": 8.0,

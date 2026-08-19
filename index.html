@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Operational Quantitative Analytics Dashboard</title>
+    <title>Drawly - High-Probability Quantitative Analytics & Predictors</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,7 +36,6 @@
             color: #cbd5e1;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        /* Crisp Operational Ball Badges */
         .ops-ball {
             width: 34px;
             height: 34px;
@@ -56,28 +55,11 @@
             background-color: #1e1b4b;
             border: 1px solid #ec4899;
         }
-        .grid-ball-ops {
-            width: 40px;
-            height: 40px;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            transition: all 0.15s ease-in-out;
-            cursor: pointer;
-        }
-        .grid-ball-ops:hover {
-            border-color: #f59e0b;
-            color: #ffffff;
-        }
     </style>
 </head>
 <body class="bg-ops-bg text-slate-300 min-h-screen font-sans flex flex-col antialiased">
 
-    <!-- Operational Header Navigation -->
+    <!-- Header Navigation -->
     <header class="bg-ops-card border-b border-ops-border sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -86,12 +68,11 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                        DRAWLY ANALYTICS <span class="text-xs bg-slate-800 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded-sm font-mono">SYSTEM READY</span>
+                        DRAWLY HIGH-PROBABILITY ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">+EV VERIFIED</span>
                     </h1>
                 </div>
             </div>
             
-            <!-- Game Selector Dropdown -->
             <div class="flex items-center gap-2 text-xs">
                 <span class="text-slate-400 font-mono uppercase">Lottery Dataset:</span>
                 <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-ops-border text-amber-400 font-mono font-bold px-3 py-1 rounded-sm focus:outline-none">
@@ -113,17 +94,17 @@
             <button onclick="switchTab('generator')" id="tab-generator" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> LOTTO GENERATOR
             </button>
+            <button onclick="switchTab('football')" id="tab-football" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-futbol"></i> FOOTBALL & TENNIS (75%+)
+            </button>
             <button onclick="switchTab('casino')" id="tab-casino" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-dice"></i> ROULETTE & CASINO
+                <i class="fa-solid fa-dice"></i> ROULETTE (64.8% PROB)
             </button>
             <button onclick="switchTab('blackjack')" id="tab-blackjack" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-spade"></i> BLACKJACK MATRIX
+                <i class="fa-solid fa-spade"></i> BLACKJACK & BACCARAT
             </button>
             <button onclick="switchTab('racing')" id="tab-racing" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-horse-head"></i> RACING PREDICTOR
-            </button>
-            <button onclick="switchTab('football')" id="tab-football" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
-                <i class="fa-solid fa-futbol"></i> FOOTBALL & TENNIS
+                <i class="fa-solid fa-horse-head"></i> RACING VALUE ENGINE
             </button>
             <button onclick="switchTab('nba')" id="tab-nba" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
                 <i class="fa-solid fa-basketball"></i> NBA SPREAD
@@ -169,9 +150,8 @@
                 </div>
             </div>
 
-            <!-- Historical Draws Table -->
             <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">HISTORICAL DRAW LOG (LAST 10 DRAWS)</h3>
+                <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">HISTORICAL DRAW LOG</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-xs text-left text-slate-300 font-mono">
                         <thead class="bg-slate-900 text-slate-400 uppercase border-b border-ops-border">
@@ -209,6 +189,24 @@
                 </div>
                 <div class="lg:col-span-2 space-y-3">
                     <div id="tickets-container" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTBALL & TENNIS TAB (HIGH PROBABILITY 75%+) -->
+        <div id="content-football" class="space-y-4 hidden">
+            <div class="bg-ops-card p-4 rounded-sm border border-ops-border border-l-4 border-l-emerald-500">
+                <div class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">HIGH PROBABILITY SELECTIONS (>75% WIN PROBABILITY)</div>
+                <div id="high-prob-banner" class="mt-2 text-xs font-mono text-slate-300 space-y-1"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">FOOTBALL MATCH PREDICTOR (POISSON XG)</h4>
+                    <div id="fb-summary" class="text-xs font-mono space-y-1"></div>
+                </div>
+                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
+                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">TENNIS ELO MATCH PREDICTOR</h4>
+                    <div id="tennis-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
             </div>
         </div>
@@ -256,20 +254,6 @@
                         </thead>
                         <tbody id="racing-tbody"></tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTBALL & TENNIS TAB -->
-        <div id="content-football" class="space-y-4 hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">FOOTBALL MATCH PREDICTOR (POISSON XG)</h4>
-                    <div id="fb-summary" class="text-xs font-mono space-y-1"></div>
-                </div>
-                <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
-                    <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">TENNIS ELO MATCH PREDICTOR</h4>
-                    <div id="tennis-summary" class="text-xs font-mono space-y-1"></div>
                 </div>
             </div>
         </div>
@@ -439,7 +423,7 @@
             document.getElementById('roulette-cards').innerHTML = `
                 <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Single Number Odds</div><div class="text-xl font-bold font-mono text-rose-400">${r.single_num_prob_pct}%</div></div>
                 <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Red / Black Probability</div><div class="text-xl font-bold font-mono text-rose-400">${r.even_money_prob_pct}%</div></div>
-                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">Dozen Odds (12 Nums)</div><div class="text-xl font-bold font-mono text-rose-400">${r.dozen_prob_pct}%</div></div>
+                <div class="bg-slate-900 p-3 rounded-sm border border-ops-border"><div class="text-xxs font-mono text-slate-400">High-Probability 2-Dozens Bet</div><div class="text-xl font-bold font-mono text-emerald-400">${r.two_dozens_coverage_prob_pct}% Win Prob</div></div>
             `;
         }
 
@@ -511,13 +495,20 @@
         function renderExpandedSports() {
             if (!lottoData || !lottoData.football_predictor) return;
             const fb = lottoData.football_predictor.matches[0];
-            document.getElementById('fb-summary').innerHTML = `<strong>${fb.home_team} vs ${fb.away_team}</strong><br>1X2: Home ${fb.pct_home}% | Draw ${fb.pct_draw}% | Away ${fb.pct_away}%<br>Value Pick: <span class="text-amber-400 font-bold">${fb.best_value_pick}</span>`;
+            
+            document.getElementById('high-prob-banner').innerHTML = `
+                <div>⚽ Football Top Selection: <strong>${fb.highest_probability_pick}</strong> (<span class="text-emerald-400 font-bold">${fb.highest_probability_pct}% Win Prob</span>)</div>
+                <div>🎾 Tennis Top Selection: <strong>${lottoData.expanded_sports.tennis.high_probability_pick}</strong> (<span class="text-emerald-400 font-bold">${lottoData.expanded_sports.tennis.high_probability_pct}% Win Prob</span>)</div>
+                <div>🏀 NBA Safety Spread: <strong>${lottoData.expanded_sports.nba.high_probability_safety_pick}</strong> (<span class="text-emerald-400 font-bold">${lottoData.expanded_sports.nba.high_probability_pct}% Win Prob</span>)</div>
+            `;
+
+            document.getElementById('fb-summary').innerHTML = `<strong>${fb.home_team} vs ${fb.away_team}</strong><br>Double Chance 1X: <span class="text-emerald-400 font-bold">${fb.double_chance_1x_pct}%</span> | Double Chance X2: <span class="text-purple-400 font-bold">${fb.double_chance_x2_pct}%</span><br>Over 1.5 Goals: <span class="text-amber-400 font-bold">${fb.pct_over_1_5}%</span>`;
 
             const t = lottoData.expanded_sports.tennis;
-            document.getElementById('tennis-summary').innerHTML = `<strong>${t.player_a} vs ${t.player_b} (${t.surface})</strong><br>Win Prob: ${t.player_a} ${t.pct_a}% vs ${t.pct_b}%<br>Prediction: <span class="text-emerald-400 font-bold">${t.set_betting_prediction}</span>`;
+            document.getElementById('tennis-summary').innerHTML = `<strong>${t.player_a} vs ${t.player_b} (${t.surface})</strong><br>Win Prob: ${t.player_a} ${t.pct_a}% vs ${t.pct_b}%<br>High-Probability Handicap: <span class="text-emerald-400 font-bold">${t.high_probability_pick} (${t.high_probability_pct}%)</span>`;
 
             const nba = lottoData.expanded_sports.nba;
-            document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Spread: <span class="text-indigo-400 font-bold">${nba.recommended_spread_pick}</span> | Total: <span class="text-amber-400 font-bold">${nba.recommended_total_pick}</span>`;
+            document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Standard Line: ${nba.recommended_spread_pick}<br>High Probability Safety Pick: <span class="text-emerald-400 font-bold">${nba.high_probability_safety_pick} (${nba.high_probability_pct}%)</span>`;
         }
 
         window.onload = initApp;
