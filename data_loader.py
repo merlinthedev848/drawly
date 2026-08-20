@@ -11,6 +11,7 @@ IRISH_DATA_FILE = os.path.join(BASE_DIR, "irish_lotto_draws.csv")
 def load_lotto_data(game_type="uk", file_path=None):
     """
     Loads UK Lotto (1-59) or Irish Lotto (1-47) draw dataset.
+    Handles mixed date formats robustly.
     """
     if file_path is None:
         file_path = IRISH_DATA_FILE if game_type == "irish" else UK_DATA_FILE
@@ -22,7 +23,7 @@ def load_lotto_data(game_type="uk", file_path=None):
             create_historical_lotto_csv(file_path)
 
     df = pd.read_csv(file_path)
-    df['draw_date'] = pd.to_datetime(df['draw_date'])
+    df['draw_date'] = pd.to_datetime(df['draw_date'], format='mixed', errors='coerce')
     df = df.sort_values('draw_date', ascending=True).reset_index(drop=True)
 
     ball_cols = ['ball_1', 'ball_2', 'ball_3', 'ball_4', 'ball_5', 'ball_6']

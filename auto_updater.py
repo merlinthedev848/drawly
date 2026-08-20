@@ -11,9 +11,9 @@ IRISH_CSV = os.path.join(BASE_DIR, "irish_lotto_draws.csv")
 
 def get_latest_draw_date(csv_path):
     if not os.path.exists(csv_path):
-        return None
+        return None, None, None
     df = pd.read_csv(csv_path)
-    df['draw_date'] = pd.to_datetime(df['draw_date'])
+    df['draw_date'] = pd.to_datetime(df['draw_date'], format='mixed', errors='coerce')
     return df['draw_date'].max(), df['draw_number'].max(), df
 
 def fetch_and_append_latest_draws(game_type="uk"):
@@ -25,7 +25,7 @@ def fetch_and_append_latest_draws(game_type="uk"):
     max_date, max_draw_no, df = get_latest_draw_date(csv_path)
     
     today = datetime.now()
-    if max_date is None:
+    if max_date is None or pd.isna(max_date):
         return 0
 
     next_date = max_date + timedelta(days=1)
@@ -34,16 +34,14 @@ def fetch_and_append_latest_draws(game_type="uk"):
     total_balls = 47 if game_type == "irish" else 59
 
     while next_date <= today:
-        # Lotto draws occur on Wednesdays (weekday 2) and Saturdays (weekday 5)
         if next_date.weekday() in [2, 5]:
-            # Generate or fetch latest draw result
             selected = random.sample(range(1, total_balls + 1), 7)
             main_balls = sorted(selected[:6])
             bonus_ball = selected[6]
 
             new_draws.append({
                 "draw_number": current_draw_no,
-                "draw_date": next_date.strftime("%Y-%m-%d"),
+                "draw_date": next_date.strftime("%Y-%m-%d %H:%M:%S"),
                 "day_of_week": next_date.strftime("%A"),
                 "ball_1": main_balls[0],
                 "ball_2": main_balls[1],
@@ -64,7 +62,7 @@ def fetch_and_append_latest_draws(game_type="uk"):
         print(f"Auto-updater appended {len(new_draws)} new draws to {csv_path}")
         return len(new_draws)
 
-    print(f"Dataset {game_type.toUpperCase()} is already fully up to date.")
+    print(f"Dataset {game_type.upper()} is already fully up to date.")
     return 0
 
 def run_auto_update_pipeline():
@@ -74,7 +72,6 @@ def run_auto_update_pipeline():
     uk_added = fetch_and_append_latest_draws("uk")
     irish_added = fetch_and_append_latest_draws("irish")
 
-    # Rebuild data JSON & HTML bundle
     from build_web_data import build_export_data
     from public_html_packager import package_public_html
 
