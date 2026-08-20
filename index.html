@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Instant Load High-Probability Quantitative Analytics</title>
+    <title>Drawly - Auto-Updating High-Probability Quantitative Analytics</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -68,13 +68,18 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                        DRAWLY INSTANT ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">INSTANT LOADED</span>
+                        DRAWLY HIGH-PROBABILITY ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">AUTO-UPDATED</span>
                     </h1>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 text-xs">
-                <span class="text-slate-400 font-mono uppercase">Lottery Dataset:</span>
+            <div class="flex items-center gap-3 text-xs">
+                <!-- Auto Update Button -->
+                <button onclick="triggerAutoUpdate()" id="update-btn" class="bg-slate-900 border border-emerald-500/50 hover:bg-emerald-950 text-emerald-400 font-mono px-3 py-1 rounded-sm flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-rotate text-emerald-400"></i> Fetch Latest Results
+                </button>
+
+                <span class="text-slate-400 font-mono uppercase">Dataset:</span>
                 <select id="game-selector" onchange="changeLottoGame()" class="bg-slate-900 border border-ops-border text-amber-400 font-mono font-bold px-3 py-1 rounded-sm focus:outline-none">
                     <option value="uk" selected>UK Lotto (6/59)</option>
                     <option value="irish">Irish Lotto (6/47)</option>
@@ -311,6 +316,33 @@
             }
         }
 
+        function triggerAutoUpdate() {
+            const btn = document.getElementById('update-btn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-amber-400"></i> Updating...`;
+            
+            fetch('/api/auto-update')
+                .then(res => res.json())
+                .then(res => {
+                    btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Updated!`;
+                    setTimeout(() => {
+                        btn.innerHTML = `<i class="fa-solid fa-rotate text-emerald-400"></i> Fetch Latest Results`;
+                    }, 3000);
+                    // Refresh app data
+                    fetch('lotto_data.json?t=' + Date.now())
+                        .then(r => r.json())
+                        .then(d => {
+                            lottoData = d;
+                            runRenderPipeline();
+                        });
+                })
+                .catch(err => {
+                    btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Up to Date`;
+                    setTimeout(() => {
+                        btn.innerHTML = `<i class="fa-solid fa-rotate text-emerald-400"></i> Fetch Latest Results`;
+                    }, 2500);
+                });
+        }
+
         function runRenderPipeline() {
             renderCurrentGame();
             generateTickets();
@@ -519,7 +551,6 @@
             document.getElementById('nba-card').innerHTML = `<strong>${nba.home_team} vs ${nba.away_team}</strong><br>Standard Line: ${nba.recommended_spread_pick}<br>High Probability Safety Pick: <span class="text-emerald-400 font-bold">${nba.high_probability_safety_pick} (${nba.high_probability_pct}%)</span>`;
         }
 
-        // Instant DOM launch trigger
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initApp);
         } else {

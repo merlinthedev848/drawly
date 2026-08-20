@@ -10,6 +10,7 @@ from stats_engine import (
     compute_number_likelihoods
 )
 from generator import generate_logical_tickets
+from auto_updater import run_auto_update_pipeline
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,10 +29,18 @@ def get_static_json():
 @app.route("/api/stats")
 def api_stats():
     if os.path.exists(JSON_FILE):
-        with open(JSON_FILE, "r") as f:
+        with open(JSON_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
         return jsonify(data)
     return jsonify({"error": "Data not found"}), 404
+
+@app.route("/api/auto-update", methods=["POST", "GET"])
+def api_auto_update():
+    try:
+        res = run_auto_update_pipeline()
+        return jsonify(res)
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/api/generate", methods=["POST"])
 def api_generate():
@@ -48,4 +57,10 @@ def api_generate():
     return jsonify({"tickets": tickets})
 
 if __name__ == "__main__":
+    # Auto update dataset on server launch
+    try:
+        run_auto_update_pipeline()
+    except Exception as err:
+        print("Auto-update launch check:", err)
+
     app.run(host="0.0.0.0", port=5000, debug=True)
