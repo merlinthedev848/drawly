@@ -15,6 +15,8 @@ from stock_explosion_engine import get_preset_explosion_stocks
 from football_predictor_engine import get_preset_football_matches
 from casino_games_engine import analyze_roulette_wheel, analyze_baccarat_probabilities
 from sports_expanded_engine import calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, predict_greyhound_race
+from next_draw_predictor import predict_next_draw
+from live_fetcher import fetch_live_lotto_data
 
 def process_lotto_game(game_type="uk", total_balls=59):
     df_raw, draw_matrix = load_lotto_data(game_type)
@@ -70,6 +72,8 @@ def process_lotto_game(game_type="uk", total_balls=59):
             'top_pairs': top_pairs
         })
 
+    next_draw_pred = predict_next_draw(game_type)
+
     return {
         'game_type': game_type,
         'total_balls': total_balls,
@@ -80,12 +84,14 @@ def process_lotto_game(game_type="uk", total_balls=59):
         'theo_draw_prob': float(np.round(theo_draw_prob * 100, 2)),
         'chi_square': chi_square,
         'ball_stats': ball_stats,
-        'recent_draws': recent_draws
+        'recent_draws': recent_draws,
+        'next_draw_prediction': next_draw_pred
     }
 
 def build_export_data():
     uk_lotto = process_lotto_game("uk", 59)
     irish_lotto = process_lotto_game("irish", 47)
+    live_meta = fetch_live_lotto_data()
 
     preset_races = get_preset_races()
     for race in preset_races:
@@ -102,6 +108,7 @@ def build_export_data():
     greyhound_race = predict_greyhound_race()
 
     data_payload = {
+        'live_meta': live_meta,
         'total_draws': uk_lotto['total_draws'],
         'start_date': uk_lotto['start_date'],
         'end_date': uk_lotto['end_date'],
@@ -110,6 +117,7 @@ def build_export_data():
         'chi_square': uk_lotto['chi_square'],
         'ball_stats': uk_lotto['ball_stats'],
         'recent_draws': uk_lotto['recent_draws'],
+        'next_draw_prediction': uk_lotto['next_draw_prediction'],
         'lotto_games': {
             'uk': uk_lotto,
             'irish': irish_lotto
@@ -140,7 +148,7 @@ def build_export_data():
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(data_payload, f, separators=(',', ':'))
         
-    print(f"Exported optimized high-speed dataset JSON to {json_path}")
+    print(f"Exported dataset JSON with Live Next Draw Predictions to {json_path}")
     return data_payload
 
 if __name__ == "__main__":

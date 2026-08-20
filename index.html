@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawly - Auto-Updating High-Probability Quantitative Analytics</title>
+    <title>Drawly - Live Next Draw Quantitative Predictor</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -50,6 +50,11 @@
             background-color: #0f172a;
             border: 1px solid #f59e0b;
         }
+        .ops-ball-pred {
+            color: #090d16;
+            background-color: #10b981;
+            border: 1px solid #34d399;
+        }
         .ops-ball-bonus {
             color: #fbcfe8;
             background-color: #1e1b4b;
@@ -68,7 +73,7 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                        DRAWLY HIGH-PROBABILITY ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono">AUTO-UPDATED</span>
+                        DRAWLY LIVE ENGINE <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-sm font-mono"><i class="fa-solid fa-signal text-emerald-400"></i> LIVE FEED ACTIVE</span>
                     </h1>
                 </div>
             </div>
@@ -94,7 +99,7 @@
         <!-- Navigation Tabs -->
         <div class="flex flex-wrap border-b border-ops-border text-xs font-mono gap-1" id="tab-nav">
             <button onclick="switchTab('overview')" id="tab-overview" class="px-3 py-1.5 font-bold border-b-2 border-amber-500 text-amber-400 bg-slate-900/60 rounded-t-sm flex items-center gap-1.5">
-                <i class="fa-solid fa-chart-pie"></i> OVERVIEW
+                <i class="fa-solid fa-chart-pie"></i> OVERVIEW & LIVE PREDICTOR
             </button>
             <button onclick="switchTab('generator')" id="tab-generator" class="px-3 py-1.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> LOTTO GENERATOR
@@ -124,6 +129,24 @@
 
         <!-- TAB 1: OVERVIEW -->
         <div id="content-overview" class="space-y-4">
+            
+            <!-- LIVE NEXT DRAW PREDICTION BANNER -->
+            <div class="bg-ops-card p-4 rounded-sm border border-emerald-500/50 bg-gradient-to-r from-emerald-950/40 via-ops-card to-slate-900 space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-500/30 pb-2">
+                    <div>
+                        <h2 class="text-sm font-bold font-mono text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye text-emerald-400"></i> NEXT DRAW LIVE PREDICTION MATRIX &bull; <span id="next-draw-date-title" class="text-white">--</span>
+                        </h2>
+                        <div class="text-xs text-slate-400 font-mono" id="next-draw-jackpot">Est. Jackpot: --</div>
+                    </div>
+                    <span class="text-xs bg-emerald-500 text-slate-950 font-bold px-2 py-0.5 rounded-sm font-mono uppercase">BAYESIAN VELOCITY WEIGHTED</span>
+                </div>
+                <div>
+                    <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Top 6 Highest Probability Predicted Balls for Next Draw:</div>
+                    <div class="flex flex-wrap items-center gap-2 mt-2" id="next-draw-predicted-balls"></div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div class="bg-ops-card p-4 rounded-sm border border-ops-border">
                     <div class="text-xxs font-mono uppercase text-slate-400 tracking-wider">Total Draws Analyzed</div>
@@ -150,7 +173,7 @@
             <!-- Latest Draw Operational Banner -->
             <div class="bg-ops-card p-4 rounded-sm border border-ops-border flex flex-wrap items-center justify-between gap-4">
                 <div>
-                    <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">LATEST DRAW RESULT <span class="text-white ml-2" id="latest-draw-date">--</span></h3>
+                    <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">LATEST COMPLETED DRAW <span class="text-white ml-2" id="latest-draw-date">--</span></h3>
                     <div class="flex flex-wrap items-center gap-2 mt-2" id="latest-draw-balls"></div>
                 </div>
             </div>
@@ -327,7 +350,6 @@
                     setTimeout(() => {
                         btn.innerHTML = `<i class="fa-solid fa-rotate text-emerald-400"></i> Fetch Latest Results`;
                     }, 3000);
-                    // Refresh app data
                     fetch('lotto_data.json?t=' + Date.now())
                         .then(r => r.json())
                         .then(d => {
@@ -375,6 +397,19 @@
             document.getElementById('stat-theo-prob').innerText = `${gData.theo_draw_prob}%`;
             document.getElementById('stat-theo-formula').innerText = `P(X) = 6/${gData.total_balls}`;
             document.getElementById('stat-exp-gap').innerText = `${gData.expected_gap} Draws`;
+
+            // Render Next Draw Live Prediction
+            if (gData.next_draw_prediction) {
+                const np = gData.next_draw_prediction;
+                document.getElementById('next-draw-date-title').innerText = np.next_draw_date;
+                document.getElementById('next-draw-jackpot').innerText = `Est. Jackpot: ${np.jackpot_estimate}`;
+
+                let predHtml = '';
+                np.predicted_top_6_balls.forEach(b => {
+                    predHtml += `<div class="ops-ball ops-ball-pred">${b}</div>`;
+                });
+                document.getElementById('next-draw-predicted-balls').innerHTML = predHtml;
+            }
 
             const latest = gData.recent_draws[0];
             if (latest) {
