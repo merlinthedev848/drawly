@@ -239,12 +239,16 @@ def get_preset_races():
             'course': 'Brighton',
             'distance': '1m',
             'going': 'Good to Firm',
+            'bha_disclaimer': 'BHA 24h Declarations: Official William Hill declared racecard for Sunday, Aug 23.',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Brighton -> 14:20 Race',
             'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Brighton',
             'runners': [
-                {'name': 'Sir Winston', 'form': '1-1-2-1', 'official_rating': 82, 'cd_winner': 'C&D', 'jockey': 'O. Murphy', 'trainer': 'A. Balding', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 24.0, 'days_since_run': 14, 'bookie_odds_dec': 2.50},
-                {'name': 'Intercessor', 'form': '2-3-1-2', 'official_rating': 78, 'cd_winner': 'D', 'jockey': 'T. Marquand', 'trainer': 'J. Boyle', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 4.00},
-                {'name': 'Coachello', 'form': '1-4-2-3', 'official_rating': 76, 'cd_winner': 'None', 'jockey': 'R. Ryan', 'trainer': 'G. Boughey', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 28, 'bookie_odds_dec': 6.50}
+                {'name': 'Highland Harvey', 'form': '2-1-1-1', 'official_rating': 76, 'cd_winner': 'C&D', 'jockey': 'Liam Wright', 'trainer': 'D. M. Simcock', 'jockey_win_pct': 24.0, 'trainer_strike_rate': 23.0, 'days_since_run': 14, 'bookie_odds_dec': 2.38},
+                {'name': 'Sea Of Charm', 'form': '1-3-2-2', 'official_rating': 73, 'cd_winner': 'D', 'jockey': 'Finley Marsh', 'trainer': 'A. Kleinkorres', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 21, 'bookie_odds_dec': 4.00},
+                {'name': 'Stintino Sunset', 'form': '3-2-1-3', 'official_rating': 71, 'cd_winner': 'C', 'jockey': 'Jack Doughty', 'trainer': 'J. S. Moore', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 18, 'bookie_odds_dec': 5.00},
+                {'name': 'Wrist Art', 'form': '4-1-3-4', 'official_rating': 70, 'cd_winner': 'None', 'jockey': 'Alex Jary', 'trainer': 'J. James-Dunn', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 17.0, 'days_since_run': 28, 'bookie_odds_dec': 5.00},
+                {'name': 'Little She', 'form': '2-4-2-5', 'official_rating': 68, 'cd_winner': 'D', 'jockey': 'Mia Nichol', 'trainer': 'M. A. Treacy', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 16.0, 'days_since_run': 30, 'bookie_odds_dec': 6.00},
+                {'name': 'The Pug', 'form': '5-3-4-6', 'official_rating': 62, 'cd_winner': 'None', 'jockey': 'O. Murphy', 'trainer': 'S. Dow', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 40, 'bookie_odds_dec': 13.00}
             ]
         },
         {
