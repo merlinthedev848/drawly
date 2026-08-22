@@ -175,14 +175,14 @@ def get_preset_races():
     """
     return [
         {
-            'race_id': 'york_juddmonte',
-            'race_name': 'York 15:35 - Juddmonte International Stakes (Group 1)',
-            'race_date_str': 'Saturday, Aug 22, 2026 - 15:35 BST',
+            'race_id': 'york_ebor',
+            'race_name': 'York 15:35 - Ebor Festival International Stakes (Group 1)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 15:35 BST',
             'course': 'York',
             'distance': '1m 2f 56y',
             'going': 'Good to Firm',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 15:35 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=York',
             'runners': [
                 {'name': 'City Of Troy', 'form': '1-1-1-1', 'official_rating': 124, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 28, 'bookie_odds_dec': 2.10},
                 {'name': 'Calandagan', 'form': '1-1-2-1', 'official_rating': 121, 'cd_winner': 'D', 'jockey': 'S. Pasquier', 'trainer': 'F. Graffard', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 22.0, 'days_since_run': 35, 'bookie_odds_dec': 4.50},
@@ -192,19 +192,34 @@ def get_preset_races():
             ]
         },
         {
-            'race_id': 'newmarket_hopeful',
-            'race_name': 'Newmarket 14:25 - Hopeful Stakes (Listed Race)',
-            'race_date_str': 'Saturday, Aug 22, 2026 - 14:25 BST',
-            'course': 'Newmarket',
-            'distance': '6f',
+            'race_id': 'goodwood_august',
+            'race_name': 'Goodwood 15:00 - August Celebration Stakes (Group 2)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 15:00 BST',
+            'course': 'Goodwood',
+            'distance': '1m',
             'going': 'Good',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Newmarket -> 14:25 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Goodwood -> 15:00 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Goodwood',
             'runners': [
                 {'name': 'Kinross', 'form': '1-2-1-2', 'official_rating': 118, 'cd_winner': 'C&D', 'jockey': 'L. Dettori', 'trainer': 'R. Beckett', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 2.75},
                 {'name': 'Art Power', 'form': '1-4-1-8', 'official_rating': 116, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 28, 'bookie_odds_dec': 5.00},
                 {'name': 'Shouldvebeenaring', 'form': '2-1-3-1', 'official_rating': 114, 'cd_winner': 'C', 'jockey': 'S. Levey', 'trainer': 'R. Hannon', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 14, 'bookie_odds_dec': 6.50},
                 {'name': 'Commanche Falls', 'form': '4-1-2-3', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'C. Beasley', 'trainer': 'M. Dods', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 18, 'bookie_odds_dec': 9.00}
+            ]
+        },
+        {
+            'race_id': 'curragh_irish',
+            'race_name': 'The Curragh 16:15 - Irish St Leger Trial (Group 3)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 16:15 BST',
+            'course': 'The Curragh',
+            'distance': '1m 6f',
+            'going': 'Good to Yielding',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Curragh -> 16:15 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Curragh',
+            'runners': [
+                {'name': 'Kyprios', 'form': '1-1-1-1', 'official_rating': 122, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 24, 'bookie_odds_dec': 1.80},
+                {'name': 'Grosvenor Square', 'form': '1-2-1-3', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'W. M. Lordan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 4.50},
+                {'name': 'Vauban', 'form': '1-4-2-1', 'official_rating': 114, 'cd_winner': 'D', 'jockey': 'C. T. Keane', 'trainer': 'W. P. Mullins', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 24.0, 'days_since_run': 30, 'bookie_odds_dec': 6.00}
             ]
         }
     ]
@@ -212,6 +227,6 @@ def get_preset_races():
 if __name__ == "__main__":
     races = get_preset_races()
     res = calculate_horse_likelihoods(races[0]['runners'])
-    print("Cheltenham Gold Cup Logical Ratings & Probability:")
+    print("Horse Racing Logical Ratings & Probability Analysis Complete.")
     for r in res:
         print(f"Horse: {r['name']:<20} | Prob: {r['win_prob_pct']:>5.2f}% | Fair Odds: {r['fair_odds_dec']:>5.2f} | Bookie Odds: {r['bookie_odds_dec']:>5.2f} | Value: {r['value_status']}")
