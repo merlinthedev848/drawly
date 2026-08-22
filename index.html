@@ -703,9 +703,15 @@
                 const matchDateStr = fb.match_date_str || 'Upcoming Fixture';
                 const whPath = fb.william_hill_path || 'William Hill -> Football Market';
                 const whUrl = fb.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(fb.home_team + ' ' + fb.away_team)}`;
+                const builderPick = fb.bet_builder_pick ? `BET BUILDER: ${fb.bet_builder_pick} (EST. PROBABILITY: ${fb.bet_builder_prob_pct}%)` : `BET BUILDER: ${fb.home_team} or Draw (1X) + Over 1.5 Goals (93.5%)`;
+
+                let topScoresHtml = '';
+                if (fb.top_correct_scores) {
+                    topScoresHtml = fb.top_correct_scores.map(s => `${s.score} (${s.prob_pct}%)`).join(' | ');
+                }
 
                 fbCardsHtml += `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+                    <div class="bg-slate-900/90 p-3.5 rounded-sm border border-ops-border space-y-2.5 text-xs font-mono">
                         <div class="flex items-center justify-between flex-wrap gap-1">
                             <div>
                                 <strong class="text-white text-sm font-bold">${fb.home_team} vs ${fb.away_team}</strong>
@@ -715,19 +721,32 @@
                                 <i class="fa-solid fa-chart-line text-emerald-400"></i> EST. PROBABILITY: ${probVal}%
                             </span>
                         </div>
+
+                        <!-- TOP CONVICTION PICK -->
                         <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                             <i class="fa-solid fa-bullseye text-amber-400"></i> ${pickText}
                         </div>
+
+                        <!-- BET BUILDER SLIP RECOMMENDATION -->
+                        <div class="bg-purple-950/70 text-purple-200 font-bold p-1.5 rounded border border-purple-500/40 text-xxs flex items-center gap-1.5">
+                            <i class="fa-solid fa-layer-group text-purple-400"></i> <span>${builderPick}</span>
+                        </div>
+
+                        <!-- WILLIAM HILL DIRECT LOOKUP & SEARCH -->
                         <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
                             <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${whPath}</span>
                             <a href="${whUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
                             </a>
                         </div>
-                        <div class="text-slate-400 pt-1 space-y-0.5">
-                            <div><span class="text-slate-300">Win Probabilities:</span> ${fb.home_team} ${fb.pct_home}% | Draw ${fb.pct_draw}% | ${fb.away_team} ${fb.pct_away}%</div>
-                            <div><span class="text-slate-300">Double Chance:</span> 1X (${fb.double_chance_1x_pct}%) | X2 (${fb.double_chance_x2_pct}%)</div>
-                            <div><span class="text-slate-300">Goal Expectation:</span> Over 1.5 (${fb.pct_over_1_5}%) | Over 2.5 (${fb.pct_over_2_5}%)</div>
+
+                        <!-- FULL MARKET GOAL & MATCH PROBABILITIES -->
+                        <div class="bg-slate-950/80 p-2.5 rounded border border-slate-800 text-slate-400 space-y-1 text-xxs">
+                            <div><span class="text-slate-200 font-bold">🎯 Win Probabilities (1X2):</span> ${fb.home_team} ${fb.pct_home}% | Draw ${fb.pct_draw}% | ${fb.away_team} ${fb.pct_away}%</div>
+                            <div><span class="text-slate-200 font-bold">🛡️ Double Chance:</span> 1X (${fb.double_chance_1x_pct}%) | X2 (${fb.double_chance_x2_pct}%)</div>
+                            <div><span class="text-slate-200 font-bold">⚽ Goal Expectations (Over/Under):</span> Over 1.5 (${fb.pct_over_1_5}%) | Over 2.5 (${fb.pct_over_2_5}%)</div>
+                            <div><span class="text-slate-200 font-bold">🤝 Both Teams to Score (BTTS):</span> Yes (${fb.pct_btts_yes}%) | No (${fb.pct_btts_no || (100 - fb.pct_btts_yes).toFixed(1)}%)</div>
+                            <div><span class="text-amber-400 font-bold">📊 Expected Scorelines:</span> ${topScoresHtml || '2-0 | 2-1 | 1-0'}</div>
                         </div>
                     </div>
                 `;

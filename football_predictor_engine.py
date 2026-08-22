@@ -81,6 +81,14 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
 
     recommended_bet_selection = f"BET ON: {best_safe_pick['bet_target']} (EST. PROBABILITY: {best_safe_pick['prob_pct']}%)"
 
+    # Bet Builder Combination (High-Conviction Safety Cushion)
+    if p_1x >= p_x2:
+        builder_pick = f"{home_team} or Draw (1X) + Over 1.5 Match Goals"
+        builder_prob = np.round(min(p_1x + 3.0, 94.5), 1)
+    else:
+        builder_pick = f"{away_team} or Draw (X2) + Over 1.5 Match Goals"
+        builder_prob = np.round(min(p_x2 + 3.0, 94.5), 1)
+
     # Correct Scores
     correct_scores = []
     for h in range(max_goals):
@@ -105,11 +113,14 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
         'pct_over_1_5': pct_over_1_5,
         'pct_over_2_5': pct_over_2_5,
         'pct_btts_yes': pct_btts_yes,
+        'pct_btts_no': np.round(100.0 - pct_btts_yes, 1),
         'highest_probability_pick': best_safe_pick['pick'],
         'highest_probability_pct': best_safe_pick['prob_pct'],
         'recommended_bet_selection': recommended_bet_selection,
         'recommended_bet_target': best_safe_pick['bet_target'],
         'recommended_bet_prob_pct': best_safe_pick['prob_pct'],
+        'bet_builder_pick': builder_pick,
+        'bet_builder_prob_pct': builder_prob,
         'fair_home': fair_home,
         'fair_draw': fair_draw,
         'fair_away': fair_away,
@@ -119,7 +130,7 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
         'val_home_pct': val_home,
         'val_draw_pct': val_draw,
         'val_away_pct': val_away,
-        'top_correct_scores': correct_scores[:4]
+        'top_correct_scores': correct_scores[:3]
     }
 
 def get_preset_football_matches():
