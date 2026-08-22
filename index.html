@@ -900,10 +900,39 @@
                 `;
             }
 
-            const gf = lottoData.expanded_sports.golf;
-            if (gf && document.getElementById('golf-summary')) {
-                document.getElementById('golf-summary').innerHTML = `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+            const tennisArray = lottoData.expanded_sports.all_tennis || [lottoData.expanded_sports.tennis];
+            if (tennisArray && document.getElementById('tennis-summary')) {
+                document.getElementById('tennis-summary').innerHTML = tennisArray.map(t => {
+                    const tUrl = t.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(t.player_a)}`;
+                    return `
+                        <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono mb-2">
+                            <div class="flex items-center justify-between flex-wrap gap-1">
+                                <div>
+                                    <strong class="text-white text-sm font-bold">${t.player_a} vs ${t.player_b}</strong>
+                                    <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${t.match_date_str || 'Upcoming Match'}</span>
+                                </div>
+                                <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
+                                    EST. PROBABILITY: ${t.high_probability_pct}%
+                                </span>
+                            </div>
+                            <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
+                                <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${t.high_probability_pick}
+                            </div>
+                            <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                                <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${t.william_hill_path}</span>
+                                <a href="${tUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const golfArray = lottoData.expanded_sports.all_golf || [lottoData.expanded_sports.golf];
+            if (golfArray && document.getElementById('golf-summary')) {
+                document.getElementById('golf-summary').innerHTML = golfArray.map(gf => `
+                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono mb-2">
                         <div class="flex items-center justify-between flex-wrap gap-1">
                             <div>
                                 <strong class="text-white text-sm font-bold">${gf.player_a} vs ${gf.player_b} (${gf.tournament})</strong>
@@ -923,13 +952,13 @@
                             </a>
                         </div>
                     </div>
-                `;
+                `).join('');
             }
 
-            const cr = lottoData.expanded_sports.cricket;
-            if (cr && document.getElementById('cricket-summary')) {
-                document.getElementById('cricket-summary').innerHTML = `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+            const cricketArray = lottoData.expanded_sports.all_cricket || [lottoData.expanded_sports.cricket];
+            if (cricketArray && document.getElementById('cricket-summary')) {
+                document.getElementById('cricket-summary').innerHTML = cricketArray.map(cr => `
+                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono mb-2">
                         <div class="flex items-center justify-between flex-wrap gap-1">
                             <div>
                                 <strong class="text-white text-sm font-bold">${cr.team_a} vs ${cr.team_b} (${cr.series})</strong>
@@ -949,16 +978,16 @@
                             </a>
                         </div>
                     </div>
-                `;
+                `).join('');
             }
 
-            const bx = lottoData.expanded_sports.boxing;
-            if (bx && document.getElementById('boxing-summary')) {
-                document.getElementById('boxing-summary').innerHTML = `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+            const fightsArray = lottoData.expanded_sports.all_fights || [lottoData.expanded_sports.boxing, lottoData.expanded_sports.ufc];
+            if (fightsArray && document.getElementById('boxing-summary')) {
+                document.getElementById('boxing-summary').innerHTML = fightsArray.map(bx => `
+                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono mb-2">
                         <div class="flex items-center justify-between flex-wrap gap-1">
                             <div>
-                                <strong class="text-white text-sm font-bold">${bx.fighter_a} vs ${bx.fighter_b} (${bx.weight_class})</strong>
+                                <strong class="text-white text-sm font-bold">${bx.fighter_a || bx.player_a} vs ${bx.fighter_b || bx.player_b} (${bx.weight_class || bx.tournament})</strong>
                                 <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${bx.match_date_str}</span>
                             </div>
                             <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
@@ -975,7 +1004,7 @@
                             </a>
                         </div>
                     </div>
-                `;
+                `).join('');
             }
 
             const ufc = lottoData.expanded_sports.ufc;

@@ -191,7 +191,7 @@ def get_preset_races():
     return [
         {
             'race_id': 'york_ebor',
-            'race_name': 'York 15:35 - Ebor Festival International Stakes (Group 1)',
+            'race_name': 'York 15:35 - Ebor Festival International Stakes (Group 1 Feature)',
             'race_date_str': 'Sunday, Aug 23, 2026 - 15:35 BST',
             'course': 'York',
             'distance': '1m 2f 56y',
@@ -207,8 +207,23 @@ def get_preset_races():
             ]
         },
         {
-            'race_id': 'goodwood_august',
-            'race_name': 'Goodwood 15:00 - August Celebration Stakes (Group 2)',
+            'race_id': 'york_strensall',
+            'race_name': 'York 14:25 - Strensall Stakes (Group 3)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:25 BST',
+            'course': 'York',
+            'distance': '1m 1f',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 14:25 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=York',
+            'runners': [
+                {'name': 'My Prospero', 'form': '1-3-2-1', 'official_rating': 117, 'cd_winner': 'C&D', 'jockey': 'T. Marquand', 'trainer': 'W. Haggas', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 24.0, 'days_since_run': 21, 'bookie_odds_dec': 2.60},
+                {'name': 'Alyanaabi', 'form': '2-1-5-3', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'J. Crowley', 'trainer': 'O. Burrows', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 20.0, 'days_since_run': 28, 'bookie_odds_dec': 4.20},
+                {'name': 'Flight Plan', 'form': '1-4-1-6', 'official_rating': 112, 'cd_winner': 'C', 'jockey': 'D. Tudhope', 'trainer': 'K. Burke', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 19.0, 'days_since_run': 35, 'bookie_odds_dec': 7.00}
+            ]
+        },
+        {
+            'race_id': 'goodwood_celebration',
+            'race_name': 'Goodwood 15:00 - Celebration Mile (Group 2 Feature)',
             'race_date_str': 'Sunday, Aug 23, 2026 - 15:00 BST',
             'course': 'Goodwood',
             'distance': '1m',
@@ -223,8 +238,22 @@ def get_preset_races():
             ]
         },
         {
+            'race_id': 'goodwood_supreme',
+            'race_name': 'Goodwood 14:05 - Supreme Stakes (Group 3)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:05 BST',
+            'course': 'Goodwood',
+            'distance': '7f',
+            'going': 'Good',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Goodwood -> 14:05 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Goodwood',
+            'runners': [
+                {'name': 'Audience', 'form': '1-1-3-1', 'official_rating': 119, 'cd_winner': 'C&D', 'jockey': 'R. Havlin', 'trainer': 'J. & T. Gosden', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 23.0, 'days_since_run': 24, 'bookie_odds_dec': 2.20},
+                {'name': 'Chindit', 'form': '2-1-2-4', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'P. Dobbs', 'trainer': 'R. Hannon', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
+            ]
+        },
+        {
             'race_id': 'curragh_irish',
-            'race_name': 'The Curragh 16:15 - Irish St Leger Trial (Group 3)',
+            'race_name': 'The Curragh 16:15 - Irish St Leger Trial (Group 3 Feature)',
             'race_date_str': 'Sunday, Aug 23, 2026 - 16:15 BST',
             'course': 'The Curragh',
             'distance': '1m 6f',
@@ -235,6 +264,20 @@ def get_preset_races():
                 {'name': 'Kyprios', 'form': '1-1-1-1', 'official_rating': 122, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 24, 'bookie_odds_dec': 1.80},
                 {'name': 'Grosvenor Square', 'form': '1-2-1-3', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'W. M. Lordan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 4.50},
                 {'name': 'Vauban', 'form': '1-4-2-1', 'official_rating': 114, 'cd_winner': 'D', 'jockey': 'C. T. Keane', 'trainer': 'W. P. Mullins', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 24.0, 'days_since_run': 30, 'bookie_odds_dec': 6.00}
+            ]
+        },
+        {
+            'race_id': 'curragh_futurity',
+            'race_name': 'The Curragh 14:50 - Futurity Stakes (Group 2)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:50 BST',
+            'course': 'The Curragh',
+            'distance': '7f',
+            'going': 'Good to Yielding',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Curragh -> 14:50 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Curragh',
+            'runners': [
+                {'name': 'Henri Matisse', 'form': '1-1-1-0', 'official_rating': 114, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 2.10},
+                {'name': 'Hotazhell', 'form': '1-2-1-1', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 20.0, 'days_since_run': 28, 'bookie_odds_dec': 3.75}
             ]
         }
     ]

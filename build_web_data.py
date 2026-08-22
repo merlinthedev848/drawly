@@ -18,7 +18,9 @@ from sports_expanded_engine import (
     calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, 
     predict_greyhound_race, predict_darts_match, predict_snooker_match,
     predict_golf_matchup, predict_cricket_match, predict_boxing_match,
-    predict_ufc_match, predict_baseball_mlb, predict_nfl_match
+    predict_ufc_match, predict_baseball_mlb, predict_nfl_match,
+    get_all_greyhound_races, get_all_tennis_matches, get_all_golf_matchups,
+    get_all_cricket_matches, get_all_combat_fights, get_all_american_sports
 )
 from next_draw_predictor import predict_next_draw
 from live_fetcher import fetch_live_lotto_data
@@ -127,6 +129,13 @@ def build_export_data():
     baseball_match = predict_baseball_mlb()
     nfl_match = predict_nfl_match()
 
+    all_greyhounds = get_all_greyhound_races()
+    all_tennis = get_all_tennis_matches()
+    all_golf = get_all_golf_matchups()
+    all_cricket = get_all_cricket_matches()
+    all_fights = get_all_combat_fights()
+    all_american = get_all_american_sports()
+
     data_payload = {
         'live_meta': live_meta,
         'total_draws': uk_lotto['total_draws'],
@@ -168,7 +177,13 @@ def build_export_data():
             'boxing': boxing_match,
             'ufc': ufc_match,
             'baseball': baseball_match,
-            'nfl': nfl_match
+            'nfl': nfl_match,
+            'all_greyhounds': all_greyhounds,
+            'all_tennis': all_tennis,
+            'all_golf': all_golf,
+            'all_cricket': all_cricket,
+            'all_fights': all_fights,
+            'all_american': all_american
         }
     }
     

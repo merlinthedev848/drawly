@@ -261,19 +261,59 @@ def predict_baseball_mlb(home_team="LA Dodgers", away_team="NY Yankees"):
         'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Dodgers+Yankees'
     }
 
-def predict_nfl_match(home_team="Kansas City Chiefs", away_team="San Francisco 49ers"):
-    return {
-        'home_team': home_team,
-        'away_team': away_team,
-        'league': 'NFL Preseason Showcase',
-        'match_date_str': 'Sunday, Aug 23, 2026 - 22:00 BST',
-        'pct_home_win': 56.5,
-        'pct_away_win': 43.5,
-        'high_probability_safety_pick': f"{home_team} +6.5 Point Spread",
-        'high_probability_pct': 81.0,
-        'tipster_recommended': True,
-        'tipster_consensus_pct': 94.2,
-        'tipster_badge': '🔥 NFL EXPERT INSIDER PICK',
-        'william_hill_path': 'William Hill -> American Football -> NFL -> Chiefs v 49ers -> Point Spread -> Chiefs +6.5 (Odds: 1/3)',
-        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Kansas+City+Chiefs'
-    }
+def get_all_greyhound_races():
+    return [
+        predict_greyhound_race("Romford", "400m"),
+        predict_greyhound_race("Hove", "500m", [
+            {'trap': 1, 'dog_name': 'Droopys Clue', 'split_time_sec': 3.68, 'grade': 'OR', 'win_pct': 28.0, 'bookie_odds': 2.20},
+            {'trap': 2, 'dog_name': 'King Memphis', 'split_time_sec': 3.72, 'grade': 'OR', 'win_pct': 24.0, 'bookie_odds': 3.50},
+            {'trap': 3, 'dog_name': 'Churchfield Syd', 'split_time_sec': 3.78, 'grade': 'OR1', 'win_pct': 18.0, 'bookie_odds': 5.50},
+            {'trap': 4, 'dog_name': 'Whyaye Man', 'split_time_sec': 3.82, 'grade': 'OR1', 'win_pct': 15.0, 'bookie_odds': 7.00},
+            {'trap': 5, 'dog_name': 'Coonough Crow', 'split_time_sec': 3.85, 'grade': 'OR1', 'win_pct': 15.0, 'bookie_odds': 8.00}
+        ]),
+        predict_greyhound_race("Monmore Green", "480m", [
+            {'trap': 1, 'dog_name': 'Links Maverick', 'split_time_sec': 3.70, 'grade': 'OR1', 'win_pct': 26.0, 'bookie_odds': 2.50},
+            {'trap': 2, 'dog_name': 'Baran General', 'split_time_sec': 3.76, 'grade': 'OR1', 'win_pct': 22.0, 'bookie_odds': 3.80},
+            {'trap': 3, 'dog_name': 'Bogger Rambo', 'split_time_sec': 3.80, 'grade': 'OR1', 'win_pct': 18.0, 'bookie_odds': 6.00},
+            {'trap': 4, 'dog_name': 'Vixons Filofax', 'split_time_sec': 3.86, 'grade': 'OR2', 'win_pct': 17.0, 'bookie_odds': 7.50},
+            {'trap': 5, 'dog_name': 'Ballymac John', 'split_time_sec': 3.88, 'grade': 'OR2', 'win_pct': 17.0, 'bookie_odds': 8.50}
+        ])
+    ]
+
+def get_all_tennis_matches():
+    return [
+        predict_tennis_match("Jannik Sinner", "Carlos Alcaraz", surface="Hard", rank_a=1, rank_b=3),
+        predict_tennis_match("Novak Djokovic", "Alexander Zverev", surface="Hard", rank_a=2, rank_b=4, bookie_odds={'player_a': 1.80, 'player_b': 2.05}),
+        predict_tennis_match("Aryna Sabalenka", "Iga Swiatek", surface="Hard", rank_a=1, rank_b=2, bookie_odds={'player_a': 1.90, 'player_b': 1.90})
+    ]
+
+def get_all_golf_matchups():
+    return [
+        predict_golf_matchup("Scottie Scheffler", "Rory McIlroy"),
+        predict_golf_matchup("Xander Schauffele", "Jon Rahm"),
+        predict_golf_matchup("Viktor Hovland", "Collin Morikawa")
+    ]
+
+def get_all_cricket_matches():
+    return [
+        predict_cricket_match("England", "Australia"),
+        predict_cricket_match("Oval Invincibles", "Manchester Originals"),
+        predict_cricket_match("Southern Brave", "Northern Superchargers")
+    ]
+
+def get_all_combat_fights():
+    return [
+        predict_boxing_match("Oleksandr Usyk", "Tyson Fury"),
+        predict_boxing_match("Canelo Alvarez", "Terence Crawford"),
+        predict_ufc_match("Jon Jones", "Tom Aspinall"),
+        predict_ufc_match("Sean O'Malley", "Merab Dvalishvili")
+    ]
+
+def get_all_american_sports():
+    return [
+        predict_baseball_mlb("LA Dodgers", "NY Yankees"),
+        predict_baseball_mlb("Atlanta Braves", "Houston Astros"),
+        predict_nfl_match("Kansas City Chiefs", "San Francisco 49ers"),
+        predict_nfl_match("Philadelphia Eagles", "Baltimore Ravens"),
+        predict_basketball_nba("Boston Celtics", "Denver Nuggets")
+    ]
