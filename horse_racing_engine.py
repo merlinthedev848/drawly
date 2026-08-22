@@ -186,98 +186,94 @@ def calculate_horse_likelihoods(runners, weights=None):
 
 def get_preset_races():
     """
-    Returns preset active races with current William Hill market locator paths.
+    Returns preset active races matching William Hill's exact live Sunday, Aug 23, 2026 meetings: Worcester, Brighton, and Naas.
     """
     return [
         {
-            'race_id': 'york_ebor',
-            'race_name': 'York 15:35 - Ebor Festival International Stakes (Group 1 Feature)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 15:35 BST',
-            'course': 'York',
-            'distance': '1m 2f 56y',
-            'going': 'Good to Firm',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 15:35 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=York',
+            'race_id': 'worcester_1408',
+            'race_name': 'Worcester 14:08 - Handicap Hurdle (2m 7f)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:08 BST',
+            'course': 'Worcester',
+            'distance': '2m 7f',
+            'going': 'Good',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Worcester -> 14:08 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Worcester',
             'runners': [
-                {'name': 'City Of Troy', 'form': '1-1-1-1', 'official_rating': 124, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 28, 'bookie_odds_dec': 2.10},
-                {'name': 'Calandagan', 'form': '1-1-2-1', 'official_rating': 121, 'cd_winner': 'D', 'jockey': 'S. Pasquier', 'trainer': 'F. Graffard', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 22.0, 'days_since_run': 35, 'bookie_odds_dec': 4.50},
-                {'name': 'Ghostwriter', 'form': '1-3-3-3', 'official_rating': 117, 'cd_winner': 'D', 'jockey': 'R. Hornby', 'trainer': 'C. Cox', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 21, 'bookie_odds_dec': 8.50},
-                {'name': 'Zarakem', 'form': '1-2-1-7', 'official_rating': 118, 'cd_winner': 'None', 'jockey': 'M. Guyon', 'trainer': 'J. Reynier', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 42, 'bookie_odds_dec': 11.00},
-                {'name': 'Bluestocking', 'form': '2-1-2-1', 'official_rating': 116, 'cd_winner': 'D', 'jockey': 'R. Ryan', 'trainer': 'R. Beckett', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 30, 'bookie_odds_dec': 13.00}
+                {'name': 'Presenting Percy', 'form': '1-2-1-3', 'official_rating': 138, 'cd_winner': 'C&D', 'jockey': 'H. Skelton', 'trainer': 'D. Skelton', 'jockey_win_pct': 24.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 2.75},
+                {'name': 'Call Me Lord', 'form': '2-1-3-2', 'official_rating': 135, 'cd_winner': 'D', 'jockey': 'N. de Boinville', 'trainer': 'N. Henderson', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 25.0, 'days_since_run': 28, 'bookie_odds_dec': 4.50},
+                {'name': 'Ballyandy', 'form': '3-2-1-4', 'official_rating': 132, 'cd_winner': 'C', 'jockey': 'S. Twiston-Davies', 'trainer': 'N. Twiston-Davies', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 35, 'bookie_odds_dec': 6.00}
             ]
         },
         {
-            'race_id': 'york_strensall',
-            'race_name': 'York 14:25 - Strensall Stakes (Group 3)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 14:25 BST',
-            'course': 'York',
-            'distance': '1m 1f',
-            'going': 'Good to Firm',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 14:25 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=York',
+            'race_id': 'worcester_1608',
+            'race_name': 'Worcester 16:08 - Feature Handicap Chase (2m 4f)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 16:08 BST',
+            'course': 'Worcester',
+            'distance': '2m 4f',
+            'going': 'Good',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Worcester -> 16:08 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Worcester',
             'runners': [
-                {'name': 'My Prospero', 'form': '1-3-2-1', 'official_rating': 117, 'cd_winner': 'C&D', 'jockey': 'T. Marquand', 'trainer': 'W. Haggas', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 24.0, 'days_since_run': 21, 'bookie_odds_dec': 2.60},
-                {'name': 'Alyanaabi', 'form': '2-1-5-3', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'J. Crowley', 'trainer': 'O. Burrows', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 20.0, 'days_since_run': 28, 'bookie_odds_dec': 4.20},
-                {'name': 'Flight Plan', 'form': '1-4-1-6', 'official_rating': 112, 'cd_winner': 'C', 'jockey': 'D. Tudhope', 'trainer': 'K. Burke', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 19.0, 'days_since_run': 35, 'bookie_odds_dec': 7.00}
+                {'name': 'Al Dancer', 'form': '1-1-3-1', 'official_rating': 142, 'cd_winner': 'C&D', 'jockey': 'S. Bowen', 'trainer': 'S. Edmunds', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 24, 'bookie_odds_dec': 2.60},
+                {'name': 'Gats Imprior', 'form': '2-1-2-4', 'official_rating': 136, 'cd_winner': 'D', 'jockey': 'G. Sheehan', 'trainer': 'J. Snowden', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
             ]
         },
         {
-            'race_id': 'goodwood_celebration',
-            'race_name': 'Goodwood 15:00 - Celebration Mile (Group 2 Feature)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 15:00 BST',
-            'course': 'Goodwood',
+            'race_id': 'brighton_1420',
+            'race_name': 'Brighton 14:20 - Apprentice Handicap (1m)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:20 BST',
+            'course': 'Brighton',
             'distance': '1m',
-            'going': 'Good',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Goodwood -> 15:00 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Goodwood',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Brighton -> 14:20 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Brighton',
             'runners': [
-                {'name': 'Kinross', 'form': '1-2-1-2', 'official_rating': 118, 'cd_winner': 'C&D', 'jockey': 'L. Dettori', 'trainer': 'R. Beckett', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 2.75},
-                {'name': 'Art Power', 'form': '1-4-1-8', 'official_rating': 116, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 28, 'bookie_odds_dec': 5.00},
-                {'name': 'Shouldvebeenaring', 'form': '2-1-3-1', 'official_rating': 114, 'cd_winner': 'C', 'jockey': 'S. Levey', 'trainer': 'R. Hannon', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 14, 'bookie_odds_dec': 6.50},
-                {'name': 'Commanche Falls', 'form': '4-1-2-3', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'C. Beasley', 'trainer': 'M. Dods', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 18, 'bookie_odds_dec': 9.00}
+                {'name': 'Sir Winston', 'form': '1-1-2-1', 'official_rating': 82, 'cd_winner': 'C&D', 'jockey': 'O. Murphy', 'trainer': 'A. Balding', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 24.0, 'days_since_run': 14, 'bookie_odds_dec': 2.50},
+                {'name': 'Intercessor', 'form': '2-3-1-2', 'official_rating': 78, 'cd_winner': 'D', 'jockey': 'T. Marquand', 'trainer': 'J. Boyle', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 4.00},
+                {'name': 'Coachello', 'form': '1-4-2-3', 'official_rating': 76, 'cd_winner': 'None', 'jockey': 'R. Ryan', 'trainer': 'G. Boughey', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 28, 'bookie_odds_dec': 6.50}
             ]
         },
         {
-            'race_id': 'goodwood_supreme',
-            'race_name': 'Goodwood 14:05 - Supreme Stakes (Group 3)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 14:05 BST',
-            'course': 'Goodwood',
-            'distance': '7f',
-            'going': 'Good',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Goodwood -> 14:05 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Goodwood',
+            'race_id': 'brighton_1550',
+            'race_name': 'Brighton 15:50 - Feature Sprint Handicap (5f 21y)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 15:50 BST',
+            'course': 'Brighton',
+            'distance': '5f 21y',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Brighton -> 15:50 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Brighton',
             'runners': [
-                {'name': 'Audience', 'form': '1-1-3-1', 'official_rating': 119, 'cd_winner': 'C&D', 'jockey': 'R. Havlin', 'trainer': 'J. & T. Gosden', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 23.0, 'days_since_run': 24, 'bookie_odds_dec': 2.20},
-                {'name': 'Chindit', 'form': '2-1-2-4', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'P. Dobbs', 'trainer': 'R. Hannon', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
+                {'name': 'Treacherous', 'form': '1-2-1-1', 'official_rating': 85, 'cd_winner': 'C&D', 'jockey': 'W. Buick', 'trainer': 'E. Walker', 'jockey_win_pct': 26.0, 'trainer_strike_rate': 22.0, 'days_since_run': 18, 'bookie_odds_dec': 2.20},
+                {'name': 'Confederation', 'form': '3-1-2-4', 'official_rating': 80, 'cd_winner': 'C', 'jockey': 'H. Turner', 'trainer': 'D. Simcock', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 25, 'bookie_odds_dec': 5.00}
             ]
         },
         {
-            'race_id': 'curragh_irish',
-            'race_name': 'The Curragh 16:15 - Irish St Leger Trial (Group 3 Feature)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 16:15 BST',
-            'course': 'The Curragh',
-            'distance': '1m 6f',
-            'going': 'Good to Yielding',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Curragh -> 16:15 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Curragh',
+            'race_id': 'naas_1430',
+            'race_name': 'Naas 14:30 - Irish EBF Fillies Maiden (6f)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 14:30 BST',
+            'course': 'Naas',
+            'distance': '6f',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Naas -> 14:30 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Naas',
             'runners': [
-                {'name': 'Kyprios', 'form': '1-1-1-1', 'official_rating': 122, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 24, 'bookie_odds_dec': 1.80},
-                {'name': 'Grosvenor Square', 'form': '1-2-1-3', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'W. M. Lordan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 4.50},
-                {'name': 'Vauban', 'form': '1-4-2-1', 'official_rating': 114, 'cd_winner': 'D', 'jockey': 'C. T. Keane', 'trainer': 'W. P. Mullins', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 24.0, 'days_since_run': 30, 'bookie_odds_dec': 6.00}
+                {'name': 'Bedtime Story', 'form': '1-1-1-1', 'official_rating': 110, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 1.80},
+                {'name': 'Fairy Godmother', 'form': '1-2-1-1', 'official_rating': 108, 'cd_winner': 'D', 'jockey': 'W. M. Lordan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 26.0, 'days_since_run': 28, 'bookie_odds_dec': 3.50},
+                {'name': 'Heavens Gate', 'form': '2-1-3-1', 'official_rating': 104, 'cd_winner': 'D', 'jockey': 'C. T. Keane', 'trainer': 'G. Lyons', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 14, 'bookie_odds_dec': 5.50}
             ]
         },
         {
-            'race_id': 'curragh_futurity',
-            'race_name': 'The Curragh 14:50 - Futurity Stakes (Group 2)',
-            'race_date_str': 'Sunday, Aug 23, 2026 - 14:50 BST',
-            'course': 'The Curragh',
-            'distance': '7f',
-            'going': 'Good to Yielding',
-            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Curragh -> 14:50 Race -> Win & Each Way',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Curragh',
+            'race_id': 'naas_1630',
+            'race_name': 'Naas 16:30 - Feature Sprint Stakes (5f)',
+            'race_date_str': 'Sunday, Aug 23, 2026 - 16:30 BST',
+            'course': 'Naas',
+            'distance': '5f',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Naas -> 16:30 Race',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Naas',
             'runners': [
-                {'name': 'Henri Matisse', 'form': '1-1-1-0', 'official_rating': 114, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 2.10},
-                {'name': 'Hotazhell', 'form': '1-2-1-1', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 20.0, 'days_since_run': 28, 'bookie_odds_dec': 3.75}
+                {'name': 'Bucanero Fuerte', 'form': '1-1-3-1', 'official_rating': 115, 'cd_winner': 'C&D', 'jockey': 'R. Whelan', 'trainer': 'A. Murray', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 20.0, 'days_since_run': 30, 'bookie_odds_dec': 2.25},
+                {'name': 'Givemethebeatboys', 'form': '2-1-4-1', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 4.20}
             ]
         }
     ]
