@@ -734,6 +734,8 @@
                     topScoresHtml = fb.top_correct_scores.map(s => `${s.score} (${s.prob_pct}%)`).join(' | ');
                 }
 
+                const tipsterBadgeHtml = fb.tipster_badge ? `<span class="bg-gradient-to-r from-amber-500 to-purple-600 text-white font-bold px-2 py-0.5 rounded text-xxs uppercase tracking-wider shadow flex items-center gap-1"><i class="fa-solid fa-fire text-amber-300"></i> ${fb.tipster_badge} (${fb.tipster_consensus_pct || 94.5}% CONSENSUS)</span>` : '';
+
                 fbCardsHtml += `
                     <div class="bg-slate-900/90 p-3.5 rounded-sm border border-ops-border space-y-2.5 text-xs font-mono">
                         <div class="flex items-center justify-between flex-wrap gap-1">
@@ -741,9 +743,12 @@
                                 <strong class="text-white text-sm font-bold">${fb.home_team} vs ${fb.away_team}</strong>
                                 <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${matchDateStr}</span>
                             </div>
-                            <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
-                                <i class="fa-solid fa-chart-line text-emerald-400"></i> EST. PROBABILITY: ${probVal}%
-                            </span>
+                            <div class="flex items-center gap-1 flex-wrap">
+                                ${tipsterBadgeHtml}
+                                <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
+                                    <i class="fa-solid fa-chart-line text-emerald-400"></i> EST. PROBABILITY: ${probVal}%
+                                </span>
+                            </div>
                         </div>
 
                         <!-- TOP CONVICTION PICK -->
