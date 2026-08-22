@@ -24,6 +24,7 @@ from sports_expanded_engine import (
 )
 from next_draw_predictor import predict_next_draw
 from live_fetcher import fetch_live_lotto_data
+from live_sports_intelligence import fetch_live_william_hill_racecards
 
 def process_lotto_game(game_type="uk", total_balls=59):
     balls_drawn = 5 if game_type in ["euromillions", "irish"] else 6
