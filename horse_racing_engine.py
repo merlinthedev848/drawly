@@ -211,12 +211,25 @@ def get_preset_races():
             'course': 'Worcester',
             'distance': '2m 4f',
             'going': 'Good',
-            'bha_disclaimer': 'BHA 24h Declarations: Final runner declarations are confirmed by BHA 24 hours prior to post time.',
+            'bha_disclaimer': 'BHA 24h Declarations: Official William Hill declared racecard for Sunday, Aug 23.',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Worcester -> 16:08 Race',
             'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Worcester',
             'runners': [
-                {'name': 'Breeze Of Wind', 'form': '1-1-3-1', 'official_rating': 128, 'cd_winner': 'C&D', 'jockey': 'S. Bowen', 'trainer': 'O. Greenall', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 24, 'bookie_odds_dec': 2.60},
-                {'name': 'Hoganville', 'form': '2-1-2-4', 'official_rating': 122, 'cd_winner': 'D', 'jockey': 'G. Sheehan', 'trainer': 'A. M. Thomson', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
+                {'name': 'Ballymullan Boy', 'form': '2-1-3-1', 'official_rating': 128, 'cd_winner': 'C&D', 'jockey': 'S. Bowen', 'trainer': 'O. Greenall', 'jockey_win_pct': 24.0, 'trainer_strike_rate': 23.0, 'days_since_run': 18, 'bookie_odds_dec': 4.00},
+                {'name': 'Gardener\'s Banker', 'form': '1-4-2-2', 'official_rating': 125, 'cd_winner': 'D', 'jockey': 'O. Murphy', 'trainer': 'R. Hannon', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 21.0, 'days_since_run': 24, 'bookie_odds_dec': 5.00},
+                {'name': 'Gunnery Officer', 'form': '3-1-1-2', 'official_rating': 122, 'cd_winner': 'C&D', 'jockey': 'T. Marquand', 'trainer': 'G. L. Moore', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 6.00},
+                {'name': 'Harthill', 'form': '4-2-1-3', 'official_rating': 120, 'cd_winner': 'D', 'jockey': 'L. Morris', 'trainer': 'P. McEntee', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 7.00},
+                {'name': 'High Grounds', 'form': '1-3-2-4', 'official_rating': 118, 'cd_winner': 'None', 'jockey': 'R. Ryan', 'trainer': 'J. Boyle', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 17.0, 'days_since_run': 28, 'bookie_odds_dec': 8.00},
+                {'name': 'Jody\'s Special', 'form': '2-2-1-5', 'official_rating': 116, 'cd_winner': 'C', 'jockey': 'H. Doyle', 'trainer': 'A. Watson', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 19.0, 'days_since_run': 25, 'bookie_odds_dec': 9.00},
+                {'name': 'Juarez', 'form': '1-5-3-2', 'official_rating': 115, 'cd_winner': 'D', 'jockey': 'K. Shoemark', 'trainer': 'P. Evans', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 16.0, 'days_since_run': 22, 'bookie_odds_dec': 10.00},
+                {'name': 'Keck', 'form': '3-2-2-1', 'official_rating': 114, 'cd_winner': 'None', 'jockey': 'S. De Sousa', 'trainer': 'M. Appleby', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 16, 'bookie_odds_dec': 11.00},
+                {'name': 'Landlord', 'form': '4-1-4-3', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'C. Shepherd', 'trainer': 'C. Hills', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 17.0, 'days_since_run': 35, 'bookie_odds_dec': 12.00},
+                {'name': 'Lost On You', 'form': '2-1-5-2', 'official_rating': 110, 'cd_winner': 'C&D', 'jockey': 'R. Kingscote', 'trainer': 'G. Kelleway', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 16.0, 'days_since_run': 20, 'bookie_odds_dec': 13.00},
+                {'name': 'Lubeck', 'form': '1-4-3-4', 'official_rating': 108, 'cd_winner': 'C', 'jockey': 'J. Fanning', 'trainer': 'L. Carter', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 27, 'bookie_odds_dec': 15.00},
+                {'name': 'Mon Viking', 'form': '5-2-1-6', 'official_rating': 106, 'cd_winner': 'D', 'jockey': 'G. Wood', 'trainer': 'D. Ivory', 'jockey_win_pct': 13.0, 'trainer_strike_rate': 13.0, 'days_since_run': 40, 'bookie_odds_dec': 17.00},
+                {'name': 'Mr Biker', 'form': '3-3-2-5', 'official_rating': 104, 'cd_winner': 'None', 'jockey': 'D. Probert', 'trainer': 'R. Cowell', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 15.0, 'days_since_run': 32, 'bookie_odds_dec': 19.00},
+                {'name': 'Nomadic Star', 'form': '4-4-1-7', 'official_rating': 102, 'cd_winner': 'None', 'jockey': 'J. Watson', 'trainer': 'D. M. Simcock', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 45, 'bookie_odds_dec': 21.00},
+                {'name': 'Poli King', 'form': '2-5-4-3', 'official_rating': 100, 'cd_winner': 'C&D', 'jockey': 'M. Ghiani', 'trainer': 'J. Gallagher', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 15.0, 'days_since_run': 19, 'bookie_odds_dec': 26.00}
             ]
         },
         {
