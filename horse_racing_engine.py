@@ -244,8 +244,21 @@ def get_preset_races():
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Brighton -> 15:50 Race',
             'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Brighton',
             'runners': [
-                {'name': 'Treacherous', 'form': '1-2-1-1', 'official_rating': 85, 'cd_winner': 'C&D', 'jockey': 'W. Buick', 'trainer': 'E. Walker', 'jockey_win_pct': 26.0, 'trainer_strike_rate': 22.0, 'days_since_run': 18, 'bookie_odds_dec': 2.20},
-                {'name': 'Confederation', 'form': '3-1-2-4', 'official_rating': 80, 'cd_winner': 'C', 'jockey': 'H. Turner', 'trainer': 'D. Simcock', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 25, 'bookie_odds_dec': 5.00}
+                {'name': 'Albegone', 'form': '2-1-3-1', 'official_rating': 72, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 21.0, 'days_since_run': 14, 'bookie_odds_dec': 4.50},
+                {'name': 'Battle Of Dartmoor', 'form': '1-4-2-2', 'official_rating': 70, 'cd_winner': 'D', 'jockey': 'O. Murphy', 'trainer': 'R. Hannon', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 5.50},
+                {'name': 'Big Bard', 'form': '3-1-1-2', 'official_rating': 68, 'cd_winner': 'C&D', 'jockey': 'T. Marquand', 'trainer': 'G. L. Moore', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 19.0, 'days_since_run': 18, 'bookie_odds_dec': 6.50},
+                {'name': 'Brave Display', 'form': '4-2-1-3', 'official_rating': 66, 'cd_winner': 'D', 'jockey': 'L. Morris', 'trainer': 'P. McEntee', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 28, 'bookie_odds_dec': 8.00},
+                {'name': 'Docile', 'form': '1-3-2-4', 'official_rating': 65, 'cd_winner': 'None', 'jockey': 'R. Ryan', 'trainer': 'J. Boyle', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 9.00},
+                {'name': 'Electric Ladyland', 'form': '2-2-1-5', 'official_rating': 64, 'cd_winner': 'C', 'jockey': 'H. Doyle', 'trainer': 'A. Watson', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 20.0, 'days_since_run': 25, 'bookie_odds_dec': 10.00},
+                {'name': 'Em Jay Kay', 'form': '1-5-3-2', 'official_rating': 63, 'cd_winner': 'D', 'jockey': 'K. Shoemark', 'trainer': 'P. Evans', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 16.0, 'days_since_run': 22, 'bookie_odds_dec': 11.00},
+                {'name': 'Mastering', 'form': '3-2-2-1', 'official_rating': 62, 'cd_winner': 'None', 'jockey': 'S. De Sousa', 'trainer': 'M. Appleby', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 19.0, 'days_since_run': 16, 'bookie_odds_dec': 12.00},
+                {'name': 'Need A Hero', 'form': '4-1-4-3', 'official_rating': 60, 'cd_winner': 'D', 'jockey': 'C. Shepherd', 'trainer': 'C. Hills', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 35, 'bookie_odds_dec': 13.00},
+                {'name': 'Reckon I\'m Hot', 'form': '2-1-5-2', 'official_rating': 59, 'cd_winner': 'C&D', 'jockey': 'R. Kingscote', 'trainer': 'G. Kelleway', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 17.0, 'days_since_run': 20, 'bookie_odds_dec': 15.00},
+                {'name': 'Smooth Silesie', 'form': '1-4-3-4', 'official_rating': 58, 'cd_winner': 'C', 'jockey': 'J. Fanning', 'trainer': 'L. Carter', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 15.0, 'days_since_run': 27, 'bookie_odds_dec': 17.00},
+                {'name': 'Suanni', 'form': '5-2-1-6', 'official_rating': 56, 'cd_winner': 'D', 'jockey': 'G. Wood', 'trainer': 'D. Ivory', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 40, 'bookie_odds_dec': 19.00},
+                {'name': 'The Decoy', 'form': '3-3-2-5', 'official_rating': 55, 'cd_winner': 'None', 'jockey': 'D. Probert', 'trainer': 'R. Cowell', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 16.0, 'days_since_run': 32, 'bookie_odds_dec': 21.00},
+                {'name': 'Undercurrant', 'form': '4-4-1-7', 'official_rating': 54, 'cd_winner': 'None', 'jockey': 'J. Watson', 'trainer': 'D. M. Simcock', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 15.0, 'days_since_run': 45, 'bookie_odds_dec': 23.00},
+                {'name': 'Vape', 'form': '2-5-4-3', 'official_rating': 52, 'cd_winner': 'C&D', 'jockey': 'M. Ghiani', 'trainer': 'J. Gallagher', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 16.0, 'days_since_run': 19, 'bookie_odds_dec': 26.00}
             ]
         },
         {
