@@ -261,6 +261,23 @@ def predict_baseball_mlb(home_team="LA Dodgers", away_team="NY Yankees"):
         'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Dodgers+Yankees'
     }
 
+def predict_nfl_match(home_team="Kansas City Chiefs", away_team="San Francisco 49ers"):
+    return {
+        'home_team': home_team,
+        'away_team': away_team,
+        'league': 'NFL Preseason Showcase',
+        'match_date_str': 'Sunday, Aug 23, 2026 - 22:00 BST',
+        'pct_home_win': 56.5,
+        'pct_away_win': 43.5,
+        'high_probability_safety_pick': f"{home_team} +6.5 Point Spread",
+        'high_probability_pct': 81.0,
+        'tipster_recommended': True,
+        'tipster_consensus_pct': 94.2,
+        'tipster_badge': '🔥 NFL EXPERT INSIDER PICK',
+        'william_hill_path': 'William Hill -> American Football -> NFL -> Chiefs v 49ers -> Point Spread -> Chiefs +6.5 (Odds: 1/3)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Kansas+City+Chiefs'
+    }
+
 def get_all_greyhound_races():
     return [
         predict_greyhound_race("Romford", "400m"),
