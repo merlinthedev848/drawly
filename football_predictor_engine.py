@@ -125,64 +125,64 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
 def get_preset_football_matches():
     fixtures = [
         {
-            'match_id': 'mci_ars',
+            'match_id': 'mci_bou',
             'home_team': 'Manchester City',
-            'away_team': 'Arsenal',
+            'away_team': 'AFC Bournemouth',
+            'match_date_str': 'Sunday, Aug 23, 2026 - 15:00 BST',
+            'league': 'English Premier League (Matchweek 1)',
+            'home_attack': 2.50, 'home_defense': 0.75,
+            'away_attack': 1.10, 'away_defense': 1.60,
+            'bookie_odds': {'home': 1.25, 'draw': 6.00, 'away': 11.00},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Man City v Bournemouth -> Total Match Goals -> Over 1.5 Goals (Odds: 2/9)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Manchester+City+Bournemouth'
+        },
+        {
+            'match_id': 'new_liv',
+            'home_team': 'Newcastle United',
+            'away_team': 'Liverpool',
             'match_date_str': 'Sunday, Aug 23, 2026 - 16:30 BST',
-            'league': 'English Premier League',
-            'home_attack': 2.30, 'home_defense': 0.80,
-            'away_attack': 2.10, 'away_defense': 0.85,
-            'bookie_odds': {'home': 1.95, 'draw': 3.60, 'away': 3.80},
-            'william_hill_path': 'William Hill -> Football -> Premier League -> Man City v Arsenal -> Total Match Goals -> Over 1.5 Goals (Odds: 1/4)',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Manchester+City+Arsenal'
+            'league': 'English Premier League (Matchweek 1)',
+            'home_attack': 1.95, 'home_defense': 1.10,
+            'away_attack': 2.30, 'away_defense': 1.05,
+            'bookie_odds': {'home': 2.80, 'draw': 3.60, 'away': 2.35},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Newcastle v Liverpool -> Total Match Goals -> Over 1.5 Goals (Odds: 1/4)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Newcastle+Liverpool'
         },
         {
-            'match_id': 'rma_bar',
-            'home_team': 'Real Madrid',
-            'away_team': 'FC Barcelona',
-            'match_date_str': 'Sunday, Aug 23, 2026 - 20:00 CEST',
-            'league': 'Spanish La Liga',
-            'home_attack': 2.20, 'home_defense': 0.90,
-            'away_attack': 2.15, 'away_defense': 0.95,
-            'bookie_odds': {'home': 2.10, 'draw': 3.75, 'away': 3.30},
-            'william_hill_path': 'William Hill -> Football -> La Liga -> Real Madrid v Barcelona -> Total Match Goals -> Over 1.5 Goals (Odds: 1/5)',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Real+Madrid+Barcelona'
-        },
-        {
-            'match_id': 'liv_mun',
-            'home_team': 'Liverpool',
-            'away_team': 'Manchester United',
+            'match_id': 'ful_che',
+            'home_team': 'Fulham',
+            'away_team': 'Chelsea',
             'match_date_str': 'Monday, Aug 24, 2026 - 20:00 BST',
-            'league': 'English Premier League',
-            'home_attack': 2.40, 'home_defense': 0.95,
-            'away_attack': 1.50, 'away_defense': 1.35,
-            'bookie_odds': {'home': 1.50, 'draw': 4.75, 'away': 6.00},
-            'william_hill_path': 'William Hill -> Football -> Premier League -> Liverpool v Man Utd -> Double Chance -> 1X (Liverpool/Draw) (Odds: 2/11)',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Liverpool+Manchester+United'
+            'league': 'English Premier League (Matchweek 1)',
+            'home_attack': 1.40, 'home_defense': 1.30,
+            'away_attack': 2.10, 'away_defense': 1.10,
+            'bookie_odds': {'home': 3.60, 'draw': 3.75, 'away': 1.95},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Fulham v Chelsea -> Double Chance -> X2 (Chelsea/Draw) (Odds: 3/10)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Fulham+Chelsea'
         },
         {
-            'match_id': 'bay_dor',
-            'home_team': 'Bayern Munich',
-            'away_team': 'Borussia Dortmund',
-            'match_date_str': 'Saturday, Aug 29, 2026 - 17:30 CEST',
-            'league': 'German Bundesliga',
-            'home_attack': 2.50, 'home_defense': 0.90,
-            'away_attack': 1.80, 'away_defense': 1.25,
-            'bookie_odds': {'home': 1.60, 'draw': 4.20, 'away': 5.00},
-            'william_hill_path': 'William Hill -> Football -> Bundesliga -> Bayern v Dortmund -> Total Match Goals -> Over 1.5 Goals (Odds: 1/6)',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Bayern+Munich+Dortmund'
+            'match_id': 'bha_avl',
+            'home_team': 'Brighton & Hove Albion',
+            'away_team': 'Aston Villa',
+            'match_date_str': 'Sunday, Aug 23, 2026 - 14:00 BST',
+            'league': 'English Premier League (Matchweek 1)',
+            'home_attack': 1.80, 'home_defense': 1.20,
+            'away_attack': 1.75, 'away_defense': 1.25,
+            'bookie_odds': {'home': 2.40, 'draw': 3.50, 'away': 2.80},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Brighton v Aston Villa -> Total Match Goals -> Over 1.5 Goals (Odds: 2/7)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Brighton+Aston+Villa'
         },
         {
-            'match_id': 'psg_om',
-            'home_team': 'Paris Saint-Germain',
-            'away_team': 'Olympique Marseille',
-            'match_date_str': 'Sunday, Aug 30, 2026 - 20:45 CEST',
-            'league': 'French Ligue 1',
-            'home_attack': 2.35, 'home_defense': 0.85,
-            'away_attack': 1.60, 'away_defense': 1.30,
-            'bookie_odds': {'home': 1.55, 'draw': 4.50, 'away': 5.50},
-            'william_hill_path': 'William Hill -> Football -> Ligue 1 -> PSG v Marseille -> Double Chance -> 1X (PSG/Draw) (Odds: 2/13)',
-            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=PSG+Marseille'
+            'match_id': 'liv_nfo',
+            'home_team': 'Liverpool',
+            'away_team': 'Nottingham Forest',
+            'match_date_str': 'Saturday, Aug 29, 2026 - 15:00 BST',
+            'league': 'English Premier League (Matchweek 2)',
+            'home_attack': 2.45, 'home_defense': 0.85,
+            'away_attack': 1.15, 'away_defense': 1.50,
+            'bookie_odds': {'home': 1.30, 'draw': 5.50, 'away': 9.50},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Liverpool v Nottingham Forest -> Double Chance -> 1X (Liverpool/Draw) (Odds: 1/8)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Liverpool+Nottingham+Forest'
         }
     ]
 
