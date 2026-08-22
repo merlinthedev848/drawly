@@ -52,7 +52,7 @@ def predict_tennis_match(player_a="Jannik Sinner", player_b="Carlos Alcaraz", su
         'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Sinner+Alcaraz'
     }
 
-def predict_basketball_nba(home_team="Boston Celtics", away_team="Denver Nuggets", line_spread=-5.5, line_total=224.5, home_off_rating=118.2, away_off_rating=114.5):
+def predict_basketball_nba(home_team="Boston Celtics", away_team="Dallas Mavericks", line_spread=-4.5, line_total=224.5, home_off_rating=118.2, away_off_rating=115.0):
     home_adv = 3.2
     expected_margin = (home_off_rating - away_off_rating) + home_adv
     proj_margin = np.round(expected_margin, 1)
@@ -81,7 +81,7 @@ def predict_basketball_nba(home_team="Boston Celtics", away_team="Denver Nuggets
         'tipster_recommended': True,
         'tipster_consensus_pct': 91.0,
         'tipster_badge': '⭐ PRO TIPSTER VERIFIED',
-        'william_hill_path': 'William Hill -> Basketball -> NBA -> Celtics v Nuggets -> Alternative Point Spread -> Celtics +3.5 (Odds: 4/9)',
+        'william_hill_path': 'William Hill -> Basketball -> NBA -> Celtics v Mavericks -> Alternative Point Spread -> Celtics +3.5 (Odds: 4/9)',
         'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Boston+Celtics'
     }
 
