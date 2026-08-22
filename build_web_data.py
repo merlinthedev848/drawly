@@ -14,7 +14,12 @@ from horse_racing_engine import get_preset_races, calculate_horse_likelihoods
 from stock_explosion_engine import get_preset_explosion_stocks
 from football_predictor_engine import get_preset_football_matches
 from casino_games_engine import analyze_roulette_wheel, analyze_baccarat_probabilities
-from sports_expanded_engine import calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, predict_greyhound_race, predict_darts_match, predict_snooker_match
+from sports_expanded_engine import (
+    calculate_euromillions_stats, predict_tennis_match, predict_basketball_nba, 
+    predict_greyhound_race, predict_darts_match, predict_snooker_match,
+    predict_golf_matchup, predict_cricket_match, predict_boxing_match,
+    predict_ufc_match, predict_baseball_mlb, predict_nfl_match
+)
 from next_draw_predictor import predict_next_draw
 from live_fetcher import fetch_live_lotto_data
 
@@ -115,6 +120,12 @@ def build_export_data():
     greyhound_race = predict_greyhound_race()
     darts_match = predict_darts_match()
     snooker_match = predict_snooker_match()
+    golf_match = predict_golf_matchup()
+    cricket_match = predict_cricket_match()
+    boxing_match = predict_boxing_match()
+    ufc_match = predict_ufc_match()
+    baseball_match = predict_baseball_mlb()
+    nfl_match = predict_nfl_match()
 
     data_payload = {
         'live_meta': live_meta,
@@ -151,7 +162,13 @@ def build_export_data():
             'nba': nba_game,
             'greyhound': greyhound_race,
             'darts': darts_match,
-            'snooker': snooker_match
+            'snooker': snooker_match,
+            'golf': golf_match,
+            'cricket': cricket_match,
+            'boxing': boxing_match,
+            'ufc': ufc_match,
+            'baseball': baseball_match,
+            'nfl': nfl_match
         }
     }
     

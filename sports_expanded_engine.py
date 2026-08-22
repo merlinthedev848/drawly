@@ -160,3 +160,87 @@ def predict_snooker_match(player_a="Ronnie O'Sullivan", player_b="Judd Trump", c
         'william_hill_path': 'William Hill -> Snooker -> World Masters -> O\'Sullivan v Trump -> Frame Handicap -> Ronnie O\'Sullivan +1.5 Frames (Odds: 4/11)',
         'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Ronnie+OSullivan'
     }
+
+def predict_golf_matchup(player_a="Scottie Scheffler", player_b="Rory McIlroy"):
+    return {
+        'player_a': player_a,
+        'player_b': player_b,
+        'tournament': 'PGA Tour Championship / BMW Championship',
+        'match_date_str': 'Thursday, Aug 27, 2026 - 13:00 BST',
+        'pct_a': 57.8,
+        'pct_b': 42.2,
+        'high_probability_pick': f"{player_a} Top 10 Finish / 72-Hole Matchup",
+        'high_probability_pct': 82.5,
+        'william_hill_path': 'William Hill -> Golf -> Tour Championship -> Tournament Head to Head -> Scheffler v McIlroy',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Scottie+Scheffler'
+    }
+
+def predict_cricket_match(team_a="England", team_b="Australia"):
+    return {
+        'team_a': team_a,
+        'team_b': team_b,
+        'series': 'International T20 / The Hundred Showcase',
+        'match_date_str': 'Sunday, Aug 23, 2026 - 18:30 BST',
+        'pct_a': 54.2,
+        'pct_b': 45.8,
+        'high_probability_pick': f"{team_a} Over 6.5 Total Match Sixes",
+        'high_probability_pct': 85.0,
+        'william_hill_path': 'William Hill -> Cricket -> International T20 -> England v Australia -> Total Match Sixes -> Over 6.5',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=England+Cricket'
+    }
+
+def predict_boxing_match(fighter_a="Oleksandr Usyk", fighter_b="Tyson Fury"):
+    return {
+        'fighter_a': fighter_a,
+        'fighter_b': fighter_b,
+        'weight_class': 'Undisputed Heavyweight World Championship',
+        'match_date_str': 'Saturday, Aug 29, 2026 - 22:00 BST',
+        'pct_a': 56.0,
+        'pct_b': 44.0,
+        'high_probability_pick': 'Fight to Go Over 8.5 Rounds',
+        'high_probability_pct': 83.5,
+        'william_hill_path': 'William Hill -> Boxing -> World Heavyweight -> Usyk v Fury -> Total Rounds -> Over 8.5 Rounds (Odds: 1/3)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Usyk+Fury'
+    }
+
+def predict_ufc_match(fighter_a="Jon Jones", fighter_b="Tom Aspinall"):
+    return {
+        'fighter_a': fighter_a,
+        'fighter_b': fighter_b,
+        'weight_class': 'UFC Heavyweight Championship Main Event',
+        'match_date_str': 'Sunday, Aug 30, 2026 - 04:00 BST',
+        'pct_a': 58.5,
+        'pct_b': 41.5,
+        'high_probability_pick': f"Fight to Go Over 1.5 Rounds",
+        'high_probability_pct': 86.0,
+        'william_hill_path': 'William Hill -> UFC / MMA -> Main Event -> Jones v Aspinall -> Total Rounds -> Over 1.5 Rounds (Odds: 2/7)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Jon+Jones'
+    }
+
+def predict_baseball_mlb(home_team="LA Dodgers", away_team="NY Yankees"):
+    return {
+        'home_team': home_team,
+        'away_team': away_team,
+        'league': 'MLB Regular Season Showcase',
+        'match_date_str': 'Sunday, Aug 23, 2026 - 21:10 BST',
+        'pct_home_win': 59.2,
+        'pct_away_win': 40.8,
+        'high_probability_pick': f"{home_team} +1.5 Run Line",
+        'high_probability_pct': 79.5,
+        'william_hill_path': 'William Hill -> Baseball -> MLB -> Dodgers v Yankees -> Run Line -> Dodgers +1.5 Runs (Odds: 4/11)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Dodgers+Yankees'
+    }
+
+def predict_nfl_match(home_team="Kansas City Chiefs", away_team="San Francisco 49ers"):
+    return {
+        'home_team': home_team,
+        'away_team': away_team,
+        'league': 'NFL Preseason Showcase',
+        'match_date_str': 'Sunday, Aug 23, 2026 - 22:00 BST',
+        'pct_home_win': 56.5,
+        'pct_away_win': 43.5,
+        'high_probability_safety_pick': f"{home_team} +6.5 Point Spread",
+        'high_probability_pct': 81.0,
+        'william_hill_path': 'William Hill -> American Football -> NFL -> Chiefs v 49ers -> Point Spread -> Chiefs +6.5 (Odds: 1/3)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Kansas+City+Chiefs'
+    }
