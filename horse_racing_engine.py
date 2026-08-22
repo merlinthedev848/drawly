@@ -211,11 +211,12 @@ def get_preset_races():
             'course': 'Worcester',
             'distance': '2m 4f',
             'going': 'Good',
+            'bha_disclaimer': 'BHA 24h Declarations: Final runner declarations are confirmed by BHA 24 hours prior to post time.',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Worcester -> 16:08 Race',
             'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Worcester',
             'runners': [
-                {'name': 'Al Dancer', 'form': '1-1-3-1', 'official_rating': 142, 'cd_winner': 'C&D', 'jockey': 'S. Bowen', 'trainer': 'S. Edmunds', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 24, 'bookie_odds_dec': 2.60},
-                {'name': 'Gats Imprior', 'form': '2-1-2-4', 'official_rating': 136, 'cd_winner': 'D', 'jockey': 'G. Sheehan', 'trainer': 'J. Snowden', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
+                {'name': 'Breeze Of Wind', 'form': '1-1-3-1', 'official_rating': 128, 'cd_winner': 'C&D', 'jockey': 'S. Bowen', 'trainer': 'O. Greenall', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 24, 'bookie_odds_dec': 2.60},
+                {'name': 'Hoganville', 'form': '2-1-2-4', 'official_rating': 122, 'cd_winner': 'D', 'jockey': 'G. Sheehan', 'trainer': 'A. M. Thomson', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 18.0, 'days_since_run': 30, 'bookie_odds_dec': 4.80}
             ]
         },
         {

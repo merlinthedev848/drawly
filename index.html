@@ -644,13 +644,15 @@
                 const whPath = race.william_hill_path || 'William Hill -> Horse Racing Meetings';
                 const whUrl = race.william_hill_url || 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today';
                 const rDate = race.race_date_str || 'Today / Active Race';
+                const bhaNote = race.bha_disclaimer ? `<div class="text-xxs text-amber-400 font-bold pt-1"><i class="fa-solid fa-circle-info"></i> ${race.bha_disclaimer}</div>` : '';
                 bannerEl.innerHTML = `
                     <div class="bg-slate-950 text-cyan-300 p-2.5 rounded-sm border border-cyan-500/30 text-xs font-mono space-y-1">
                         <div class="flex items-center justify-between flex-wrap gap-2">
                             <span class="text-white font-bold"><i class="fa-regular fa-calendar"></i> ${rDate}</span>
                             <span class="text-slate-400">Course: ${race.course} | Going: ${race.going} | Distance: ${race.distance}</span>
                         </div>
-                        <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
+                        ${bhaNote}
+                        <div class="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-slate-900 mt-1">
                             <span class="flex items-center gap-1.5"><i class="fa-solid fa-compass text-cyan-400"></i> <strong>LOOKUP:</strong> ${whPath}</span>
                             <a href="${whUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2.5 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open William Hill Racing
