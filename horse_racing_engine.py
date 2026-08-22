@@ -182,6 +182,7 @@ def get_preset_races():
             'distance': '1m 2f 56y',
             'going': 'Good to Firm',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 15:35 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today',
             'runners': [
                 {'name': 'City Of Troy', 'form': '1-1-1-1', 'official_rating': 124, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 28, 'bookie_odds_dec': 2.10},
                 {'name': 'Calandagan', 'form': '1-1-2-1', 'official_rating': 121, 'cd_winner': 'D', 'jockey': 'S. Pasquier', 'trainer': 'F. Graffard', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 22.0, 'days_since_run': 35, 'bookie_odds_dec': 4.50},
@@ -198,6 +199,7 @@ def get_preset_races():
             'distance': '6f',
             'going': 'Good',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Newmarket -> 14:25 Race -> Win & Each Way',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today',
             'runners': [
                 {'name': 'Kinross', 'form': '1-2-1-2', 'official_rating': 118, 'cd_winner': 'C&D', 'jockey': 'L. Dettori', 'trainer': 'R. Beckett', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 2.75},
                 {'name': 'Art Power', 'form': '1-4-1-8', 'official_rating': 116, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 28, 'bookie_odds_dec': 5.00},

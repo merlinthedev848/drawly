@@ -45,7 +45,8 @@ def predict_tennis_match(player_a="Jannik Sinner", player_b="Carlos Alcaraz", su
         'high_probability_pick': set_handicap_pick,
         'high_probability_pct': set_handicap_prob,
         'set_betting_prediction': f"{player_a} 2-0 Sets" if pct_a > 65.0 else f"{player_a} 2-1 Sets",
-        'william_hill_path': 'William Hill -> Tennis -> US Open Series -> Sinner v Alcaraz -> Set Handicap -> Sinner +1.5 Sets (Odds: 3/10)'
+        'william_hill_path': 'William Hill -> Tennis -> US Open Series -> Sinner v Alcaraz -> Set Handicap -> Sinner +1.5 Sets (Odds: 3/10)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Sinner+Alcaraz'
     }
 
 def predict_basketball_nba(home_team="Boston Celtics", away_team="Denver Nuggets", line_spread=-5.5, line_total=224.5, home_off_rating=118.2, away_off_rating=114.5):
@@ -74,7 +75,8 @@ def predict_basketball_nba(home_team="Boston Celtics", away_team="Denver Nuggets
         'recommended_spread_pick': f"{home_team} {line_spread}" if proj_margin > abs(line_spread) else f"{away_team} +{abs(line_spread)}",
         'high_probability_safety_pick': high_prob_spread,
         'high_probability_pct': high_prob_pct,
-        'william_hill_path': 'William Hill -> Basketball -> NBA -> Celtics v Nuggets -> Alternative Point Spread -> Celtics +3.5 (Odds: 4/9)'
+        'william_hill_path': 'William Hill -> Basketball -> NBA -> Celtics v Nuggets -> Alternative Point Spread -> Celtics +3.5 (Odds: 4/9)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Boston+Celtics'
     }
 
 def predict_greyhound_race(track="Romford", distance="400m", runners=None):
@@ -117,7 +119,8 @@ def predict_greyhound_race(track="Romford", distance="400m", runners=None):
         'race_date_str': 'Saturday, Aug 22, 2026 - 19:42 BST',
         'runners': analyzed,
         'forecast_pick': f"Trap {analyzed[0]['trap']} ({analyzed[0]['dog_name']}) & Trap {analyzed[1]['trap']} ({analyzed[1]['dog_name']})",
-        'william_hill_path': 'William Hill -> Greyhounds -> Romford -> 19:42 Race -> Trap Betting'
+        'william_hill_path': 'William Hill -> Greyhounds -> Romford -> 19:42 Race -> Trap Betting',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/greyhounds'
     }
 
 def predict_darts_match(player_a="Luke Littler", player_b="Luke Humphries", three_d_avg_a=104.5, three_d_avg_b=102.1):
@@ -135,7 +138,8 @@ def predict_darts_match(player_a="Luke Littler", player_b="Luke Humphries", thre
         'pct_b': pct_b,
         'high_probability_pick': high_prob_pick,
         'high_probability_pct': high_prob_pct,
-        'william_hill_path': 'William Hill -> Darts -> PDC Premier League -> Littler v Humphries -> Leg Handicap -> Luke Littler +1.5 Legs (Odds: 1/3)'
+        'william_hill_path': 'William Hill -> Darts -> PDC Premier League -> Littler v Humphries -> Leg Handicap -> Luke Littler +1.5 Legs (Odds: 1/3)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Luke+Littler'
     }
 
 def predict_snooker_match(player_a="Ronnie O'Sullivan", player_b="Judd Trump", century_rate_a=14.5, century_rate_b=12.8):
@@ -153,5 +157,6 @@ def predict_snooker_match(player_a="Ronnie O'Sullivan", player_b="Judd Trump", c
         'pct_b': pct_b,
         'high_probability_pick': high_prob_pick,
         'high_probability_pct': high_prob_pct,
-        'william_hill_path': 'William Hill -> Snooker -> World Masters -> O\'Sullivan v Trump -> Frame Handicap -> Ronnie O\'Sullivan +1.5 Frames (Odds: 4/11)'
+        'william_hill_path': 'William Hill -> Snooker -> World Masters -> O\'Sullivan v Trump -> Frame Handicap -> Ronnie O\'Sullivan +1.5 Frames (Odds: 4/11)',
+        'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Ronnie+OSullivan'
     }

@@ -616,6 +616,7 @@
             const bannerEl = document.getElementById('racing-info-banner');
             if (bannerEl) {
                 const whPath = race.william_hill_path || 'William Hill -> Horse Racing Meetings';
+                const whUrl = race.william_hill_url || 'https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today';
                 const rDate = race.race_date_str || 'Today / Active Race';
                 bannerEl.innerHTML = `
                     <div class="bg-slate-950 text-cyan-300 p-2.5 rounded-sm border border-cyan-500/30 text-xs font-mono space-y-1">
@@ -623,9 +624,11 @@
                             <span class="text-white font-bold"><i class="fa-regular fa-calendar"></i> ${rDate}</span>
                             <span class="text-slate-400">Course: ${race.course} | Going: ${race.going} | Distance: ${race.distance}</span>
                         </div>
-                        <div class="flex items-center gap-1.5 text-cyan-300 pt-1">
-                            <i class="fa-solid fa-compass text-cyan-400"></i>
-                            <span><strong>WILLIAM HILL LOOKUP:</strong> ${whPath}</span>
+                        <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-compass text-cyan-400"></i> <strong>LOOKUP:</strong> ${whPath}</span>
+                            <a href="${whUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2.5 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open William Hill Racing
+                            </a>
                         </div>
                     </div>
                 `;
@@ -676,9 +679,21 @@
             const topPickStr = topFb.recommended_bet_selection || (topFb.highest_probability_pick ? `BET ON: ${topFb.highest_probability_pick} (EST. PROBABILITY: ${topFb.highest_probability_pct}%)` : `BET ON: Double Chance 1X (EST. PROBABILITY: ${topFb.double_chance_1x_pct}%)`);
             
             document.getElementById('high-prob-banner').innerHTML = `
-                <div>⚽ Football Top Pick: <strong class="text-amber-300">${topPickStr}</strong></div>
-                <div>🎾 Tennis Top Pick: <strong class="text-amber-300">BET ON: ${lottoData.expanded_sports.tennis.high_probability_pick} (EST. PROBABILITY: ${lottoData.expanded_sports.tennis.high_probability_pct}%)</strong></div>
-                <div>🏀 NBA Safety Spread: <strong class="text-amber-300">BET ON: ${lottoData.expanded_sports.nba.high_probability_safety_pick} (EST. PROBABILITY: ${lottoData.expanded_sports.nba.high_probability_pct}%)</strong></div>
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                    <div>
+                        <div>⚽ Football Top Pick: <strong class="text-amber-300">${topPickStr}</strong></div>
+                        <div>🎾 Tennis Top Pick: <strong class="text-amber-300">BET ON: ${lottoData.expanded_sports.tennis.high_probability_pick} (EST. PROBABILITY: ${lottoData.expanded_sports.tennis.high_probability_pct}%)</strong></div>
+                        <div>🏀 NBA Safety Spread: <strong class="text-amber-300">BET ON: ${lottoData.expanded_sports.nba.high_probability_safety_pick} (EST. PROBABILITY: ${lottoData.expanded_sports.nba.high_probability_pct}%)</strong></div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <a href="https://sports.williamhill.com/betting/en-gb/football" target="_blank" rel="noopener noreferrer" class="bg-emerald-800/80 hover:bg-emerald-700 text-emerald-200 font-bold px-2.5 py-1 rounded border border-emerald-400/40 text-xxs flex items-center gap-1">
+                            <i class="fa-solid fa-external-link"></i> William Hill Football
+                        </a>
+                        <a href="https://sports.williamhill.com/betting/en-gb/horse-racing/meetings/today" target="_blank" rel="noopener noreferrer" class="bg-amber-800/80 hover:bg-amber-700 text-amber-200 font-bold px-2.5 py-1 rounded border border-amber-400/40 text-xxs flex items-center gap-1">
+                            <i class="fa-solid fa-external-link"></i> William Hill Racing
+                        </a>
+                    </div>
+                </div>
             `;
 
             let fbCardsHtml = '';
@@ -687,6 +702,7 @@
                 const probVal = fb.recommended_bet_prob_pct || fb.highest_probability_pct || fb.double_chance_1x_pct || 75.0;
                 const matchDateStr = fb.match_date_str || 'Upcoming Fixture';
                 const whPath = fb.william_hill_path || 'William Hill -> Football Market';
+                const whUrl = fb.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(fb.home_team + ' ' + fb.away_team)}`;
 
                 fbCardsHtml += `
                     <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
@@ -702,8 +718,11 @@
                         <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                             <i class="fa-solid fa-bullseye text-amber-400"></i> ${pickText}
                         </div>
-                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center gap-1.5">
-                            <i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <span><strong>WILLIAM HILL LOOKUP:</strong> ${whPath}</span>
+                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${whPath}</span>
+                            <a href="${whUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                            </a>
                         </div>
                         <div class="text-slate-400 pt-1 space-y-0.5">
                             <div><span class="text-slate-300">Win Probabilities:</span> ${fb.home_team} ${fb.pct_home}% | Draw ${fb.pct_draw}% | ${fb.away_team} ${fb.pct_away}%</div>
@@ -716,6 +735,7 @@
             document.getElementById('fb-summary').innerHTML = fbCardsHtml;
 
             const t = lottoData.expanded_sports.tennis;
+            const tUrl = t.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(t.player_a + ' ' + t.player_b)}`;
             document.getElementById('tennis-summary').innerHTML = `
                 <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
                     <div class="flex items-center justify-between flex-wrap gap-1">
@@ -730,8 +750,11 @@
                     <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                         <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${t.high_probability_pick}
                     </div>
-                    <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center gap-1.5">
-                        <i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <span><strong>WILLIAM HILL LOOKUP:</strong> ${t.william_hill_path || 'William Hill -> Tennis Market'}</span>
+                    <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                        <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${t.william_hill_path || 'William Hill -> Tennis Market'}</span>
+                        <a href="${tUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                        </a>
                     </div>
                     <div class="text-slate-400 pt-1">
                         Match Win Probabilities: ${t.player_a} ${t.pct_a}% vs ${t.player_b} ${t.pct_b}%<br>
@@ -741,6 +764,7 @@
             `;
 
             const nba = lottoData.expanded_sports.nba;
+            const nbaUrl = nba.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(nba.home_team)}`;
             document.getElementById('nba-card').innerHTML = `
                 <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
                     <div class="flex items-center justify-between flex-wrap gap-1">
@@ -755,8 +779,11 @@
                     <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                         <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${nba.high_probability_safety_pick}
                     </div>
-                    <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center gap-1.5">
-                        <i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <span><strong>WILLIAM HILL LOOKUP:</strong> ${nba.william_hill_path || 'William Hill -> NBA Market'}</span>
+                    <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                        <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${nba.william_hill_path || 'William Hill -> NBA Market'}</span>
+                        <a href="${nbaUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                        </a>
                     </div>
                     <div class="text-slate-400 pt-1">
                         Standard Line Recommendation: ${nba.recommended_spread_pick}<br>
@@ -767,6 +794,7 @@
 
             const d = lottoData.expanded_sports.darts;
             if (d && document.getElementById('darts-summary')) {
+                const dUrl = d.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(d.player_a)}`;
                 document.getElementById('darts-summary').innerHTML = `
                     <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
                         <div class="flex items-center justify-between flex-wrap gap-1">
@@ -781,8 +809,11 @@
                         <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                             <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${d.high_probability_pick}
                         </div>
-                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center gap-1.5">
-                            <i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <span><strong>WILLIAM HILL LOOKUP:</strong> ${d.william_hill_path}</span>
+                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${d.william_hill_path}</span>
+                            <a href="${dUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                            </a>
                         </div>
                         <div class="text-slate-400 pt-1">
                             3-Dart Average Model: ${d.player_a} ${d.pct_a}% vs ${d.player_b} ${d.pct_b}%
@@ -793,6 +824,7 @@
 
             const sn = lottoData.expanded_sports.snooker;
             if (sn && document.getElementById('snooker-summary')) {
+                const snUrl = sn.william_hill_url || `https://sports.williamhill.com/betting/en-gb/search?q=${encodeURIComponent(sn.player_a)}`;
                 document.getElementById('snooker-summary').innerHTML = `
                     <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
                         <div class="flex items-center justify-between flex-wrap gap-1">
@@ -807,8 +839,11 @@
                         <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
                             <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${sn.high_probability_pick}
                         </div>
-                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center gap-1.5">
-                            <i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <span><strong>WILLIAM HILL LOOKUP:</strong> ${sn.william_hill_path}</span>
+                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
+                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${sn.william_hill_path}</span>
+                            <a href="${snUrl}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
+                            </a>
                         </div>
                         <div class="text-slate-400 pt-1">
                             Frame Win Probabilities: ${sn.player_a} ${sn.pct_a}% vs ${sn.player_b} ${sn.pct_b}%

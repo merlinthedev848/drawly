@@ -133,7 +133,8 @@ def get_preset_football_matches():
             'home_attack': 2.30, 'home_defense': 0.80,
             'away_attack': 2.10, 'away_defense': 0.85,
             'bookie_odds': {'home': 1.95, 'draw': 3.60, 'away': 3.80},
-            'william_hill_path': 'William Hill -> Football -> Premier League -> Man City v Arsenal -> Total Match Goals -> Over 1.5 Goals (Odds: 1/4)'
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Man City v Arsenal -> Total Match Goals -> Over 1.5 Goals (Odds: 1/4)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Manchester+City+Arsenal'
         },
         {
             'match_id': 'rma_bar',
@@ -144,7 +145,8 @@ def get_preset_football_matches():
             'home_attack': 2.20, 'home_defense': 0.90,
             'away_attack': 2.15, 'away_defense': 0.95,
             'bookie_odds': {'home': 2.10, 'draw': 3.75, 'away': 3.30},
-            'william_hill_path': 'William Hill -> Football -> La Liga -> Real Madrid v Barcelona -> Total Match Goals -> Over 1.5 Goals (Odds: 1/5)'
+            'william_hill_path': 'William Hill -> Football -> La Liga -> Real Madrid v Barcelona -> Total Match Goals -> Over 1.5 Goals (Odds: 1/5)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Real+Madrid+Barcelona'
         },
         {
             'match_id': 'liv_mun',
@@ -155,7 +157,8 @@ def get_preset_football_matches():
             'home_attack': 2.40, 'home_defense': 0.95,
             'away_attack': 1.50, 'away_defense': 1.35,
             'bookie_odds': {'home': 1.50, 'draw': 4.75, 'away': 6.00},
-            'william_hill_path': 'William Hill -> Football -> Premier League -> Liverpool v Man Utd -> Double Chance -> 1X (Liverpool/Draw) (Odds: 2/11)'
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Liverpool v Man Utd -> Double Chance -> 1X (Liverpool/Draw) (Odds: 2/11)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Liverpool+Manchester+United'
         },
         {
             'match_id': 'bay_dor',
@@ -166,7 +169,8 @@ def get_preset_football_matches():
             'home_attack': 2.50, 'home_defense': 0.90,
             'away_attack': 1.80, 'away_defense': 1.25,
             'bookie_odds': {'home': 1.60, 'draw': 4.20, 'away': 5.00},
-            'william_hill_path': 'William Hill -> Football -> Bundesliga -> Bayern v Dortmund -> Total Match Goals -> Over 1.5 Goals (Odds: 1/6)'
+            'william_hill_path': 'William Hill -> Football -> Bundesliga -> Bayern v Dortmund -> Total Match Goals -> Over 1.5 Goals (Odds: 1/6)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Bayern+Munich+Dortmund'
         },
         {
             'match_id': 'psg_om',
@@ -177,7 +181,8 @@ def get_preset_football_matches():
             'home_attack': 2.35, 'home_defense': 0.85,
             'away_attack': 1.60, 'away_defense': 1.30,
             'bookie_odds': {'home': 1.55, 'draw': 4.50, 'away': 5.50},
-            'william_hill_path': 'William Hill -> Football -> Ligue 1 -> PSG v Marseille -> Double Chance -> 1X (PSG/Draw) (Odds: 2/13)'
+            'william_hill_path': 'William Hill -> Football -> Ligue 1 -> PSG v Marseille -> Double Chance -> 1X (PSG/Draw) (Odds: 2/13)',
+            'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=PSG+Marseille'
         }
     ]
 
@@ -193,6 +198,7 @@ def get_preset_football_matches():
         m_res['match_date_str'] = f['match_date_str']
         m_res['league'] = f['league']
         m_res['william_hill_path'] = f['william_hill_path']
+        m_res['william_hill_url'] = f['william_hill_url']
         analyzed.append(m_res)
 
     return analyzed
