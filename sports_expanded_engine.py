@@ -122,7 +122,7 @@ def predict_greyhound_race(track="Romford", distance="400m", runners=None):
     return {
         'track': track,
         'distance': distance,
-        'race_date_str': 'Saturday, Aug 22, 2026 - 19:42 BST',
+        'race_date_str': 'Sunday, Aug 23, 2026 - 19:42 BST',
         'runners': analyzed,
         'forecast_pick': f"Trap {analyzed[0]['trap']} ({analyzed[0]['dog_name']}) & Trap {analyzed[1]['trap']} ({analyzed[1]['dog_name']})",
         'tipster_recommended': True,

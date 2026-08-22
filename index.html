@@ -1033,56 +1033,30 @@
                 `;
             }
 
-            const bb = lottoData.expanded_sports.baseball;
-            if (bb && document.getElementById('baseball-summary')) {
-                document.getElementById('baseball-summary').innerHTML = `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
+            const americanArray = lottoData.expanded_sports.all_american || [lottoData.expanded_sports.baseball, lottoData.expanded_sports.nfl];
+            if (americanArray && document.getElementById('baseball-summary')) {
+                document.getElementById('baseball-summary').innerHTML = americanArray.map(am => `
+                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono mb-2">
                         <div class="flex items-center justify-between flex-wrap gap-1">
                             <div>
-                                <strong class="text-white text-sm font-bold">${bb.home_team} vs ${bb.away_team} (${bb.league})</strong>
-                                <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${bb.match_date_str}</span>
+                                <strong class="text-white text-sm font-bold">${am.home_team} vs ${am.away_team} (${am.league})</strong>
+                                <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${am.match_date_str}</span>
                             </div>
                             <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
-                                EST. PROBABILITY: ${bb.high_probability_pct}%
+                                EST. PROBABILITY: ${am.high_probability_pct}%
                             </span>
                         </div>
                         <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
-                            <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${bb.high_probability_pick}
+                            <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${am.high_probability_pick || am.high_probability_safety_pick}
                         </div>
                         <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
-                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${bb.william_hill_path}</span>
-                            <a href="${bb.william_hill_url}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
+                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${am.william_hill_path}</span>
+                            <a href="${am.william_hill_url}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
                             </a>
                         </div>
                     </div>
-                `;
-            }
-
-            const nfl = lottoData.expanded_sports.nfl;
-            if (nfl && document.getElementById('nfl-summary')) {
-                document.getElementById('nfl-summary').innerHTML = `
-                    <div class="bg-slate-900/90 p-3 rounded-sm border border-ops-border space-y-2 text-xs font-mono">
-                        <div class="flex items-center justify-between flex-wrap gap-1">
-                            <div>
-                                <strong class="text-white text-sm font-bold">${nfl.home_team} vs ${nfl.away_team} (${nfl.league})</strong>
-                                <span class="text-slate-400 text-xxs block"><i class="fa-regular fa-calendar"></i> ${nfl.match_date_str}</span>
-                            </div>
-                            <span class="bg-emerald-950 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/40">
-                                EST. PROBABILITY: ${nfl.high_probability_pct}%
-                            </span>
-                        </div>
-                        <div class="bg-amber-950/60 text-amber-300 font-bold p-1.5 rounded border border-amber-500/40">
-                            <i class="fa-solid fa-bullseye text-amber-400"></i> BET ON: ${nfl.high_probability_safety_pick}
-                        </div>
-                        <div class="bg-slate-950 text-cyan-300 p-2 rounded border border-cyan-500/30 text-xxs flex items-center justify-between flex-wrap gap-2">
-                            <span><i class="fa-solid fa-compass text-cyan-400 text-xs"></i> <strong>LOOKUP:</strong> ${nfl.william_hill_path}</span>
-                            <a href="${nfl.william_hill_url}" target="_blank" rel="noopener noreferrer" class="bg-cyan-900/80 hover:bg-cyan-800 text-cyan-100 font-bold px-2 py-1 rounded border border-cyan-400/50 text-xxs flex items-center gap-1">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search William Hill
-                            </a>
-                        </div>
-                    </div>
-                `;
+                `).join('');
             }
         }
 
