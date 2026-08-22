@@ -366,18 +366,20 @@
         let currentGame = 'uk';
 
         function initApp() {
-            if (typeof embeddedLottoData !== 'undefined') {
-                lottoData = embeddedLottoData;
-                runRenderPipeline();
-            } else {
-                fetch('lotto_data.json')
-                    .then(res => res.json())
-                    .then(data => {
-                        lottoData = data;
+            // Always fetch fresh lotto_data.json with cache busting to prevent stale hosted browser cache
+            fetch('lotto_data.json?v=' + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    lottoData = data;
+                    runRenderPipeline();
+                })
+                .catch(err => {
+                    console.log("Fallback to embedded data:", err);
+                    if (typeof embeddedLottoData !== 'undefined' && embeddedLottoData !== null) {
+                        lottoData = embeddedLottoData;
                         runRenderPipeline();
-                    })
-                    .catch(err => console.error("Data loading error:", err));
-            }
+                    }
+                });
         }
 
         function triggerAutoUpdate() {
