@@ -296,11 +296,30 @@ def get_preset_races():
             'course': 'Naas',
             'distance': '5f',
             'going': 'Good to Firm',
+            'bha_disclaimer': 'BHA 24h Declarations: Official William Hill declared racecard for Sunday, Aug 23.',
             'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> UK & Ireland -> Naas -> 16:30 Race',
             'william_hill_url': 'https://sports.williamhill.com/betting/en-gb/search?q=Naas',
             'runners': [
-                {'name': 'Bucanero Fuerte', 'form': '1-1-3-1', 'official_rating': 115, 'cd_winner': 'C&D', 'jockey': 'R. Whelan', 'trainer': 'A. Murray', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 20.0, 'days_since_run': 30, 'bookie_odds_dec': 2.25},
-                {'name': 'Givemethebeatboys', 'form': '2-1-4-1', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 4.20}
+                {'name': 'Alexander John', 'form': '2-1-3-1', 'official_rating': 112, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 18, 'bookie_odds_dec': 4.00},
+                {'name': 'Ardad\'s Great', 'form': '1-4-2-2', 'official_rating': 108, 'cd_winner': 'D', 'jockey': 'C. T. Keane', 'trainer': 'G. Lyons', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 24, 'bookie_odds_dec': 5.00},
+                {'name': 'Bad Desires', 'form': '3-1-1-2', 'official_rating': 106, 'cd_winner': 'C&D', 'jockey': 'W. M. Lordan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 26.0, 'days_since_run': 21, 'bookie_odds_dec': 6.00},
+                {'name': 'Commercial', 'form': '4-2-1-3', 'official_rating': 104, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 30, 'bookie_odds_dec': 7.00},
+                {'name': 'Derida', 'form': '1-3-2-4', 'official_rating': 102, 'cd_winner': 'None', 'jockey': 'R. Whelan', 'trainer': 'A. Murray', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 20.0, 'days_since_run': 28, 'bookie_odds_dec': 8.00},
+                {'name': 'Empress Of Rome', 'form': '2-2-1-5', 'official_rating': 100, 'cd_winner': 'C', 'jockey': 'D. McMonagle', 'trainer': 'J. O\'Brien', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 25, 'bookie_odds_dec': 9.00},
+                {'name': 'Fiery Lucy', 'form': '1-5-3-2', 'official_rating': 98, 'cd_winner': 'D', 'jockey': 'B. M. Coen', 'trainer': 'J. P. Murtagh', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 22, 'bookie_odds_dec': 10.00},
+                {'name': 'Frosty Morn', 'form': '3-2-2-1', 'official_rating': 96, 'cd_winner': 'None', 'jockey': 'G. F. Carroll', 'trainer': 'G. Cromwell', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 16, 'bookie_odds_dec': 11.00},
+                {'name': 'Giggling Prince', 'form': '4-1-4-3', 'official_rating': 95, 'cd_winner': 'D', 'jockey': 'J. A. Heffernan', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 26.0, 'days_since_run': 35, 'bookie_odds_dec': 12.00},
+                {'name': 'Great North West', 'form': '2-1-5-2', 'official_rating': 94, 'cd_winner': 'C&D', 'jockey': 'C. D. Hayes', 'trainer': 'D. Weld', 'jockey_win_pct': 17.0, 'trainer_strike_rate': 18.0, 'days_since_run': 20, 'bookie_odds_dec': 13.00},
+                {'name': 'Hands Off', 'form': '1-4-3-4', 'official_rating': 92, 'cd_winner': 'C', 'jockey': 'W. J. Lee', 'trainer': 'P. Twomey', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 27, 'bookie_odds_dec': 14.00},
+                {'name': 'Head Start', 'form': '5-2-1-6', 'official_rating': 90, 'cd_winner': 'D', 'jockey': 'R. Colgan', 'trainer': 'Ms S. Lavery', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 40, 'bookie_odds_dec': 15.00},
+                {'name': 'Heavy Metal', 'form': '3-3-2-5', 'official_rating': 88, 'cd_winner': 'None', 'jockey': 'L. F. Roche', 'trainer': 'M. O\'Callaghan', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 15.0, 'days_since_run': 32, 'bookie_odds_dec': 16.00},
+                {'name': 'Island Legend', 'form': '4-4-1-7', 'official_rating': 86, 'cd_winner': 'None', 'jockey': 'N. G. McCullagh', 'trainer': 'K. Prendergast', 'jockey_win_pct': 13.0, 'trainer_strike_rate': 13.0, 'days_since_run': 45, 'bookie_odds_dec': 18.00},
+                {'name': 'Japanese Moon', 'form': '2-5-4-3', 'official_rating': 85, 'cd_winner': 'C&D', 'jockey': 'R. P. Whelan', 'trainer': 'M. Halford', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 16.0, 'days_since_run': 19, 'bookie_odds_dec': 20.00},
+                {'name': 'Katsuma', 'form': '1-2-3-4', 'official_rating': 84, 'cd_winner': 'D', 'jockey': 'S. Foley', 'trainer': 'J. Harrington', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 21, 'bookie_odds_dec': 22.00},
+                {'name': 'Lasting Love', 'form': '3-4-1-2', 'official_rating': 82, 'cd_winner': 'None', 'jockey': 'C. T. Keane', 'trainer': 'G. Lyons', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 23, 'bookie_odds_dec': 24.00},
+                {'name': 'Little Boy', 'form': '2-1-4-5', 'official_rating': 80, 'cd_winner': 'None', 'jockey': 'D. McMonagle', 'trainer': 'J. O\'Brien', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 26, 'bookie_odds_dec': 26.00},
+                {'name': 'Nacpan', 'form': '4-3-2-1', 'official_rating': 78, 'cd_winner': 'D', 'jockey': 'W. J. Lee', 'trainer': 'P. Twomey', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 29, 'bookie_odds_dec': 28.00},
+                {'name': 'Over-Run', 'form': '5-5-1-3', 'official_rating': 75, 'cd_winner': 'None', 'jockey': 'B. M. Coen', 'trainer': 'J. P. Murtagh', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 31, 'bookie_odds_dec': 33.00}
             ]
         }
     ]
