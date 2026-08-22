@@ -171,36 +171,38 @@ def calculate_horse_likelihoods(runners, weights=None):
 
 def get_preset_races():
     """
-    Returns preset sample races for demonstration.
+    Returns preset active races with current William Hill market locator paths.
     """
     return [
         {
-            'race_id': 'cheltenham_cup',
-            'race_name': 'Cheltenham Gold Cup Steeplechase (Grade 1)',
-            'course': 'Cheltenham',
-            'distance': '3m 2f',
-            'going': 'Good to Soft',
+            'race_id': 'york_juddmonte',
+            'race_name': 'York 15:35 - Juddmonte International Stakes (Group 1)',
+            'race_date_str': 'Saturday, Aug 22, 2026 - 15:35 BST',
+            'course': 'York',
+            'distance': '1m 2f 56y',
+            'going': 'Good to Firm',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> York -> 15:35 Race -> Win & Each Way',
             'runners': [
-                {'name': 'Galopin Des Champs', 'form': '1-1-1-2-1', 'official_rating': 178, 'cd_winner': 'C&D', 'jockey': 'P. Townend', 'trainer': 'W. P. Mullins', 'jockey_win_pct': 24.0, 'trainer_strike_rate': 28.0, 'days_since_run': 28, 'bookie_odds_dec': 2.50},
-                {'name': 'Fastorslow', 'form': '2-1-2-1-2', 'official_rating': 174, 'cd_winner': 'C', 'jockey': 'J. J. Slevin', 'trainer': 'M. Brassil', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 35, 'bookie_odds_dec': 5.50},
-                {'name': 'Gerri Colombe', 'form': '1-2-1-1-3', 'official_rating': 170, 'cd_winner': 'D', 'jockey': 'J. W. Kennedy', 'trainer': 'G. Elliott', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 42, 'bookie_odds_dec': 8.00},
-                {'name': 'L\'Homme Presse', 'form': '1-2-1-4-2', 'official_rating': 166, 'cd_winner': 'C&D', 'jockey': 'C. Deutsch', 'trainer': 'V. Williams', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 17.0, 'days_since_run': 21, 'bookie_odds_dec': 12.00},
-                {'name': 'Bravemansgame', 'form': '2-2-3-2-5', 'official_rating': 168, 'cd_winner': 'D', 'jockey': 'H. Cobden', 'trainer': 'P. Nicholls', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 30, 'bookie_odds_dec': 15.00},
-                {'name': 'Hewick', 'form': '1-4-1-P-1', 'official_rating': 165, 'cd_winner': 'None', 'jockey': 'G. Sheehan', 'trainer': 'J. Hanlon', 'jockey_win_pct': 14.0, 'trainer_strike_rate': 14.0, 'days_since_run': 60, 'bookie_odds_dec': 21.00}
+                {'name': 'City Of Troy', 'form': '1-1-1-1', 'official_rating': 124, 'cd_winner': 'C&D', 'jockey': 'R. L. Moore', 'trainer': 'A. P. O\'Brien', 'jockey_win_pct': 25.0, 'trainer_strike_rate': 26.0, 'days_since_run': 28, 'bookie_odds_dec': 2.10},
+                {'name': 'Calandagan', 'form': '1-1-2-1', 'official_rating': 121, 'cd_winner': 'D', 'jockey': 'S. Pasquier', 'trainer': 'F. Graffard', 'jockey_win_pct': 19.0, 'trainer_strike_rate': 22.0, 'days_since_run': 35, 'bookie_odds_dec': 4.50},
+                {'name': 'Ghostwriter', 'form': '1-3-3-3', 'official_rating': 117, 'cd_winner': 'D', 'jockey': 'R. Hornby', 'trainer': 'C. Cox', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 18.0, 'days_since_run': 21, 'bookie_odds_dec': 8.50},
+                {'name': 'Zarakem', 'form': '1-2-1-7', 'official_rating': 118, 'cd_winner': 'None', 'jockey': 'M. Guyon', 'trainer': 'J. Reynier', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 42, 'bookie_odds_dec': 11.00},
+                {'name': 'Bluestocking', 'form': '2-1-2-1', 'official_rating': 116, 'cd_winner': 'D', 'jockey': 'R. Ryan', 'trainer': 'R. Beckett', 'jockey_win_pct': 20.0, 'trainer_strike_rate': 21.0, 'days_since_run': 30, 'bookie_odds_dec': 13.00}
             ]
         },
         {
-            'race_id': 'ascor_sprint',
-            'race_name': 'Royal Ascot Platinum Jubilee Stakes (Group 1)',
-            'course': 'Ascot',
+            'race_id': 'newmarket_hopeful',
+            'race_name': 'Newmarket 14:25 - Hopeful Stakes (Listed Race)',
+            'race_date_str': 'Saturday, Aug 22, 2026 - 14:25 BST',
+            'course': 'Newmarket',
             'distance': '6f',
             'going': 'Good',
+            'william_hill_path': 'William Hill -> Horse Racing -> Meetings -> Newmarket -> 14:25 Race -> Win & Each Way',
             'runners': [
-                {'name': 'Kinross', 'form': '1-2-1-2-1', 'official_rating': 118, 'cd_winner': 'C&D', 'jockey': 'F. Dettori', 'trainer': 'R. Beckett', 'jockey_win_pct': 21.0, 'trainer_strike_rate': 22.0, 'days_since_run': 21, 'bookie_odds_dec': 3.50},
-                {'name': 'Art Power', 'form': '1-4-1-8-1', 'official_rating': 116, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 28, 'bookie_odds_dec': 7.00},
-                {'name': 'Highfield Princess', 'form': '2-1-3-1-2', 'official_rating': 117, 'cd_winner': 'C', 'jockey': 'J. Hart', 'trainer': 'J. Quinn', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 14, 'bookie_odds_dec': 4.50},
-                {'name': 'Rohaan', 'form': '4-1-7-3-1', 'official_rating': 112, 'cd_winner': 'C&D', 'jockey': 'R. Ryan', 'trainer': 'D. Evans', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 15.0, 'days_since_run': 18, 'bookie_odds_dec': 11.00},
-                {'name': 'Shaquille', 'form': '1-1-1-1-9', 'official_rating': 120, 'cd_winner': 'D', 'jockey': 'O. Murphy', 'trainer': 'J. Camacho', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 20.0, 'days_since_run': 45, 'bookie_odds_dec': 5.00}
+                {'name': 'Kinross', 'form': '1-2-1-2', 'official_rating': 118, 'cd_winner': 'C&D', 'jockey': 'L. Dettori', 'trainer': 'R. Beckett', 'jockey_win_pct': 22.0, 'trainer_strike_rate': 23.0, 'days_since_run': 21, 'bookie_odds_dec': 2.75},
+                {'name': 'Art Power', 'form': '1-4-1-8', 'official_rating': 116, 'cd_winner': 'C&D', 'jockey': 'D. Allan', 'trainer': 'T. Easterby', 'jockey_win_pct': 15.0, 'trainer_strike_rate': 16.0, 'days_since_run': 28, 'bookie_odds_dec': 5.00},
+                {'name': 'Shouldvebeenaring', 'form': '2-1-3-1', 'official_rating': 114, 'cd_winner': 'C', 'jockey': 'S. Levey', 'trainer': 'R. Hannon', 'jockey_win_pct': 18.0, 'trainer_strike_rate': 19.0, 'days_since_run': 14, 'bookie_odds_dec': 6.50},
+                {'name': 'Commanche Falls', 'form': '4-1-2-3', 'official_rating': 112, 'cd_winner': 'D', 'jockey': 'C. Beasley', 'trainer': 'M. Dods', 'jockey_win_pct': 16.0, 'trainer_strike_rate': 17.0, 'days_since_run': 18, 'bookie_odds_dec': 9.00}
             ]
         }
     ]

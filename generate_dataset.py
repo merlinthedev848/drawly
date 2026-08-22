@@ -84,7 +84,50 @@ def create_irish_lotto_csv(output_path="irish_lotto_draws.csv", num_draws=1130, 
     print(f"Generated {len(df)} Irish Lotto draw records at {output_path}")
     return df
 
+def create_euromillions_lotto_csv(output_path="euromillions_draws.csv", num_draws=1130, start_date_str="2015-09-01"):
+    """
+    EuroMillions: 5 main numbers from 1 to 50 + 2 Lucky Stars from 1 to 12.
+    Draw days: Tuesday and Friday.
+    """
+    random.seed(99)
+    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+    
+    draws = []
+    current_date = start_date
+    draw_no = 830
+    
+    for i in range(num_draws):
+        main_balls = sorted(random.sample(range(1, 51), 5))
+        star_balls = sorted(random.sample(range(1, 13), 2))
+        
+        draws.append({
+            "draw_number": draw_no,
+            "draw_date": current_date.strftime("%Y-%m-%d"),
+            "day_of_week": current_date.strftime("%A"),
+            "ball_1": main_balls[0],
+            "ball_2": main_balls[1],
+            "ball_3": main_balls[2],
+            "ball_4": main_balls[3],
+            "ball_5": main_balls[4],
+            "ball_6": star_balls[0],  # Star 1 mapping for matrix compatibility
+            "bonus_ball": star_balls[1],  # Star 2 mapping for bonus compatibility
+            "star_1": star_balls[0],
+            "star_2": star_balls[1]
+        })
+        
+        draw_no += 1
+        if current_date.weekday() == 1:  # Tue -> Fri
+            current_date += timedelta(days=3)
+        else:  # Fri -> Tue
+            current_date += timedelta(days=4)
+            
+    df = pd.DataFrame(draws)
+    df.to_csv(output_path, index=False)
+    print(f"Generated {len(df)} EuroMillions draw records at {output_path}")
+    return df
+
 if __name__ == "__main__":
     out_dir = os.path.dirname(os.path.abspath(__file__))
     create_historical_lotto_csv(os.path.join(out_dir, "lotto_draws.csv"))
     create_irish_lotto_csv(os.path.join(out_dir, "irish_lotto_draws.csv"))
+    create_euromillions_lotto_csv(os.path.join(out_dir, "euromillions_draws.csv"))

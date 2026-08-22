@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-def compute_ball_frequencies(draw_matrix, total_balls=59):
+def compute_ball_frequencies(draw_matrix, total_balls=59, balls_drawn=6):
     """
     Computes empirical frequency count, rate, and ratio for all balls (1 to total_balls).
     """
     num_draws = len(draw_matrix)
     counts = np.zeros(total_balls + 1, dtype=int)
-    theo_draw_prob = 6.0 / total_balls
+    theo_draw_prob = float(balls_drawn) / total_balls
 
     for row in draw_matrix:
         for ball in row:
@@ -30,12 +30,12 @@ def compute_ball_frequencies(draw_matrix, total_balls=59):
     })
     return df_freq
 
-def compute_gap_statistics(draw_matrix, total_balls=59):
+def compute_gap_statistics(draw_matrix, total_balls=59, balls_drawn=6):
     """
     Computes recency gap statistics for each ball (1 to total_balls).
     """
     num_draws = len(draw_matrix)
-    expected_gap = total_balls / 6.0
+    expected_gap = total_balls / float(balls_drawn)
     current_gaps = np.zeros(total_balls + 1, dtype=int)
     max_gaps = np.zeros(total_balls + 1, dtype=int)
     gap_lists = [[] for _ in range(total_balls + 1)]
@@ -90,13 +90,12 @@ def compute_cooccurrence_matrix(draw_matrix, total_balls=59):
                 matrix[b2, b1] += 1
     return matrix
 
-def perform_chi_square_test(df_freq, num_draws, total_balls=59):
+def perform_chi_square_test(df_freq, num_draws, total_balls=59, balls_drawn=6):
     """
     Performs Chi-Square Goodness-of-Fit test against uniform expected frequencies.
     """
-    theo_draw_prob = 6.0 / total_balls
     observed = df_freq['count'].values
-    expected = np.full(total_balls, num_draws * theo_draw_prob)
+    expected = np.full(total_balls, float(np.sum(observed)) / float(total_balls))
     
     chi2_stat, p_val = stats.chisquare(f_obs=observed, f_exp=expected)
     return {
@@ -106,28 +105,28 @@ def perform_chi_square_test(df_freq, num_draws, total_balls=59):
         'is_uniform': bool(p_val > 0.05)
     }
 
-def compute_number_likelihoods(df_freq, df_gaps, cooc_matrix=None, model="harmonic", weights=None, total_balls=59):
+def compute_number_likelihoods(df_freq, df_gaps, cooc_matrix=None, model="harmonic", weights=None, total_balls=59, balls_drawn=6):
     """
     Calculates likelihood probabilities P(ball_i drawn) for total_balls.
     """
     if weights is None:
         weights = {'base': 0.3, 'hot': 0.3, 'cold': 0.3, 'pair': 0.1}
 
-    theo_draw_prob = 6.0 / total_balls
-    num_draws = df_freq['count'].sum() / 6.0
+    theo_draw_prob = float(balls_drawn) / total_balls
+    num_draws = df_freq['count'].sum() / float(balls_drawn) if balls_drawn > 0 else 1.0
 
     p_base = np.full(total_balls, theo_draw_prob)
 
     raw_hot = df_freq['rate'].values
-    p_hot = (raw_hot / np.sum(raw_hot)) * 6.0 if np.sum(raw_hot) > 0 else p_base
+    p_hot = (raw_hot / np.sum(raw_hot)) * float(balls_drawn) if np.sum(raw_hot) > 0 else p_base
 
     gap_ratios = df_gaps['gap_ratio'].values
     raw_cold = np.exp(0.5 * gap_ratios)
-    p_cold = (raw_cold / np.sum(raw_cold)) * 6.0
+    p_cold = (raw_cold / np.sum(raw_cold)) * float(balls_drawn)
 
     if cooc_matrix is not None:
         raw_pair = np.sum(cooc_matrix, axis=1) / max(num_draws, 1)
-        p_pair = (raw_pair / np.sum(raw_pair)) * 6.0 if np.sum(raw_pair) > 0 else p_base
+        p_pair = (raw_pair / np.sum(raw_pair)) * float(balls_drawn) if np.sum(raw_pair) > 0 else p_base
     else:
         p_pair = p_base
 
@@ -143,7 +142,7 @@ def compute_number_likelihoods(df_freq, df_gaps, cooc_matrix=None, model="harmon
         p_final = p_base
 
     p_final = np.clip(p_final, 0.001, 0.99)
-    p_final = (p_final / np.sum(p_final)) * 6.0
+    p_final = (p_final / np.sum(p_final)) * float(balls_drawn)
 
     df_likelihood = pd.DataFrame({
         'ball': np.arange(1, total_balls + 1),

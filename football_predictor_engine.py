@@ -61,15 +61,25 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
 
     # Identify Highest Probability Safe Pick (>70% probability)
     safe_picks = []
-    if p_1x >= 72.0:
-        safe_picks.append({'pick': f"Double Chance {home_team} or Draw (1X)", 'prob_pct': p_1x})
-    if p_x2 >= 72.0:
-        safe_picks.append({'pick': f"Double Chance {away_team} or Draw (X2)", 'prob_pct': p_x2})
+    if p_1x >= 70.0:
+        safe_picks.append({'pick': f"Double Chance {home_team} or Draw (1X)", 'prob_pct': p_1x, 'bet_target': f"{home_team} or Draw (1X)"})
+    if p_x2 >= 70.0:
+        safe_picks.append({'pick': f"Double Chance {away_team} or Draw (X2)", 'prob_pct': p_x2, 'bet_target': f"{away_team} or Draw (X2)"})
     if pct_over_1_5 >= 75.0:
-        safe_picks.append({'pick': "Over 1.5 Match Goals", 'prob_pct': pct_over_1_5})
+        safe_picks.append({'pick': "Over 1.5 Match Goals", 'prob_pct': pct_over_1_5, 'bet_target': "Over 1.5 Match Goals"})
+    if pct_home >= 55.0:
+        safe_picks.append({'pick': f"{home_team} Direct Win", 'prob_pct': pct_home, 'bet_target': f"{home_team} to Win"})
+    elif pct_away >= 55.0:
+        safe_picks.append({'pick': f"{away_team} Direct Win", 'prob_pct': pct_away, 'bet_target': f"{away_team} to Win"})
 
     safe_picks.sort(key=lambda x: x['prob_pct'], reverse=True)
-    best_safe_pick = safe_picks[0] if safe_picks else {'pick': f"Double Chance 1X ({p_1x}%)", 'prob_pct': p_1x}
+    best_safe_pick = safe_picks[0] if safe_picks else {
+        'pick': f"Double Chance {home_team} or Draw (1X)",
+        'prob_pct': p_1x,
+        'bet_target': f"{home_team} or Draw (1X)"
+    }
+
+    recommended_bet_selection = f"BET ON: {best_safe_pick['bet_target']} (EST. PROBABILITY: {best_safe_pick['prob_pct']}%)"
 
     # Correct Scores
     correct_scores = []
@@ -97,6 +107,9 @@ def predict_football_match(home_team, away_team, home_attack=1.85, home_defense=
         'pct_btts_yes': pct_btts_yes,
         'highest_probability_pick': best_safe_pick['pick'],
         'highest_probability_pct': best_safe_pick['prob_pct'],
+        'recommended_bet_selection': recommended_bet_selection,
+        'recommended_bet_target': best_safe_pick['bet_target'],
+        'recommended_bet_prob_pct': best_safe_pick['prob_pct'],
         'fair_home': fair_home,
         'fair_draw': fair_draw,
         'fair_away': fair_away,
@@ -115,25 +128,56 @@ def get_preset_football_matches():
             'match_id': 'mci_ars',
             'home_team': 'Manchester City',
             'away_team': 'Arsenal',
+            'match_date_str': 'Sunday, Aug 23, 2026 - 16:30 BST',
+            'league': 'English Premier League',
             'home_attack': 2.30, 'home_defense': 0.80,
             'away_attack': 2.10, 'away_defense': 0.85,
-            'bookie_odds': {'home': 1.95, 'draw': 3.60, 'away': 3.80}
+            'bookie_odds': {'home': 1.95, 'draw': 3.60, 'away': 3.80},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Man City v Arsenal -> Total Match Goals -> Over 1.5 Goals (Odds: 1/4)'
         },
         {
             'match_id': 'rma_bar',
             'home_team': 'Real Madrid',
             'away_team': 'FC Barcelona',
+            'match_date_str': 'Sunday, Aug 23, 2026 - 20:00 CEST',
+            'league': 'Spanish La Liga',
             'home_attack': 2.20, 'home_defense': 0.90,
             'away_attack': 2.15, 'away_defense': 0.95,
-            'bookie_odds': {'home': 2.10, 'draw': 3.75, 'away': 3.30}
+            'bookie_odds': {'home': 2.10, 'draw': 3.75, 'away': 3.30},
+            'william_hill_path': 'William Hill -> Football -> La Liga -> Real Madrid v Barcelona -> Total Match Goals -> Over 1.5 Goals (Odds: 1/5)'
         },
         {
             'match_id': 'liv_mun',
             'home_team': 'Liverpool',
             'away_team': 'Manchester United',
+            'match_date_str': 'Monday, Aug 24, 2026 - 20:00 BST',
+            'league': 'English Premier League',
             'home_attack': 2.40, 'home_defense': 0.95,
             'away_attack': 1.50, 'away_defense': 1.35,
-            'bookie_odds': {'home': 1.50, 'draw': 4.75, 'away': 6.00}
+            'bookie_odds': {'home': 1.50, 'draw': 4.75, 'away': 6.00},
+            'william_hill_path': 'William Hill -> Football -> Premier League -> Liverpool v Man Utd -> Double Chance -> 1X (Liverpool/Draw) (Odds: 2/11)'
+        },
+        {
+            'match_id': 'bay_dor',
+            'home_team': 'Bayern Munich',
+            'away_team': 'Borussia Dortmund',
+            'match_date_str': 'Saturday, Aug 29, 2026 - 17:30 CEST',
+            'league': 'German Bundesliga',
+            'home_attack': 2.50, 'home_defense': 0.90,
+            'away_attack': 1.80, 'away_defense': 1.25,
+            'bookie_odds': {'home': 1.60, 'draw': 4.20, 'away': 5.00},
+            'william_hill_path': 'William Hill -> Football -> Bundesliga -> Bayern v Dortmund -> Total Match Goals -> Over 1.5 Goals (Odds: 1/6)'
+        },
+        {
+            'match_id': 'psg_om',
+            'home_team': 'Paris Saint-Germain',
+            'away_team': 'Olympique Marseille',
+            'match_date_str': 'Sunday, Aug 30, 2026 - 20:45 CEST',
+            'league': 'French Ligue 1',
+            'home_attack': 2.35, 'home_defense': 0.85,
+            'away_attack': 1.60, 'away_defense': 1.30,
+            'bookie_odds': {'home': 1.55, 'draw': 4.50, 'away': 5.50},
+            'william_hill_path': 'William Hill -> Football -> Ligue 1 -> PSG v Marseille -> Double Chance -> 1X (PSG/Draw) (Odds: 2/13)'
         }
     ]
 
@@ -146,6 +190,9 @@ def get_preset_football_matches():
             f['bookie_odds']
         )
         m_res['match_id'] = f['match_id']
+        m_res['match_date_str'] = f['match_date_str']
+        m_res['league'] = f['league']
+        m_res['william_hill_path'] = f['william_hill_path']
         analyzed.append(m_res)
 
     return analyzed

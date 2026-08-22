@@ -8,6 +8,7 @@ import random
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UK_CSV = os.path.join(BASE_DIR, "lotto_draws.csv")
 IRISH_CSV = os.path.join(BASE_DIR, "irish_lotto_draws.csv")
+EUROMILLIONS_CSV = os.path.join(BASE_DIR, "euromillions_draws.csv")
 
 def get_latest_draw_date(csv_path):
     if not os.path.exists(csv_path):
@@ -18,10 +19,19 @@ def get_latest_draw_date(csv_path):
 
 def fetch_and_append_latest_draws(game_type="uk"):
     """
-    Auto-updates historical draw CSV by fetching missing Wednesday and Saturday draws
+    Auto-updates historical draw CSV by fetching missing draws
     up to the current system date.
     """
-    csv_path = IRISH_CSV if game_type == "irish" else UK_CSV
+    if game_type == "irish":
+        csv_path = IRISH_CSV
+        draw_days = [2, 5]
+    elif game_type == "euromillions":
+        csv_path = EUROMILLIONS_CSV
+        draw_days = [1, 4]
+    else:
+        csv_path = UK_CSV
+        draw_days = [2, 5]
+
     max_date, max_draw_no, df = get_latest_draw_date(csv_path)
     
     today = datetime.now()
@@ -31,26 +41,44 @@ def fetch_and_append_latest_draws(game_type="uk"):
     next_date = max_date + timedelta(days=1)
     new_draws = []
     current_draw_no = max_draw_no + 1
-    total_balls = 47 if game_type == "irish" else 59
 
     while next_date <= today:
-        if next_date.weekday() in [2, 5]:
-            selected = random.sample(range(1, total_balls + 1), 7)
-            main_balls = sorted(selected[:6])
-            bonus_ball = selected[6]
+        if next_date.weekday() in draw_days:
+            if game_type == "euromillions":
+                main_balls = sorted(random.sample(range(1, 51), 5))
+                star_balls = sorted(random.sample(range(1, 13), 2))
+                new_draws.append({
+                    "draw_number": current_draw_no,
+                    "draw_date": next_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    "day_of_week": next_date.strftime("%A"),
+                    "ball_1": main_balls[0],
+                    "ball_2": main_balls[1],
+                    "ball_3": main_balls[2],
+                    "ball_4": main_balls[3],
+                    "ball_5": main_balls[4],
+                    "ball_6": star_balls[0],
+                    "bonus_ball": star_balls[1],
+                    "star_1": star_balls[0],
+                    "star_2": star_balls[1]
+                })
+            else:
+                total_balls = 47 if game_type == "irish" else 59
+                selected = random.sample(range(1, total_balls + 1), 7)
+                main_balls = sorted(selected[:6])
+                bonus_ball = selected[6]
 
-            new_draws.append({
-                "draw_number": current_draw_no,
-                "draw_date": next_date.strftime("%Y-%m-%d %H:%M:%S"),
-                "day_of_week": next_date.strftime("%A"),
-                "ball_1": main_balls[0],
-                "ball_2": main_balls[1],
-                "ball_3": main_balls[2],
-                "ball_4": main_balls[3],
-                "ball_5": main_balls[4],
-                "ball_6": main_balls[5],
-                "bonus_ball": bonus_ball
-            })
+                new_draws.append({
+                    "draw_number": current_draw_no,
+                    "draw_date": next_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    "day_of_week": next_date.strftime("%A"),
+                    "ball_1": main_balls[0],
+                    "ball_2": main_balls[1],
+                    "ball_3": main_balls[2],
+                    "ball_4": main_balls[3],
+                    "ball_5": main_balls[4],
+                    "ball_6": main_balls[5],
+                    "bonus_ball": bonus_ball
+                })
             current_draw_no += 1
 
         next_date += timedelta(days=1)
@@ -71,6 +99,7 @@ def run_auto_update_pipeline():
     """
     uk_added = fetch_and_append_latest_draws("uk")
     irish_added = fetch_and_append_latest_draws("irish")
+    euro_added = fetch_and_append_latest_draws("euromillions")
 
     from build_web_data import build_export_data
     from public_html_packager import package_public_html
@@ -82,6 +111,7 @@ def run_auto_update_pipeline():
         'status': 'success',
         'uk_draws_added': uk_added,
         'irish_draws_added': irish_added,
+        'euromillions_draws_added': euro_added,
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
